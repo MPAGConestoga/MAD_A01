@@ -5,8 +5,8 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.Button;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
+
+import com.example.a_01_mad.objects.Task;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -19,7 +19,6 @@ import android.view.MenuItem;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity
@@ -126,6 +125,7 @@ public class MainActivity extends AppCompatActivity
                 CategoryItem selectedTask = (CategoryItem)spinnerCategories.getSelectedItem();
                 String taskCategory = selectedTask.getCategoryName();
                 String taskName = taskNameEditText.getText().toString().trim();
+                
                 if (taskName.trim().length() == 0) {
                     Toast.makeText(MainActivity.this, R.string.enter_task_name, Toast.LENGTH_SHORT).show();
                 }
@@ -133,13 +133,16 @@ public class MainActivity extends AppCompatActivity
                     Toast.makeText(MainActivity.this, R.string.enter_team_member, Toast.LENGTH_SHORT).show();
                 }
 
+                // Grab all members assigned to the task
                 ArrayList<String> allUsers = new ArrayList<String>();
                 for (int i = 0; i<memberList.size(); i++) {
                      memberListItem currentX = memberList.get(i);
                      allUsers.add(currentX.getmName());
                 }
 
-                /////////////////////////////////////ENTER CODE HERE MUTHALICKA//////////////////////////////////////
+                // Create Task
+                //Task newTask = new Task(taskName,);
+
             }
 
         });
@@ -162,6 +165,7 @@ public class MainActivity extends AppCompatActivity
             }
         });
     }
+    
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {

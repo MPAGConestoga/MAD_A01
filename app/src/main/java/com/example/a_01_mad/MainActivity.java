@@ -6,7 +6,10 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.Button;
 
-import com.example.a_01_mad.objects.Task;
+import com.example.a_01_mad.adapters.CategoryAdapter;
+import com.example.a_01_mad.adapters.MemberListAdapter;
+import com.example.a_01_mad.objects.CategoryItem;
+import com.example.a_01_mad.objects.MemberListItem;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -23,9 +26,9 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity
 {
-    private ArrayList<memberListItem> memberList;
+    private ArrayList<MemberListItem> memberList;
     private RecyclerView memberListRecyclerView;
-    private memberListAdapter mListAdapter;
+    private MemberListAdapter mListAdapter;
     private RecyclerView.LayoutManager memberListLayoutManager;
     private Button buttonInsert;
     private Button buttonCreateTask;
@@ -77,7 +80,7 @@ public class MainActivity extends AppCompatActivity
 
     public void insertItem(int position,String name)
     {
-        memberList.add(position, new memberListItem(R.drawable.user, name, R.drawable.ic_delete));
+        memberList.add(position, new MemberListItem(R.drawable.user, name, R.drawable.ic_delete));
         mListAdapter.notifyItemInserted(position);
     }
 
@@ -97,13 +100,13 @@ public class MainActivity extends AppCompatActivity
         memberListRecyclerView = findViewById(R.id.memberList);
         memberListRecyclerView.setHasFixedSize(true); //true if wont change in size
         memberListLayoutManager = new LinearLayoutManager(this);
-        mListAdapter = new memberListAdapter(memberList);
+        mListAdapter = new MemberListAdapter(memberList);
 
 
         memberListRecyclerView.setLayoutManager(memberListLayoutManager);
         memberListRecyclerView.setAdapter(mListAdapter);
 
-        mListAdapter.setOnItemClickListener(new memberListAdapter.OnItemClickListener() {
+        mListAdapter.setOnItemClickListener(new MemberListAdapter.OnItemClickListener() {
             @Override
             public void onDeleteClick(int position)
             {
@@ -136,7 +139,7 @@ public class MainActivity extends AppCompatActivity
                 // Grab all members assigned to the task
                 ArrayList<String> allUsers = new ArrayList<String>();
                 for (int i = 0; i<memberList.size(); i++) {
-                     memberListItem currentX = memberList.get(i);
+                     MemberListItem currentX = memberList.get(i);
                      allUsers.add(currentX.getmName());
                 }
 

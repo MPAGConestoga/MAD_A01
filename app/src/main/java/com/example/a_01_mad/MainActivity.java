@@ -21,7 +21,8 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity
+{
     private ArrayList<memberListItem> memberList;
     private RecyclerView memberListRecyclerView;
     private memberListAdapter mListAdapter;
@@ -34,10 +35,9 @@ public class MainActivity extends AppCompatActivity {
     private Spinner spinnerCategories;
     private CategoryAdapter categoryAdapter;
 
-
-
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void insertItem(int position,String name)
     {
-        memberList.add(position,new memberListItem(R.drawable.user, name, R.drawable.ic_delete));
+        memberList.add(position, new memberListItem(R.drawable.user, name, R.drawable.ic_delete));
         mListAdapter.notifyItemInserted(position);
     }
 
@@ -111,9 +111,6 @@ public class MainActivity extends AppCompatActivity {
             }
 
         });
-
-
-
     }
     public void setButtons()
     {
@@ -128,21 +125,17 @@ public class MainActivity extends AppCompatActivity {
                 CategoryItem selectedTask = (CategoryItem)spinnerCategories.getSelectedItem();
                 String taskCategory = selectedTask.getCategoryName();
                 String taskName = taskNameEditText.getText().toString().trim();
-
-                // Input validation
-                if(taskName.matches(""))
-                {
-                    Toast.makeText(MainActivity.this, "Please enter a task name", Toast.LENGTH_SHORT).show();
+                
+                if (taskName.trim().length() == 0) {
+                    Toast.makeText(MainActivity.this, R.string.enter_task_name, Toast.LENGTH_SHORT).show();
                 }
-                else if(memberList.size() <= 0)
-                {
-                    Toast.makeText(MainActivity.this, "Please add at least one team member", Toast.LENGTH_SHORT).show();
-
+                else if (memberList.size() <= 0) {
+                    Toast.makeText(MainActivity.this, R.string.enter_team_member, Toast.LENGTH_SHORT).show();
                 }
 
                 // Grab all members assigned to the task
                 ArrayList<String> allUsers = new ArrayList<String>();
-                for(int i=0; i<memberList.size(); i++) {
+                for (int i = 0; i<memberList.size(); i++) {
                      memberListItem currentX = memberList.get(i);
                      allUsers.add(currentX.getmName());
                 }
@@ -161,11 +154,10 @@ public class MainActivity extends AppCompatActivity {
             {
                 String name = nameEditText.getText().toString().trim();
                 int position = 0;
-                if (name.matches("")) {
+                if (name.length() == 0) {
                     Toast.makeText(getApplicationContext(), "Please enter a name", Toast.LENGTH_SHORT).show();
-
                 }
-                else{
+                else {
                     insertItem(position, name);
                     nameEditText.onEditorAction(EditorInfo.IME_ACTION_DONE);
                     nameEditText.setText("");
@@ -173,15 +165,18 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+    
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.

@@ -32,14 +32,14 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         ArrayList<Task> testData = new ArrayList<>();
-        testData.add(new Task("Test", "Cat1", new Date()));
-        testData.add(new Task("Test2", "Cat2", new Date()));
-        testData.add(new Task("Test3", "Cat3", new Date()));
-        testData.add(new Task("Test4", "Cat4", new Date()));
-        testData.add(new Task("Test5", "Cat5", new Date()));
-        testData.add(new Task("Test6", "Cat6", new Date()));
-        testData.add(new Task("Test7", "Cat7", new Date()));
-        testData.add(new Task("Test8", "Cat8", new Date()));
+        testData.add(new Task("Test", "Cat1", new Date(), null));
+        testData.add(new Task("Test2", "Cat2", new Date(), null));
+        testData.add(new Task("Test3", "Cat3", new Date(), null));
+        testData.add(new Task("Test4", "Cat4", new Date(), null));
+        testData.add(new Task("Test5", "Cat5", new Date(), null));
+        testData.add(new Task("Test6", "Cat6", new Date(), null));
+        testData.add(new Task("Test7", "Cat7", new Date(), null));
+        testData.add(new Task("Test8", "Cat8", new Date(), null));
 
         taskList = findViewById(R.id.task_list);
         taskList.setHasFixedSize(true);

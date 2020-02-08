@@ -2,19 +2,16 @@ package com.github.mpagconestoga.mad_a01;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
-import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -60,8 +57,6 @@ public class CreateTaskFragment extends Fragment {
     public CreateTaskFragment() {
 
     }
-
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -147,24 +142,24 @@ public class CreateTaskFragment extends Fragment {
         });
     }
 
-    public void insertItem(int position,String name)
+    private void insertItem(int position, String name)
     {
         memberList.add(position, new MemberListItem(R.drawable.user, name, R.drawable.ic_delete));
         mListAdapter.notifyItemInserted(position);
     }
 
-    public void removeItem(int position)
+    private void removeItem(int position)
     {
         memberList.remove(position);
         mListAdapter.notifyItemRemoved(position);
     }
 
-    public void createMemberList()
+    private void createMemberList()
     {
         memberList = new ArrayList<>();
     }
 
-    public void buildRecyclerView()
+    private void buildRecyclerView()
     {
         memberListRecyclerView = view.findViewById(R.id.memberList);
         memberListRecyclerView.setHasFixedSize(true); //true if wont change in size
@@ -184,7 +179,8 @@ public class CreateTaskFragment extends Fragment {
 
         });
     }
-    public void setButtons()
+
+    private void setButtons()
     {
         buttonCreateTask = view.findViewById(R.id.CreateTaskButton);
         buttonInsert = view.findViewById(R.id.button_insert);
@@ -207,17 +203,15 @@ public class CreateTaskFragment extends Fragment {
                 }
 
                 //------------------DEBUG: VALIDATE FOR END TIME -------------------------------------------//
-                // Grab all members assigned to the task
-                //ArrayList<String> allUsers = new ArrayList<String>();
-                //for (int i = 0; i<memberList.size(); i++) {
-                //     memberListItem currentX = memberList.get(i);
-                //     allUsers.add(currentX.getmName());
-                //}
-
 
                 // Create Task
                 Task newTask = new Task(taskName, taskCategory, endTime, assignedPeople);
-                Log.d(TAG, "------------------->Task:" + newTask.getName() + "\n" + assignedPeople);
+                Log.d(TAG, "----------> Task Created:" + newTask.getName() + "\n" + assignedPeople);
+
+                // Change Fragment
+                FragmentManager fragManager = getFragmentManager();
+                fragManager.beginTransaction().replace(R.id.TaskCreationFragment, new CreateSubtasksFragment())
+                        .commit();
             }
         });
 

@@ -1,17 +1,22 @@
 package com.github.mpagconestoga.mad_a01;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
 public class CreateTaskActivity extends AppCompatActivity {
-
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_task);
+        setContentView(R.layout.activity_create_task);  // Set the content to the Activity XML
+
+        // Fragment will change after the creation of the main task (without sub-tasks)
+        FragmentManager fragManager = getSupportFragmentManager();
+        fragManager.beginTransaction().replace(R.id.TaskCreationFragment, new CreateTaskFragment())
+                .commit();
     }
 
 

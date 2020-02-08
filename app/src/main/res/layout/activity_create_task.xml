@@ -7,11 +7,11 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".CreateTaskActivity"
     tools:showIn="@layout/activity_create_task">
-  
-    <fragment
-        android:id="@+id/CreateTaskFragment"
+
+    <FrameLayout
+        android:id="@+id/TaskCreationFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:name="com.github.mpagconestoga.mad_a01.CreateTaskFragment" />
+        android:layout_height="match_parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

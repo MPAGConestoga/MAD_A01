@@ -1,44 +1,25 @@
 package com.github.mpagconestoga.mad_a01;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.DatePickerDialog;
-import android.app.TimePickerDialog;
-import android.content.Intent;
+import androidx.fragment.app.FragmentManager;
+
 import android.os.Bundle;
-import android.util.Log;
+
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.DatePicker;
-import android.widget.EditText;
-import android.widget.Spinner;
-import android.widget.TimePicker;
-import android.widget.Toast;
-import android.widget.Toolbar;
-
-import com.github.mpagconestoga.mad_a01.adapters.CategoryAdapter;
-import com.github.mpagconestoga.mad_a01.adapters.MemberListAdapter;
-import com.github.mpagconestoga.mad_a01.objects.CategoryItem;
-import com.github.mpagconestoga.mad_a01.objects.MemberListItem;
-import com.github.mpagconestoga.mad_a01.objects.Person;
-import com.github.mpagconestoga.mad_a01.objects.Task;
-
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 
 public class CreateTaskActivity extends AppCompatActivity {
-
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_task);
+        setContentView(R.layout.activity_create_task);  // Set the content to the Activity XML
+
+        // Fragment will change after the creation of the main task (without sub-tasks)
+        FragmentManager fragManager = getSupportFragmentManager();
+        fragManager.beginTransaction().replace(R.id.TaskCreationFragment, new CreateTaskFragment())
+                .commit();
     }
 
 

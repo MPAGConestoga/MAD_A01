@@ -7,91 +7,11 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".CreateTaskActivity"
     tools:showIn="@layout/activity_create_task">
-
-    <EditText
-        android:id="@+id/addTaskEditText"
+  
+    <fragment
+        android:id="@+id/CreateTaskFragment"
         android:layout_width="match_parent"
-        android:layout_height="62dp"
-        android:hint="@string/enter_new_task"
-        android:importantForAutofill="no"
-        android:inputType="textPersonName"
-        app:layout_constraintTop_toTopOf="parent"
-        android:padding="20dp"/>
-
-    <TextView
-        android:id="@+id/SelectTaskType"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="20dp"
-        android:text="@string/select_task_type"
-        android:textSize="18sp"
-        app:layout_constraintTop_toBottomOf="@+id/addTaskEditText"
-        app:layout_constraintLeft_toLeftOf="parent" />
-
-    <Spinner
-        android:id="@+id/selectTaskSpinner"
-        android:layout_width="224dp"
-        android:layout_height="38dp"
-        app:layout_constraintTop_toBottomOf="@+id/addTaskEditText"
-        app:layout_constraintRight_toRightOf="parent"
-        android:padding="20dp"/>
-
-    <TextView
-        android:id="@+id/SelectDueTime"
-        android:layout_width="173dp"
-        android:layout_height="33dp"
-        android:text="@string/select_date"
-        android:textSize="18sp"
-        app:layout_constraintTop_toBottomOf="@+id/SelectTaskType"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:padding="20dp"/>
-
-    <Button
-        android:id="@+id/button_dateTime"
-        android:layout_width="180dp"
-        android:layout_height="37dp"
-        app:layout_constraintTop_toBottomOf="@+id/selectTaskSpinner"
-        app:layout_constraintRight_toRightOf="parent" />
-
-    <TextView
-        android:id="@+id/AddTeamMemberTextView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/add_team_member"
-        android:textSize="18sp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/SelectDueTime"
-        android:paddingLeft="20dp"/>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/memberList"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:background="@android:color/darker_gray"
-        android:padding="4dp"
-        android:scrollbars="vertical"
-        android:layout_marginTop="10dp"
-        app:layout_constraintTop_toBottomOf="@+id/AddTeamMemberTextView"
-        app:layout_constraintLeft_toRightOf="parent"/>
-
-    <Button
-        android:id="@+id/button_insert"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/add"
-        app:layout_constraintBottom_toTopOf="@+id/CreateTaskButton"
-        app:layout_constraintTop_toBottomOf="@+id/memberList"
-        android:padding="20dp"/>
-
-    <Button
-        android:id="@+id/CreateTaskButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:text="@string/create_task"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:padding="20dp"/>
+        android:layout_height="match_parent"
+        android:name="com.github.mpagconestoga.mad_a01.CreateTaskFragment" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

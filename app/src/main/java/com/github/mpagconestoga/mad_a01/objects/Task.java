@@ -12,12 +12,12 @@ public class Task
     private ArrayList<Person> assignedPeople;
 
     // Constructors
-    public Task(String name, String category, Date endTime) {
+    public Task(String name, String category, Date endTime, ArrayList<Person> assignedPeople) {
         this.name = name;
         this.category = category;
         this.startTime = new Date();
         this.endTime = endTime;
-        this.assignedPeople = new ArrayList<Person>();
+        this.assignedPeople = assignedPeople;
 
         // Register task in our data store
         registerTask(this);

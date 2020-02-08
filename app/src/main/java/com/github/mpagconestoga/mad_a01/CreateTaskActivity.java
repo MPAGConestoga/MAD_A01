@@ -1,11 +1,8 @@
 package com.github.mpagconestoga.mad_a01;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import androidx.fragment.app.FragmentManager;
-
 import android.os.Bundle;
-
 import android.view.Menu;
 import android.view.MenuItem;
 

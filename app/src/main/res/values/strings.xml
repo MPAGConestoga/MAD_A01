@@ -5,6 +5,7 @@
     <string name="select_task_type">Select Task Type:</string>
     <string name="add_task">Add Task:</string>
     <string name="enter_new_task">Enter New Task</string>
+    <string name="select_date">Due in:</string>
     <string name="enter_task_name">Please enter a task name</string>
     <string name="enter_team_member">Please enter at least one team member</string>
     <string name="add_team_member">Add Team Member:</string>

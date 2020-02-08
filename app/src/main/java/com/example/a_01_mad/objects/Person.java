@@ -19,14 +19,32 @@ public class Person
     private int color;
 
     // Constructors
-    Person(String name)
+    public Person(String name)
     {
         this.name = name;
-        this.color = validColors.get(colorIndex);   
+        this.color = validColors.get(colorIndex);
+
+        if (colorIndex == validColors.size() - 1) {
+            colorIndex = -1;
+        }
         colorIndex++;
 
         // Register person in our data store
         registerPerson(this);
+    }
+
+    public Person(String name, boolean register) {
+        this.name = name;
+        this.color = validColors.get(colorIndex);
+
+        if (colorIndex == validColors.size() - 1) {
+            colorIndex = -1;
+        }
+        colorIndex++;
+
+        if (register) {
+            registerPerson(this);
+        }
     }
 
     // Getters and Setters
@@ -40,8 +58,7 @@ public class Person
 
     // STATIC VARIABLES & METHODS
     private static ArrayList<Person> allPeople = new ArrayList<Person>();
-
-    private static ArrayList<Integer> validColors = new ArrayList<>(Arrays.asList(220220220, 303030,1090200, 2552030, 030255));
+    private static ArrayList<Integer> validColors = new ArrayList<>(Arrays.asList(220220220, 303030,1090200, 2552030, 230255));
 
     private static int colorIndex = 0;
 
@@ -63,5 +80,25 @@ public class Person
 
     public static ArrayList<Person> getAllPeople() {
         return allPeople;
+    }
+
+    public static boolean personExists(String name) {
+        for (Person person : allPeople) {
+            if (person.getName().toLowerCase().equals(name.toLowerCase())) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public static Person getPerson(String name) {
+        for (Person person : allPeople) {
+            if (person.getName().equals(name)) {
+                return person;
+            }
+        }
+
+        return null;
     }
 }

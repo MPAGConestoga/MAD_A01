@@ -1,12 +1,18 @@
 package com.example.a_01_mad;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.Button;
 
-import com.example.a_01_mad.objects.Task;
+import com.example.a_01_mad.adapters.CategoryAdapter;
+import com.example.a_01_mad.adapters.MemberListAdapter;
+import com.example.a_01_mad.objects.CategoryItem;
+import com.example.a_01_mad.objects.MemberListItem;
+import com.example.a_01_mad.objects.Person;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -23,9 +29,11 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity
 {
-    private ArrayList<memberListItem> memberList;
+    private static final String TAG = "MainActivity";
+    
+    private ArrayList<MemberListItem> memberList;
     private RecyclerView memberListRecyclerView;
-    private memberListAdapter mListAdapter;
+    private MemberListAdapter mListAdapter;
     private RecyclerView.LayoutManager memberListLayoutManager;
     private Button buttonInsert;
     private Button buttonCreateTask;
@@ -57,7 +65,7 @@ public class MainActivity extends AppCompatActivity
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 CategoryItem selectedItem = (CategoryItem)parent.getItemAtPosition(position);
                 String selectedItemName = selectedItem.getCategoryName();
-                Toast.makeText(MainActivity.this, selectedItemName + " selected", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, selectedItemName + " " + R.string.selected, Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -77,7 +85,7 @@ public class MainActivity extends AppCompatActivity
 
     public void insertItem(int position,String name)
     {
-        memberList.add(position, new memberListItem(R.drawable.user, name, R.drawable.ic_delete));
+        memberList.add(position, new MemberListItem(R.drawable.user, name, R.drawable.ic_delete));
         mListAdapter.notifyItemInserted(position);
     }
 
@@ -97,13 +105,13 @@ public class MainActivity extends AppCompatActivity
         memberListRecyclerView = findViewById(R.id.memberList);
         memberListRecyclerView.setHasFixedSize(true); //true if wont change in size
         memberListLayoutManager = new LinearLayoutManager(this);
-        mListAdapter = new memberListAdapter(memberList);
+        mListAdapter = new MemberListAdapter(memberList);
 
 
         memberListRecyclerView.setLayoutManager(memberListLayoutManager);
         memberListRecyclerView.setAdapter(mListAdapter);
 
-        mListAdapter.setOnItemClickListener(new memberListAdapter.OnItemClickListener() {
+        mListAdapter.setOnItemClickListener(new MemberListAdapter.OnItemClickListener() {
             @Override
             public void onDeleteClick(int position)
             {
@@ -116,7 +124,6 @@ public class MainActivity extends AppCompatActivity
     {
         buttonCreateTask = findViewById(R.id.CreateTaskButton);
         buttonInsert = findViewById(R.id.button_insert);
-        nameEditText = findViewById(R.id.text_insert);
 
         buttonCreateTask.setOnClickListener(new View.OnClickListener()
         {
@@ -136,7 +143,7 @@ public class MainActivity extends AppCompatActivity
                 // Grab all members assigned to the task
                 ArrayList<String> allUsers = new ArrayList<String>();
                 for (int i = 0; i<memberList.size(); i++) {
-                     memberListItem currentX = memberList.get(i);
+                     MemberListItem currentX = memberList.get(i);
                      allUsers.add(currentX.getmName());
                 }
 
@@ -152,18 +159,41 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
-                String name = nameEditText.getText().toString().trim();
-                int position = 0;
-                if (name.length() == 0) {
-                    Toast.makeText(getApplicationContext(), "Please enter a name", Toast.LENGTH_SHORT).show();
-                }
-                else {
-                    insertItem(position, name);
-                    nameEditText.onEditorAction(EditorInfo.IME_ACTION_DONE);
-                    nameEditText.setText("");
-                }
+                Intent searchIntent = new Intent(getApplicationContext(), PersonSearchActivity.class);
+                startActivityForResult(searchIntent, 1);
             }
         });
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (resultCode) {
+            case -1:
+                String personName = data.getStringExtra("selected");
+
+                Log.d(TAG, "onActivityResult: " + personName);
+
+                Person selected = null;
+
+                // Check if we need to create this person or if they already exist
+                if (data.getBooleanExtra("create", false)) {
+                    Log.d(TAG, "onActivityResult: Created new person '" + personName + "'");
+                    selected = new Person(personName);
+                }
+                else {
+                    selected = Person.getPerson(personName);
+                }
+
+                if (selected == null) {
+                    return;
+                }
+
+                Log.d(TAG, "onActivityResult: Selected Name: " + selected.getName());
+
+                insertItem(0, selected.getName());
+
+                break;
+        }
     }
     
     @Override

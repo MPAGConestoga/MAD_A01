@@ -1,11 +1,11 @@
-package com.example.a_01_mad;
+package com.example.a_01_mad.objects;
 
-public class memberListItem {
+public class MemberListItem {
     private int mImage;
     private String mName;
     private int mDeleteImage;
 
-    public memberListItem(int image, String memberName, int delete)
+    public MemberListItem(int image, String memberName, int delete)
     {
         mImage = image;
         mName = memberName;

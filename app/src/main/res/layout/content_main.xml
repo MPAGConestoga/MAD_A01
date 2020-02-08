@@ -80,32 +80,19 @@
         android:background="@android:color/darker_gray"
         android:padding="4dp"
         android:scrollbars="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/text_insert"
+        android:layout_marginTop="100dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/SelectTaskType" />
 
     <Button
         android:id="@+id/button_insert"
-        android:layout_width="92dp"
+        android:layout_width="match_parent"
         android:layout_height="55dp"
-        android:layout_marginBottom="112dp"
         android:text="@string/add"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/text_insert" />
-
-    <EditText
-        android:id="@+id/text_insert"
-        android:layout_width="319dp"
-        android:layout_height="49dp"
-        android:layout_marginBottom="112dp"
-        android:hint="@string/member_name"
-        android:importantForAutofill="no"
-        android:inputType="textPersonName"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintBottom_toTopOf="@+id/CreateTaskButton"
+        app:layout_constraintTop_toBottomOf="@+id/memberList" />
 
     <Button
         android:id="@+id/CreateTaskButton"

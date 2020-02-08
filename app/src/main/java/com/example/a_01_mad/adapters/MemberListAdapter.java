@@ -1,4 +1,4 @@
-package com.example.a_01_mad;
+package com.example.a_01_mad.adapters;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,10 +9,13 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.a_01_mad.R;
+import com.example.a_01_mad.objects.MemberListItem;
+
 import java.util.ArrayList;
 
-public class memberListAdapter extends RecyclerView.Adapter<memberListAdapter.memberListViewHolder> {
-    private ArrayList<memberListItem> memberList;
+public class MemberListAdapter extends RecyclerView.Adapter<MemberListAdapter.memberListViewHolder> {
+    private ArrayList<MemberListItem> memberList;
     private OnItemClickListener mListener;
 
     public interface OnItemClickListener
@@ -54,7 +57,7 @@ public class memberListAdapter extends RecyclerView.Adapter<memberListAdapter.me
         }
     }
 
-    public memberListAdapter(ArrayList<memberListItem> list)
+    public MemberListAdapter(ArrayList<MemberListItem> list)
     {
         memberList =  list;
     }
@@ -69,7 +72,7 @@ public class memberListAdapter extends RecyclerView.Adapter<memberListAdapter.me
 
     @Override
     public void onBindViewHolder(@NonNull memberListViewHolder holder, int position) {
-        memberListItem currentMember = memberList.get(position);
+        MemberListItem currentMember = memberList.get(position);
 
         holder.mImageView.setImageResource(currentMember.getmImage());
         holder.mName.setText(currentMember.getmName());

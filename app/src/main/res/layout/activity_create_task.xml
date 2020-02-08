@@ -12,6 +12,6 @@
         android:id="@+id/CreateTaskFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:name="com.github.mpagconestoga.mad_a01.CreateTaskFragment" />
+        android:name="com.github.mpagconestoga.mad_a01.CreateSubtasksFragment" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

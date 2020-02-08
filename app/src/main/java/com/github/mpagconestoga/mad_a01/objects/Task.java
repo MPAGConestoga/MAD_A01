@@ -10,6 +10,7 @@ public class Task
     private Date startTime;
     private Date endTime;
     private ArrayList<Person> assignedPeople;
+    private ArrayList<Subtask> subtasks;
 
     // Constructors
     public Task(String name, String category, Date endTime, ArrayList<Person> assignedPeople) {
@@ -18,9 +19,24 @@ public class Task
         this.startTime = new Date();
         this.endTime = endTime;
         this.assignedPeople = assignedPeople;
+        this.subtasks = new ArrayList<>();
 
         // Register task in our data store
         registerTask(this);
+    }
+
+    public Task(String name, String category, Date endTime, ArrayList<Person> assignedPeople, boolean register) {
+        this.name = name;
+        this.category = category;
+        this.startTime = new Date();
+        this.endTime = endTime;
+        this.assignedPeople = assignedPeople;
+        this.subtasks = new ArrayList<>();
+
+        // Register task in our data store
+        if (register) {
+            registerTask(this);
+        }
     }
 
     //  Getters and Setters
@@ -55,6 +71,7 @@ public class Task
     public ArrayList<Person> getAssignedPeople() {
         return assignedPeople;
     }
+    public ArrayList<Subtask> getSubtasks() { return subtasks; }
 
     // assignedPeople manipulation
     public void assignPerson(Person person) {
@@ -71,6 +88,10 @@ public class Task
         }
 
         assignedPeople.remove(person);
+    }
+
+    public void setSubtasks(ArrayList<Subtask> subtasks) {
+        this.subtasks = subtasks;
     }
 
     public boolean hasPersonAssigned(Person person) {

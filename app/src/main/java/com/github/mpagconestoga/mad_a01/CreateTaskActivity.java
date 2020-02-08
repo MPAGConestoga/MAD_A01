@@ -60,10 +60,6 @@ public class CreateTaskActivity extends AppCompatActivity {
         buildRecyclerView();
 
         setButtons();
-
-        // CHECK INTO LATER
-        //Toolbar toolbar = findViewById(R.id.toolbar);
-        //setSupportActionBar(toolbar);
         initList();
         dateTimeDialogBuilder();
         spinnerCategories = findViewById(R.id.selectTaskSpinner);

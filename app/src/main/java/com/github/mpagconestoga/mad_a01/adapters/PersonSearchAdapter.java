@@ -18,14 +18,12 @@ public class PersonSearchAdapter extends RecyclerView.Adapter<PersonSearchAdapte
     private static final String TAG = "PersonSearchAdapter";
 
     private ArrayList<Person> data;
-    private RecyclerView results;
     private LayoutInflater inflater;
 
     public int selectedPosition = 0;
 
-    public PersonSearchAdapter(Context context, RecyclerView results, ArrayList<Person> data) {
+    public PersonSearchAdapter(Context context, ArrayList<Person> data) {
         this.data = data;
-        this.results = results;
         this.inflater = LayoutInflater.from(context);
     }
 

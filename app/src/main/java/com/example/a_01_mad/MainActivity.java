@@ -159,17 +159,6 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
-//                String name = nameEditText.getText().toString().trim();
-//                int position = 0;
-//                if (name.length() == 0) {
-//                    Toast.makeText(getApplicationContext(), "Please enter a name", Toast.LENGTH_SHORT).show();
-//                }
-//                else {
-//                    insertItem(position, name);
-//                    nameEditText.onEditorAction(EditorInfo.IME_ACTION_DONE);
-//                    nameEditText.setText("");
-//                }
-
                 Intent searchIntent = new Intent(getApplicationContext(), PersonSearchActivity.class);
                 startActivityForResult(searchIntent, 1);
             }

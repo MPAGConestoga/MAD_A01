@@ -18,4 +18,18 @@
     <string name="person_search_hint">Enter Name</string>
     <string name="person_search_select">Please select a person</string>
     <string name="person_search_create">Create</string>
+    <string name="weight_view">Weight:</string>
+    <string name="team_button">Assign Workers</string>
+    <string name="add_subtask">Add Sub-Task</string>
+    <string-array name="workers">
+        <item>Paul</item>
+        <item>Amy</item>
+        <item>Michael</item>
+        <item>Gabriel</item>
+        <item>Duncan</item>
+    </string-array>
+    <string name="title_activity_test">ActivityTest</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

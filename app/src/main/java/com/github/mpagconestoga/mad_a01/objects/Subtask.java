@@ -6,7 +6,7 @@ public class Subtask extends Task
     private int weight;
 
     public Subtask(Task parent, String name, int weight) {
-        super(name, parent.getCategory() , parent.getEndTime());
+        super(name, parent.getCategory() , parent.getEndTime(), null);
 
         this.parent = parent;
         this.weight = weight;

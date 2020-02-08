@@ -1,8 +1,12 @@
 package com.example.a_01_mad;
 
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Button;
 
@@ -17,23 +21,31 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Spinner;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 public class MainActivity extends AppCompatActivity
 {
-    private ArrayList<memberListItem> memberList;
-    private RecyclerView memberListRecyclerView;
-    private memberListAdapter mListAdapter;
-    private RecyclerView.LayoutManager memberListLayoutManager;
-    private Button buttonInsert;
-    private Button buttonCreateTask;
-    private EditText nameEditText;
-    private EditText taskNameEditText;
-    private ArrayList<CategoryItem> categoryList;
-    private Spinner spinnerCategories;
-    private CategoryAdapter categoryAdapter;
+    private ArrayList<memberListItem> memberList;               // Member List
+    private RecyclerView memberListRecyclerView;                //
+    private memberListAdapter mListAdapter;                     //
+    private RecyclerView.LayoutManager memberListLayoutManager; //
+    private Button buttonInsert;                                // Task Info
+    private Button buttonCreateTask;                            //
+    private EditText nameEditText;                              //
+    private EditText taskNameEditText;                          //
+    private ArrayList<CategoryItem> categoryList;               //
+    private Spinner spinnerCategories;                          //
+    private CategoryAdapter categoryAdapter;                    //
+    private Button buttonDateTime;                              // Date Time
+    private DatePickerDialog dateDialog;                        //
+    private TimePickerDialog timePicker;                        //
+    private Date endTime;                                       //
+    
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -48,6 +60,7 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         initList();
+        dateTimeDialogBuilder();
         spinnerCategories = findViewById(R.id.selectTaskSpinner);
         taskNameEditText = findViewById(R.id.addTaskEditText);
         categoryAdapter = new CategoryAdapter(this, categoryList);
@@ -73,6 +86,44 @@ public class MainActivity extends AppCompatActivity
         categoryList.add(new CategoryItem("Test 2"));
         categoryList.add(new CategoryItem("Test 3"));
 
+    }
+
+    private void dateTimeDialogBuilder() {
+        buttonDateTime = findViewById(R.id.button_dateTime);
+
+        buttonDateTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Set up calendar -> used to initialized values for the time & date picker
+                final Calendar calendar = Calendar.getInstance();
+                final int day = calendar.get(Calendar.DAY_OF_MONTH);
+                final int month = calendar.get(Calendar.MONTH);
+                final int year = calendar.get(Calendar.YEAR);
+                final int hour = calendar.get(Calendar.HOUR);
+                final int minute = calendar.get(Calendar.MINUTE);
+
+                // Create date dialog
+                dateDialog = new DatePickerDialog(MainActivity.this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    // When date is set -> save the values and popup the time dialog
+                    public void onDateSet(DatePicker datePicker,final int endYear, final int endMonth, final int endDay) {
+                        timePicker = new TimePickerDialog(MainActivity.this, new TimePickerDialog.OnTimeSetListener() {
+                            @Override
+                            public void onTimeSet(TimePicker view, int endHour, int endMinute) {
+                                // Construct Date value for EndDate Task attribute
+                                calendar.set(endYear, (endMonth  - 1), endDay, endHour, endMinute);
+                                endTime = calendar.getTime();
+                                buttonDateTime.setText("WOW");
+                            }
+                        }, hour, minute, true);
+                        timePicker.show();
+                    }
+                }, day, month, year);
+
+                dateDialog.getDatePicker().setMinDate(System.currentTimeMillis());
+                dateDialog.show();
+            }
+        });
     }
 
     public void insertItem(int position,String name)

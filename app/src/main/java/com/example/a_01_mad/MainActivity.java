@@ -16,6 +16,7 @@ import com.example.a_01_mad.adapters.MemberListAdapter;
 import com.example.a_01_mad.objects.CategoryItem;
 import com.example.a_01_mad.objects.MemberListItem;
 import com.example.a_01_mad.objects.Person;
+import com.example.a_01_mad.objects.Task;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -36,9 +37,9 @@ import java.util.Date;
 public class MainActivity extends AppCompatActivity
 {
     private static final String TAG = "MainActivity";
-    private ArrayList<memberListItem> memberList;               // Member List
+    private ArrayList<MemberListItem> memberList;               // Member List
     private RecyclerView memberListRecyclerView;                //
-    private memberListAdapter mListAdapter;                     //
+    private MemberListAdapter mListAdapter;                     //
     private RecyclerView.LayoutManager memberListLayoutManager; //
     private Button buttonInsert;                                // Task Info
     private Button buttonCreateTask;                            //

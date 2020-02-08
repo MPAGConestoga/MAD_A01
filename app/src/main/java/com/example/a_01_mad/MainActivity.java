@@ -179,23 +179,25 @@ public class MainActivity extends AppCompatActivity
                 
                 if (taskName.trim().length() == 0) {
                     Toast.makeText(MainActivity.this, R.string.enter_task_name, Toast.LENGTH_SHORT).show();
+                    return;
                 }
                 else if (memberList.size() <= 0) {
                     Toast.makeText(MainActivity.this, R.string.enter_team_member, Toast.LENGTH_SHORT).show();
+                    return;
                 }
 
+                //------------------DEBUG: VALIDATE FOR END TIME -------------------------------------------//
                 // Grab all members assigned to the task
-                ArrayList<String> allUsers = new ArrayList<String>();
-                for (int i = 0; i<memberList.size(); i++) {
-                     memberListItem currentX = memberList.get(i);
-                     allUsers.add(currentX.getmName());
-                }
+                //ArrayList<String> allUsers = new ArrayList<String>();
+                //for (int i = 0; i<memberList.size(); i++) {
+                //     memberListItem currentX = memberList.get(i);
+                //     allUsers.add(currentX.getmName());
+                //}
+
 
                 // Create Task
-                //Task newTask = new Task(taskName,);
-
+                Task newTask = new Task(taskName, taskCategory, endTime);
             }
-
         });
 
         buttonInsert.setOnClickListener(new View.OnClickListener()

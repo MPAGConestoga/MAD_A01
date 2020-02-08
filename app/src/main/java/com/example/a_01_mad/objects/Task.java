@@ -14,21 +14,16 @@ public class Task
 {
 	private String name;
 	private String category;
-
 	private Date startTime;
 	private Date endTime;
-
-	private int weight;
-
 	private ArrayList<Person> assignedPeople;
 
 	// Constructors 
-	public Task(String name, String category, Date endTime, int weight) {
+	public Task(String name, String category, Date endTime) {
 		this.name = name;
 		this.category = category;
 		this.startTime = new Date();
 		this.endTime = endTime;
-		this.weight = weight;
 		this.assignedPeople = new ArrayList<Person>();
 
 		// Register task in our data store
@@ -44,10 +39,6 @@ public class Task
 		return name;
 	}
 
-	public void setStartTime(Date startTime) {
-		this.startTime = startTime;
-	}
-
 	public Date getStartTime() {
 		return startTime;
 	}
@@ -60,12 +51,12 @@ public class Task
 		return endTime;
 	}
 
-	public void setWeight(int priority) {
-		this.weight = priority;
+	public void setCategory(String category) {
+		this.category = category;
 	}
 
-	public int getPriority() {
-		return weight;
+	public String getCategory(){
+		return category;
 	}
 
 	public ArrayList<Person> getAssignedPeople() {

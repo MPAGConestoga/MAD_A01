@@ -46,7 +46,7 @@ public class PersonSearchActivity extends AppCompatActivity {
         results = findViewById(R.id.results);
         results.setHasFixedSize(true);
         results.setLayoutManager(new LinearLayoutManager(this));
-        results.setAdapter(new PersonSearchAdapter(this, results, filteredPeople));
+        results.setAdapter(new PersonSearchAdapter(this, filteredPeople));
 
         done = findViewById(R.id.button_done);
         done.setOnClickListener(new DoneClickListener());

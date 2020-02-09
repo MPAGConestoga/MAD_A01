@@ -205,8 +205,8 @@ public class CreateTaskFragment extends Fragment {
                 //------------------DEBUG: VALIDATE FOR END TIME -------------------------------------------//
 
                 // Create Task
-                Task newTask = new Task(taskName, taskCategory, endTime, assignedPeople);
-                Log.d(TAG, "----------> Task Created:" + newTask.getName() + "\n" + assignedPeople);
+                CreateTaskActivity.newTask = new Task(taskName, taskCategory, endTime, assignedPeople);
+                Log.d(TAG, "----------> Task Created:" + CreateTaskActivity.newTask.getName() + "\n" + assignedPeople);
 
                 // Change Fragment
                 FragmentManager fragManager = getFragmentManager();

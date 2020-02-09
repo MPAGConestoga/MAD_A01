@@ -35,7 +35,7 @@ public class TaskViewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Task testTask = new Task("Wowkenny", "Test1", new Date(),null ,false);
+        Task testTask = new Task("Wowkenny", "Test1", new Date(),null);
         ArrayList<Subtask> testData = new ArrayList<>();
         testData.add(new Subtask(testTask, "Clean your shit", 5));
         testData.add(new Subtask(testTask, "Clean your Fuck", 3));

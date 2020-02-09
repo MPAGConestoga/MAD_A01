@@ -36,8 +36,7 @@ public class CreateSubtasksFragment extends Fragment {
     private Task parent;
 
     public CreateSubtasksFragment() {
-        //parent = new Task("Test", "Gardening", new Date(), people);
-        parent = Task.getAllTasks().get(0);
+        parent = CreateTaskActivity.newTask;
         parent.getSubtasks().add(new Subtask(parent, "", 0));
     }
 
@@ -95,7 +94,19 @@ public class CreateSubtasksFragment extends Fragment {
     public class CreateTaskClickListener implements Button.OnClickListener {
         @Override
         public void onClick(View v) {
+            int numSubTasks = parent.getSubtasks().size();
+            String firstSubTaskName = parent.getSubtasks().get(0).getName().trim();
+            int firstPriority = parent.getSubtasks().get(0).getPriority();
+            int numWorkers = parent.getSubtasks().get(0).getAssignedPeople().size();
+
+            if (numSubTasks == 1 && (firstSubTaskName == "" || firstPriority == 0 || numWorkers == 0)) {
+                Log.d(TAG, "Number of sub-tasks:" + parent.getSubtasks().size());
+                return;
+            }
+
+            Log.d(TAG, "First Task: " + parent.getSubtasks().get(0).getName());
             parent.registerTask();
+            getActivity().finish();
         }
     }
 }

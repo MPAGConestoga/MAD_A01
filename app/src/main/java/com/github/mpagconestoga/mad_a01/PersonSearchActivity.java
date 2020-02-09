@@ -95,7 +95,9 @@ public class PersonSearchActivity extends AppCompatActivity {
                 return;
             }
 
-            if (searchBox.getText().toString().length() == 0 && ((PersonSearchAdapter) results.getAdapter()).selectedPosition == -1) {
+            Log.d(TAG, "onClick: SELECTED POSITION IS CURRENTLY " + ((PersonSearchAdapter) results.getAdapter()).selectedPosition);
+
+            if ((searchBox.getText().toString().length() == 0 && ((PersonSearchAdapter) results.getAdapter()).selectedPosition == -1) || ((PersonSearchAdapter) results.getAdapter()).selectedPosition == -1) {
                 Toast.makeText(PersonSearchActivity.this, R.string.person_search_select, Toast.LENGTH_SHORT).show();
                 return;
             }

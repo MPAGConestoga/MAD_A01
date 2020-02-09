@@ -7,11 +7,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Context;
 import android.os.Bundle;
 import android.text.Layout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,9 +28,11 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class TaskViewActivity extends AppCompatActivity {
+    private static final String TAG = "TaskViewActivity";
 
     private RecyclerView subTaskList;
     private TextView header;
+    private ProgressBar progressBar;
 
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -36,19 +40,24 @@ public class TaskViewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_view);
 
-        Task testTask = new Task("Wowkenny", "Test1", new Date(),null);
-        ArrayList<Subtask> testData = new ArrayList<>();
-        testData.add(new Subtask(testTask, "Clean your shit", 5));
-        testData.add(new Subtask(testTask, "Clean your fuck", 3));
-        testTask.setSubtasks(testData);
-        testTask.registerTask();
+        int hashCode = this.getIntent().getIntExtra("task", 0);
+
+        Task task = Task.getTaskByHashcode(hashCode);
+
+        if (task == null) {
+            Log.e(TAG, "onCreate: Hash code received was invalid!");
+            finish();
+        }
+
+        progressBar = findViewById(R.id.task_progress);
 
         subTaskList = findViewById(R.id.subtask_list);
         subTaskList.setLayoutManager(new LinearLayoutManager(this));
         subTaskList.setHasFixedSize(true);
-        subTaskList.setAdapter(new OnGoingSubtaskAdapter(this, testTask.getSubtasks(), testTask));
+
+        subTaskList.setAdapter(new OnGoingSubtaskAdapter(this, task.getSubtasks(), task, progressBar));
 
         header = findViewById(R.id.task_title);
-        header.setText(String.format("%s: %s", "Task", testTask.getName()));
+        header.setText(String.format("%s: %s", "Task", task.getName()));
     }
 }

@@ -1,3 +1,10 @@
+// FILE         Task.java
+// ASSIGNMENT   MAD A01
+// DATE         Feb 6 2020
+// PROGRAMMERS  Gabriel Gurgel & Duncan Snider
+// DESCRIPTION  This class models a task with many data members we need
+//              for the program to function.
+
 package com.github.mpagconestoga.mad_a01.objects;
 
 import java.util.ArrayList;
@@ -12,7 +19,7 @@ public class Task
     private ArrayList<Person> assignedPeople;
     private ArrayList<Subtask> subtasks;
 
-    // Constructors
+    // Constructor
     public Task(String name, String category, Date endTime, ArrayList<Person> assignedPeople) {
         this.name = name;
         this.category = category;
@@ -22,45 +29,55 @@ public class Task
         this.subtasks = new ArrayList<>();
     }
 
+    // FUNCTION         registerTask()
+    // DESCRIPTION      Adds a task to our pool of tasks
     public void registerTask() {
         registerTask(this);
     }
 
-    //  Getters and Setters
+    // FUNCTION         setName()
+    // PARAMETERS       String name
+    // DESCRIPTION      Setter for the name
     public void setName(String name) {
         this.name = name;
     }
 
+    // FUNCTION         getName()
+    // DESCRIPTION      Getter for the name
     public String getName() {
         return name;
     }
 
-    public Date getStartTime() {
-        return startTime;
-    }
-
-    public void setEndTime(Date endTime) {
-        this.endTime = endTime;
-    }
-
+    // FUNCTION         getEndTime()
+    // RETURNS          Date
+    // DESCRIPTION      Setter for the name
     public Date getEndTime() {
         return endTime;
     }
 
-    public void setCategory(String category) {
-        this.category = category;
-    }
-
+    // FUNCTION         getCategory()
+    // RETURNS          String
+    // DESCRIPTION      Getter for the category
     public String getCategory(){
         return category;
     }
 
+    // FUNCTION         getAssignedPeople()
+    // RETURNS          ArrayList<Person>
+    // DESCRIPTION      Getter for assigned people
     public ArrayList<Person> getAssignedPeople() {
         return assignedPeople;
     }
+
+    // FUNCTION         setAssignedPeople()
+    // DESCRIPTION      Setter for assigned people
     public void setAssignedPeople(ArrayList<Person> people) {
         this.assignedPeople = people;
     }
+
+    // FUNCTION         getSubtasks()
+    // RETURNS          ArrayList<Subtask>
+    // DESCRIPTION      Getter for subtasks
     public ArrayList<Subtask> getSubtasks() { return subtasks; }
 
     // assignedPeople manipulation
@@ -105,6 +122,16 @@ public class Task
         }
 
         allTasks.remove(task);
+    }
+
+    public static Task getTaskByHashcode(int hashcode) {
+        for (Task task : allTasks) {
+            if (task.hashCode() == hashcode) {
+                return task;
+            }
+        }
+
+        return null;
     }
 
     public static ArrayList<Task> getAllTasks() {

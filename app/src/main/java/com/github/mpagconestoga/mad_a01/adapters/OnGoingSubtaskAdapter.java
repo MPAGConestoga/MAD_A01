@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
@@ -30,16 +31,24 @@ public class OnGoingSubtaskAdapter extends RecyclerView.Adapter<OnGoingSubtaskAd
     private LayoutInflater inflater;
     private Context context;
     private Task parent;
+    private ProgressBar progressBar;
 
-    public OnGoingSubtaskAdapter(Context context, ArrayList<Subtask> data, Task parent) {
+    private int completionWeight = 0;
+    private int currentWeight = 0;
+
+    public OnGoingSubtaskAdapter(Context context, ArrayList<Subtask> data, Task parent, ProgressBar progressBar) {
         this.data = data;
         this.context = context;
         this.inflater = LayoutInflater.from(context);
         this.parent = parent;
+        this.progressBar = progressBar;
 
         for (Subtask st : data) {
             Log.d(TAG, "OnGoingSubtaskAdapter: SUBTASK " + st.getName());
+            completionWeight += st.getPriority();
         }
+
+        progressBar.setMax(completionWeight);
     }
 
     @Override
@@ -55,6 +64,7 @@ public class OnGoingSubtaskAdapter extends RecyclerView.Adapter<OnGoingSubtaskAd
         Subtask subtask = data.get(position);
         holder.name.setText(subtask.getName());
         holder.weight.setText(String.format("%s %s", context.getResources().getString(R.string.weight_view), String.valueOf(subtask.getPriority())));
+        holder.position = position;
 
         // Display list of people from that subtask
     }
@@ -68,6 +78,7 @@ public class OnGoingSubtaskAdapter extends RecyclerView.Adapter<OnGoingSubtaskAd
         TextView name;
         TextView weight;
         CheckBox done;
+        int position;
 
         public ViewHolder(View view) {
             super(view);
@@ -78,8 +89,14 @@ public class OnGoingSubtaskAdapter extends RecyclerView.Adapter<OnGoingSubtaskAd
             done.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton checkBox, boolean isChecked) {
-                    // Business logic for checking if all checkboxes are ticked
-                    // Progress bar
+                    if (isChecked) {
+                        currentWeight += data.get(position).getPriority();
+                    }
+                    else {
+                        currentWeight -= data.get(position).getPriority();
+                    }
+
+                    progressBar.setProgress(currentWeight);
                 }
             });
         }

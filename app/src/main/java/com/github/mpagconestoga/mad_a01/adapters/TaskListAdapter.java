@@ -40,13 +40,6 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
     @Override
     public ViewHolder onCreateViewHolder(final ViewGroup parent, int viewType) {
         View view = inflater.inflate(R.layout.task_list_item, parent, false);
-        view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent newTaskIntent = new Intent(context.getApplicationContext(), TaskViewActivity.class);
-                context.startActivity(newTaskIntent);
-            }
-        });
 
         return new ViewHolder(view);
     }
@@ -56,6 +49,7 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
         Task task = data.get(position);
         holder.name.setText(task.getName());
         holder.date.setText(dateFormat.format(task.getEndTime()));
+        holder.position = position;
     }
 
     @Override
@@ -67,11 +61,21 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView name;
         TextView date;
+        int position;
 
         public ViewHolder(View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.task_list_item_name);
             date = itemView.findViewById(R.id.task_list_item_date);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent newTaskIntent = new Intent(context.getApplicationContext(), TaskViewActivity.class);
+                    newTaskIntent.putExtra("task", data.get(position).hashCode());
+                    context.startActivity(newTaskIntent);
+                }
+            });
         }
     }
 }

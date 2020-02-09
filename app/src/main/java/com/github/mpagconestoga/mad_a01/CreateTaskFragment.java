@@ -149,6 +149,13 @@ public class CreateTaskFragment extends Fragment {
 
     private void insertItem(int position, String name)
     {
+        for (MemberListItem mli : memberList) {
+            if (mli.getmName().equals(name)) {
+                Toast.makeText(this.getContext(), getResources().getString(R.string.person_already_added), Toast.LENGTH_LONG).show();
+                return;
+            }
+        }
+
         memberList.add(position, new MemberListItem(R.drawable.user, name, R.drawable.ic_delete));
         mListAdapter.notifyItemInserted(position);
     }

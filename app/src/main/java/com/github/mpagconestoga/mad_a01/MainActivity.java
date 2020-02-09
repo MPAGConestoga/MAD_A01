@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView title;
     private RecyclerView taskList;
     private FloatingActionButton newTaskButton;
+    private TaskListAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +46,8 @@ public class MainActivity extends AppCompatActivity {
         taskList = findViewById(R.id.task_list);
         taskList.setHasFixedSize(true);
         taskList.setLayoutManager(new LinearLayoutManager(this));
-        taskList.setAdapter(new TaskListAdapter(this, tasks));
+        adapter = new TaskListAdapter(this, tasks);
+        taskList.setAdapter(adapter);
 
         newTaskButton = findViewById(R.id.button_new_task);
         newTaskButton.setOnClickListener(new NewTaskClickListener());
@@ -64,5 +66,11 @@ public class MainActivity extends AppCompatActivity {
     public void ShowTask() {
         Intent newTaskIntent = new Intent(getApplicationContext(), TaskViewActivity.class);
         startActivity(newTaskIntent);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        adapter.notifyDataSetChanged();
     }
 }

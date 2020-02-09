@@ -13,7 +13,9 @@ import android.widget.Toast;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.github.mpagconestoga.mad_a01.CreateTaskActivity;
+import com.github.mpagconestoga.mad_a01.MainActivity;
 import com.github.mpagconestoga.mad_a01.R;
+import com.github.mpagconestoga.mad_a01.TaskViewActivity;
 import com.github.mpagconestoga.mad_a01.objects.Task;
 
 import java.text.DateFormat;
@@ -27,10 +29,12 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
 
     private ArrayList<Task> data;
     private LayoutInflater inflater;
+    private Context context;
 
     public TaskListAdapter(Context context, ArrayList<Task> data) {
         this.data = data;
         this.inflater = LayoutInflater.from(context);
+        this.context = context;
     }
 
     @Override
@@ -39,7 +43,8 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d(TAG, ">?>>?>?>?>?>?>?>?>?>??>?.");
+                Intent newTaskIntent = new Intent(context.getApplicationContext(), TaskViewActivity.class);
+                context.startActivity(newTaskIntent);
             }
         });
 

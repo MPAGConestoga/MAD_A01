@@ -17,24 +17,27 @@
         android:layout_width="237dp"
         android:layout_height="20dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="32dp"
-        app:layout_constraintEnd_toStartOf="@+id/txtWeight"
+        app:layout_constraintEnd_toEndOf="@+id/txtWeight"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <CheckBox
         android:id="@+id/subTaskcheckBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:width="40dp"
+        android:height="40dp"
         android:layout_marginStart="44dp"
-        app:layout_constraintStart_toEndOf="@+id/txt_assignedPeople"
-        app:layout_constraintTop_toBottomOf="@+id/txtWeight" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/txt_assignedPeople" />
 
     <TextView
         android:id="@+id/txtWeight"
-        android:layout_width="45dp"
-        android:layout_height="20dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="68dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="@string/weight_view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -43,7 +46,6 @@
         android:id="@+id/txt_assignedPeople"
         android:layout_width="239dp"
         android:layout_height="22dp"
-        android:layout_marginStart="12dp"
         android:layout_marginTop="8dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txt_subTask" />

@@ -1,3 +1,12 @@
+/*
+ *	FILE			: MainActivity.java
+ *	PROJECT			: PROG3150 - Assignment-01
+ *	PROGRAMMER		: Michael Gordon, Paul Smith, Duncan Snider, Gabriel Gurgel, Amy Dayasundara
+ *	FIRST VERSION	: 2020 - 02 - 05
+ *	DESCRIPTION		: Landing page for the application
+ *
+ */
+
 package com.github.mpagconestoga.mad_a01;
 
 import androidx.appcompat.app.AppCompatActivity;

@@ -1,3 +1,12 @@
+/*
+ *	FILE			: Person.java
+ *	PROJECT			: PROG3150 - Assignment-01
+ *	PROGRAMMER		: Michael Gordon, Paul Smith, Duncan Snider, Gabriel Gurgel, Amy Dayasundara
+ *	FIRST VERSION	: 2020 - 02 - 05
+ *	DESCRIPTION		: Models a "Person". servers to simbolize a potential worker of a task
+ *
+ */
+
 package com.github.mpagconestoga.mad_a01.objects;
 
 import java.util.ArrayList;
@@ -53,6 +62,7 @@ public class Person
     private static ArrayList<Integer> validColors = new ArrayList<>(Arrays.asList(220220220, 303030,1090200, 2552030, 230255));
 
     private static int colorIndex = 0;
+
 
     public static void registerPerson(Person person) {
         if (allPeople.contains(person)) {

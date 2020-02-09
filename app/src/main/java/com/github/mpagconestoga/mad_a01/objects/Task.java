@@ -20,23 +20,10 @@ public class Task
         this.endTime = endTime;
         this.assignedPeople = assignedPeople;
         this.subtasks = new ArrayList<>();
-
-        // Register task in our data store
-        registerTask(this);
     }
 
-    public Task(String name, String category, Date endTime, ArrayList<Person> assignedPeople, boolean register) {
-        this.name = name;
-        this.category = category;
-        this.startTime = new Date();
-        this.endTime = endTime;
-        this.assignedPeople = assignedPeople;
-        this.subtasks = new ArrayList<>();
-
-        // Register task in our data store
-        if (register) {
-            registerTask(this);
-        }
+    public void registerTask() {
+        registerTask(this);
     }
 
     //  Getters and Setters
@@ -70,6 +57,9 @@ public class Task
 
     public ArrayList<Person> getAssignedPeople() {
         return assignedPeople;
+    }
+    public void setAssignedPeople(ArrayList<Person> people) {
+        this.assignedPeople = people;
     }
     public ArrayList<Subtask> getSubtasks() { return subtasks; }
 

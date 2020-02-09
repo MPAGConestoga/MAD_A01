@@ -243,6 +243,7 @@ public class CreateTaskFragment extends Fragment {
                     Log.d(TAG, "onActivityResult: Created new person '" + personName + "'");
                     selected = new Person(personName);
                 } else {
+                    Log.d(TAG, "onActivityResult: Retrieved person: " + personName);
                     selected = Person.getPerson(personName);
                 }
 

@@ -39,22 +39,15 @@ public class CreateSubtasksFragment extends Fragment {
 
     private RecyclerView subtasks;
     private Button addSubtask;
+    private Button createTask;
     private SubtaskAdapter adapter;
 
     private Task parent;
 
     public CreateSubtasksFragment() {
-        ArrayList<Person> people = new ArrayList<>();
-        people.add(new Person("Duncan"));
-        people.add(new Person("Gabriel"));
-        people.add(new Person("Michael"));
-
-        parent = new Task("Test", "Gardening", new Date(), people);
-
-        parent.getSubtasks().add(new Subtask(parent, "Plant weed", 0));
-        parent.getSubtasks().add(new Subtask(parent, "Water weed", 1));
-        parent.getSubtasks().add(new Subtask(parent, "Pick weed", 2));
-        parent.getSubtasks().add(new Subtask(parent, "SMOKE WEED", 3));
+        //parent = new Task("Test", "Gardening", new Date(), people);
+        parent = Task.getAllTasks().get(0);
+        parent.getSubtasks().add(new Subtask(parent, "", 0));
     }
 
     @Override
@@ -72,6 +65,9 @@ public class CreateSubtasksFragment extends Fragment {
 
         addSubtask = view.findViewById(R.id.subtasks_button_add);
         addSubtask.setOnClickListener(new AddSubtaskClickListener());
+
+        createTask = view.findViewById(R.id.subtasks_create_task);
+        createTask.setOnClickListener(new CreateTaskClickListener());
 
         return view;
     }
@@ -102,6 +98,13 @@ public class CreateSubtasksFragment extends Fragment {
 
             parent.setSubtasks(currentSubtasks);
             adapter.setData(currentSubtasks);
+        }
+    }
+
+    public class CreateTaskClickListener implements Button.OnClickListener {
+        @Override
+        public void onClick(View v) {
+            parent.registerTask();
         }
     }
 }

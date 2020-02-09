@@ -8,7 +8,7 @@ public class Subtask extends Task
     private int weight;
 
     public Subtask(Task parent, String name, int weight) {
-        super(name, parent.getCategory() , parent.getEndTime(), new ArrayList<Person>(), false);
+        super(name, parent.getCategory() , parent.getEndTime(), new ArrayList<Person>());
 
         this.parent = parent;
         this.weight = weight;

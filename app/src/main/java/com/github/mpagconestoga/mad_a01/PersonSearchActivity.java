@@ -89,21 +89,42 @@ public class PersonSearchActivity extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             Log.d(TAG, "onClick: Done button clicked");
+            
+            if (results.getAdapter() == null) {
+                Log.e(TAG, "onClick: Adapter was null");
+                return;
+            }
 
-            if (results.getAdapter() == null || searchBox.getText().toString().length() == 0) {
+            if (searchBox.getText().toString().length() == 0 && ((PersonSearchAdapter) results.getAdapter()).selectedPosition == -1) {
                 Toast.makeText(PersonSearchActivity.this, R.string.person_search_select, Toast.LENGTH_SHORT).show();
                 return;
             }
 
+            Log.d(TAG, "onClick: filteredPeople size: " + filteredPeople.size());
+
             Person selected = filteredPeople.get(((PersonSearchAdapter) results.getAdapter()).selectedPosition);
+
+            Log.d(TAG, "onClick: Selected person: " + selected.getName());
 
             if (!allPeople.contains(selected)) {
                 returnIntent.putExtra("create", true);
-                returnIntent.putExtra("selected", searchBox.getText().toString());
+
+                if (searchBox.getText().toString().trim().length() == 0) {
+                    returnIntent.putExtra("selected", selected.getName());
+                }
+                else {
+                    returnIntent.putExtra("selected", searchBox.getText().toString());
+                }
             }
             else {
                 returnIntent.putExtra("create", false);
-                returnIntent.putExtra("selected", searchBox.getText().toString());
+
+                if (searchBox.getText().toString().trim().length() == 0) {
+                    returnIntent.putExtra("selected", selected.getName());
+                }
+                else {
+                    returnIntent.putExtra("selected", searchBox.getText().toString());
+                }
             }
 
             setResult(Activity.RESULT_OK, returnIntent);

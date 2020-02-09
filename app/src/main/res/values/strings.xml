@@ -24,6 +24,7 @@
     <string name="team_button">Assign Workers</string>
     <string name="add_subtask">Add Sub-Task</string>
     <string name="subtask_name_hint">Name</string>
+    <string name="next">Next</string>
     <string-array name="workers">
         <item>Paul</item>
         <item>Amy</item>

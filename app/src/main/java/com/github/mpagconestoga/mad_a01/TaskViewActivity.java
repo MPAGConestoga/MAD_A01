@@ -13,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.mpagconestoga.mad_a01.adapters.OnGoingSubtaskAdapter;
@@ -27,22 +28,27 @@ import java.util.Date;
 public class TaskViewActivity extends AppCompatActivity {
 
     private RecyclerView subTaskList;
-
+    private TextView header;
 
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_task_view);
 
-        Task testTask = new Task("Wowkenny", "Test1", new Date(),null ,false);
+        Task testTask = new Task("Wowkenny", "Test1", new Date(),null);
         ArrayList<Subtask> testData = new ArrayList<>();
         testData.add(new Subtask(testTask, "Clean your shit", 5));
-        testData.add(new Subtask(testTask, "Clean your Fuck", 3));
+        testData.add(new Subtask(testTask, "Clean your fuck", 3));
+        testTask.setSubtasks(testData);
+        testTask.registerTask();
 
         subTaskList = findViewById(R.id.subtask_list);
-
         subTaskList.setLayoutManager(new LinearLayoutManager(this));
-        subTaskList.setAdapter(new OnGoingSubtaskAdapter(this, testData, testTask));
+        subTaskList.setHasFixedSize(true);
+        subTaskList.setAdapter(new OnGoingSubtaskAdapter(this, testTask.getSubtasks(), testTask));
+
+        header = findViewById(R.id.task_title);
+        header.setText(String.format("%s: %s", "Task", testTask.getName()));
     }
 }

@@ -28,16 +28,22 @@ public class OnGoingSubtaskAdapter extends RecyclerView.Adapter<OnGoingSubtaskAd
 
     private ArrayList<Subtask> data;
     private LayoutInflater inflater;
+    private Context context;
     private Task parent;
 
     public OnGoingSubtaskAdapter(Context context, ArrayList<Subtask> data, Task parent) {
         this.data = data;
+        this.context = context;
         this.inflater = LayoutInflater.from(context);
         this.parent = parent;
+
+        for (Subtask st : data) {
+            Log.d(TAG, "OnGoingSubtaskAdapter: SUBTASK " + st.getName());
+        }
     }
 
     @Override
-    public OnGoingSubtaskAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = inflater.inflate(R.layout.card_subtask, parent, false);
         return new ViewHolder(view);
     }
@@ -48,7 +54,7 @@ public class OnGoingSubtaskAdapter extends RecyclerView.Adapter<OnGoingSubtaskAd
 
         Subtask subtask = data.get(position);
         holder.name.setText(subtask.getName());
-        holder.weight.setText(subtask.getPriority());
+        holder.weight.setText(String.format("%s %s", context.getResources().getString(R.string.weight_view), String.valueOf(subtask.getPriority())));
 
         // Display list of people from that subtask
     }
@@ -62,7 +68,6 @@ public class OnGoingSubtaskAdapter extends RecyclerView.Adapter<OnGoingSubtaskAd
         TextView name;
         TextView weight;
         CheckBox done;
-        int position;
 
         public ViewHolder(View view) {
             super(view);

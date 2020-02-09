@@ -1,3 +1,13 @@
+/*
+ *	FILE			: memberListAdapter.java
+ *	PROJECT			: PROG3150 - Assignment-01
+ *	PROGRAMMER		: Michael Gordon, Paul Smith, Duncan Snider, Gabriel Gurgel, Amy Dayasundara
+ *	FIRST VERSION	: 2020 - 02 - 05
+ *	DESCRIPTION		:This file contains the class definition for the memberListAdapter
+                    Inspiration for this class credit: https://www.youtube.com/watch?v=17NbUcEts9c
+ *
+ */
+
 package com.github.mpagconestoga.mad_a01.adapters;
 
 import android.view.LayoutInflater;
@@ -14,6 +24,10 @@ import com.github.mpagconestoga.mad_a01.objects.MemberListItem;
 
 import java.util.ArrayList;
 
+/*
+        Class Name: MemberListAdapter
+        Purpose: Adapter for the Recycler views to select members to a task
+ */
 public class MemberListAdapter extends RecyclerView.Adapter<MemberListAdapter.memberListViewHolder> {
     private ArrayList<MemberListItem> memberList;
     private OnItemClickListener mListener;
@@ -23,6 +37,13 @@ public class MemberListAdapter extends RecyclerView.Adapter<MemberListAdapter.me
         void onDeleteClick(int position);
     }
 
+    /*
+     *    METHOD      :     setOnItemClickListener
+     *    DESCRIPTION :     This sets the listener for the click when a user presses the delete icon
+     *                      on the task creation screen
+     *    PARAMETERS  :     OnItemClickListener -> object that listener will be set to
+     *    RETURNS     :     VOID
+     * */
     public void setOnItemClickListener(OnItemClickListener listener)
     {
         mListener = listener;
@@ -57,6 +78,14 @@ public class MemberListAdapter extends RecyclerView.Adapter<MemberListAdapter.me
         }
     }
 
+
+    /*
+     *    METHOD      :   Class constructor
+     *    DESCRIPTION :   sets the list attribute of this class. Used to hold the list of members currently
+     *                    assigned to the task
+     *    PARAMETERS  :   ArrayList<memberListItem> list -> list of members
+     *    RETURNS     :   VOID
+     * */
     public MemberListAdapter(ArrayList<MemberListItem> list)
     {
         memberList =  list;
@@ -70,6 +99,13 @@ public class MemberListAdapter extends RecyclerView.Adapter<MemberListAdapter.me
         return evh;
     }
 
+    /*
+     *    METHOD      :   onBindViewHolder
+     *    DESCRIPTION :
+     *    PARAMETERS  :   memberListViewHolder holder -> viewholder being bound;
+     *                    int position -> position of the member
+     *    RETURNS     :   VOID
+     * */
     @Override
     public void onBindViewHolder(@NonNull memberListViewHolder holder, int position) {
         MemberListItem currentMember = memberList.get(position);
@@ -79,6 +115,7 @@ public class MemberListAdapter extends RecyclerView.Adapter<MemberListAdapter.me
         holder.mDeleteImage.setImageResource(currentMember.getmDeleteImage());
     }
 
+    //Getter for the size of the memberList(list of members currently attached to a new task)
     @Override
     public int getItemCount() {
         return memberList.size();

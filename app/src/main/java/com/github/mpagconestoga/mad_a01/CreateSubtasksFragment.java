@@ -1,3 +1,12 @@
+/*
+ *	FILE			: CreateSubtasksFragment.java
+ *	PROJECT			: PROG3150 - Assignment-01
+ *	PROGRAMMER		: Michael Gordon, Paul Smith, Duncan Snider, Gabriel Gurgel, Amy Dayasundara
+ *	FIRST VERSION	: 2020 - 02 - 05
+ *	DESCRIPTION		: Fragment screen to add subtasks to the task, defining their workers, weight and name
+ *
+ */
+
 package com.github.mpagconestoga.mad_a01;
 
 import android.os.Bundle;
@@ -35,6 +44,13 @@ public class CreateSubtasksFragment extends Fragment {
 
     private Task parent;
 
+    /*
+     *    METHOD      :     setOnItemClickListener
+     *    DESCRIPTION :     This sets the listener for the click when a user presses the delete icon
+     *                      on the task creation screen
+     *    PARAMETERS  :     OnItemClickListener -> object that listener will be set to
+     *    RETURNS     :     VOID
+     * */
     public CreateSubtasksFragment() {
         parent = CreateTaskActivity.newTask;
         parent.getSubtasks().add(new Subtask(parent, "", 0));

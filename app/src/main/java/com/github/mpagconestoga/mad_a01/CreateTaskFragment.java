@@ -1,3 +1,13 @@
+/*
+ *	FILE			: CreateTaskFragment.java
+ *	PROJECT			: PROG3150 - Assignment-01
+ *	PROGRAMMER		: Michael Gordon, Paul Smith, Duncan Snider, Gabriel Gurgel, Amy Dayasundara
+ *	FIRST VERSION	: 2020 - 02 - 05
+ *	DESCRIPTION		: This file contains the fragment of the screen used to create a task and
+ *                   add members to the task.
+ *
+ */
+
 package com.github.mpagconestoga.mad_a01;
 
 import android.app.DatePickerDialog;
@@ -100,6 +110,12 @@ public class CreateTaskFragment extends Fragment {
 
     }
 
+    /*
+     *    METHOD      :   initList
+     *    DESCRIPTION :   set up the categoryList. Using static categories for now
+     *    PARAMETERS  :
+     *    RETURNS     :   void
+     * */
     private void initList()
     {
         categoryList = new ArrayList<>();
@@ -147,6 +163,13 @@ public class CreateTaskFragment extends Fragment {
         });
     }
 
+    /*
+     *    METHOD      :   insertItem
+     *    DESCRIPTION :   Add a new memberListItem object to the recyclerView
+     *    PARAMETERS  :   int position - position where it should be added
+     *                    String name -> name of the person to be added to the list
+     *    RETURNS     :   void
+     * */
     private void insertItem(int position, String name)
     {
         memberList.add(position, new MemberListItem(R.drawable.user, name, R.drawable.ic_delete));
@@ -159,11 +182,24 @@ public class CreateTaskFragment extends Fragment {
         mListAdapter.notifyItemRemoved(position);
     }
 
+    /*
+     *    METHOD      :   createMemberList
+     *    DESCRIPTION :   Initialize the memberList that holds the
+     *                    list of members currently assigned to a task
+     *    PARAMETERS  :
+     *    RETURNS     :   void
+     * */
     private void createMemberList()
     {
         memberList = new ArrayList<>();
     }
 
+    /*
+     *    METHOD      :   buildRecyclerView
+     *    DESCRIPTION :   set up the recyclerView logic, set adapters and listeners
+     *    PARAMETERS  :
+     *    RETURNS     :   void
+     * */
     private void buildRecyclerView()
     {
         memberListRecyclerView = view.findViewById(R.id.memberList);
@@ -185,6 +221,12 @@ public class CreateTaskFragment extends Fragment {
         });
     }
 
+    /*
+     *    METHOD      :   setButtons
+     *    DESCRIPTION :   set up the buttons, finding Views and setting the onclick listeners
+     *    PARAMETERS  :
+     *    RETURNS     :   void
+     * */
     private void setButtons()
     {
         buttonCreateTask = view.findViewById(R.id.CreateTaskButton);
@@ -233,6 +275,7 @@ public class CreateTaskFragment extends Fragment {
             }
         });
     }
+
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {

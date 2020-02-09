@@ -1,14 +1,18 @@
 package com.github.mpagconestoga.mad_a01.adapters;
 
 import android.content.Context;
+import android.content.Intent;
+import android.service.autofill.OnClickAction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.github.mpagconestoga.mad_a01.CreateTaskActivity;
 import com.github.mpagconestoga.mad_a01.R;
 import com.github.mpagconestoga.mad_a01.objects.Task;
 
@@ -30,8 +34,15 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(final ViewGroup parent, int viewType) {
         View view = inflater.inflate(R.layout.task_list_item, parent, false);
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, ">?>>?>?>?>?>?>?>?>?>??>?.");
+            }
+        });
+
         return new ViewHolder(view);
     }
 

@@ -29,9 +29,12 @@ import com.github.mpagconestoga.mad_a01.objects.MemberListItem;
 import com.github.mpagconestoga.mad_a01.objects.Person;
 import com.github.mpagconestoga.mad_a01.objects.Task;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 
 public class CreateTaskFragment extends Fragment {
@@ -53,6 +56,7 @@ public class CreateTaskFragment extends Fragment {
     private TimePickerDialog timePicker;                        //
     private Date endTime;                                       //
     private View view;
+    private static final DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm", Locale.CANADA);
 
     public CreateTaskFragment() {
 
@@ -67,6 +71,7 @@ public class CreateTaskFragment extends Fragment {
         createMemberList();
         buildRecyclerView();
         setButtons();
+        endTime = null;
 
         // CHECK INTO LATER
         //Toolbar toolbar = findViewById(R.id.toolbar);
@@ -129,7 +134,7 @@ public class CreateTaskFragment extends Fragment {
                                 // Construct Date value for EndDate Task attribute
                                 calendar.set(endYear, (endMonth  - 1), endDay, endHour, endMinute);
                                 endTime = calendar.getTime();
-                                buttonDateTime.setText("WOW");
+                                buttonDateTime.setText(dateFormat.format(endTime));
                             }
                         }, hour, minute, true);
                         timePicker.show();
@@ -201,12 +206,15 @@ public class CreateTaskFragment extends Fragment {
                     Toast.makeText(getActivity(), R.string.enter_team_member, Toast.LENGTH_SHORT).show();
                     return;
                 }
+                else if(endTime == null) {
+                    Toast.makeText(getActivity(), R.string.enter_datetime, Toast.LENGTH_SHORT).show();
+                    return;
+                }
 
-                //------------------DEBUG: VALIDATE FOR END TIME -------------------------------------------//
 
                 // Create Task
-                Task newTask = new Task(taskName, taskCategory, endTime, assignedPeople);
-                Log.d(TAG, "----------> Task Created:" + newTask.getName() + "\n" + assignedPeople);
+                CreateTaskActivity.newTask = new Task(taskName, taskCategory, endTime, assignedPeople);
+                Log.d(TAG, "----------> Task Created:" + CreateTaskActivity.newTask.getName() + "\n" + assignedPeople);
 
                 // Change Fragment
                 FragmentManager fragManager = getFragmentManager();

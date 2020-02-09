@@ -6,7 +6,11 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.github.mpagconestoga.mad_a01.objects.Task;
+
 public class CreateTaskActivity extends AppCompatActivity {
+    public static Task newTask;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {

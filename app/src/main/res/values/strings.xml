@@ -24,6 +24,7 @@
     <string name="team_button">Assign Workers</string>
     <string name="add_subtask">Add Sub-Task</string>
     <string name="subtask_name_hint">Name</string>
+    <string name="enter_datetime">Please enter the due time</string>
     <string name="next">Next</string>
     <string name="no_tasks">Start by creating a task with the button on the bottom-right of the screen</string>
     <string-array name="workers">

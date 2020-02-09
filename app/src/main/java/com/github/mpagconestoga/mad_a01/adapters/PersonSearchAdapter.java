@@ -2,6 +2,7 @@ package com.github.mpagconestoga.mad_a01.adapters;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +21,7 @@ public class PersonSearchAdapter extends RecyclerView.Adapter<PersonSearchAdapte
     private ArrayList<Person> data;
     private LayoutInflater inflater;
 
-    public int selectedPosition = 0;
+    public int selectedPosition = -1;
 
     public PersonSearchAdapter(Context context, ArrayList<Person> data) {
         this.data = data;
@@ -52,6 +53,7 @@ public class PersonSearchAdapter extends RecyclerView.Adapter<PersonSearchAdapte
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d(TAG, "onClick: selectedPosition was set to " + position);
                 selectedPosition = position;
                 notifyDataSetChanged();
             }

@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.View;
 
 import com.github.mpagconestoga.mad_a01.adapters.TaskListAdapter;
+import com.github.mpagconestoga.mad_a01.objects.Person;
 import com.github.mpagconestoga.mad_a01.objects.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -31,8 +32,17 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // SAMPLE DATA CREATION
+        new Person("Duncan", true);
+        new Person("Gabriel", true);
+        new Person("Michael", true);
+        new Person("Paul", true);
+        new Person("Amy", true);
+
+
         ArrayList<Task> testData = new ArrayList<>();
-        testData.add(new Task("Test", "Cat1", new Date(), null));
+        ArrayList<Person> people = new ArrayList<>(Person.getAllPeople());
+        testData.add(new Task("Test", "Cat1", new Date(), people));
         testData.add(new Task("Test2", "Cat2", new Date(), null));
         testData.add(new Task("Test3", "Cat3", new Date(), null));
         testData.add(new Task("Test4", "Cat4", new Date(), null));

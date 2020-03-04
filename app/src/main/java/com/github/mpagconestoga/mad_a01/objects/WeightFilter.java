@@ -13,6 +13,9 @@ package com.github.mpagconestoga.mad_a01.objects;
 import android.text.Spanned;
 import android.text.InputFilter;
 
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 // class structure found at:
 // https://stackoverflow.com/questions/14212518/is-there-a-way-to-define-a-min-and-max-value-for-edittext-in-android
 
@@ -71,4 +74,33 @@ public class WeightFilter implements InputFilter{
         return b > a ? c >= a && c <= b : c >= b && c <= a;
     }
 
+    @Entity
+    public static class Subtask {
+        @PrimaryKey(autoGenerate = true)
+        private int Id;
+        private int Weight;
+
+        private String Name;
+
+        public Subtask(int Weight, String Name) {
+            this.Weight = Weight;
+            this.Name = Name;
+        }
+
+        public void setId(int id) {
+            this.Id = id;
+        }
+
+        public int getId() {
+            return Id;
+        }
+
+        public int getWeight() {
+            return Weight;
+        }
+
+        public String getName() {
+            return Name;
+        }
+    }
 }

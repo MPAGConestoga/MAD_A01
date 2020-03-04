@@ -7,135 +7,87 @@
 
 package com.github.mpagconestoga.mad_a01.objects;
 
-import java.util.ArrayList;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import java.util.Date;
 
-public class Task
-{
-    private String name;
-    private String category;
-    private Date startTime;
-    private Date endTime;
-    private ArrayList<Person> assignedPeople;
-    private ArrayList<Subtask> subtasks;
+
+@Entity
+public class Task {
+    @PrimaryKey(autoGenerate = true)
+    private int Id;
+    private int CatId;
+    private String Name;
+    private String Category;
+    private Date StartTime;
+    private Date EndTime;
 
     // Constructor
-    public Task(String name, String category, Date endTime, ArrayList<Person> assignedPeople) {
-        this.name = name;
-        this.category = category;
-        this.startTime = new Date();
-        this.endTime = endTime;
-        this.assignedPeople = assignedPeople;
-        this.subtasks = new ArrayList<>();
+    public Task(String Name, String Category, Date EndTime) {
+        this.Name = Name;
+        this.Category = Category;
+        this.StartTime = new Date();
+        this.EndTime = EndTime;
     }
 
-    // FUNCTION         registerTask()
-    // DESCRIPTION      Adds a task to our pool of tasks
-    public void registerTask() {
-        registerTask(this);
+    // IDS Getters and Setters
+    public void setId(int id) {
+        this.Id = id;
+    }
+
+    public int getId() {
+        return Id;
+    }
+
+    public void setCatId(int catId) {
+        this.CatId = catId;
+    }
+
+    public int getCatId() {
+        return CatId;
+    }
+
+    // Attributes Getters and Setters
+
+    public String getName() {
+        return Name;
     }
 
     // FUNCTION         setName()
     // PARAMETERS       String name
     // DESCRIPTION      Setter for the name
     public void setName(String name) {
-        this.name = name;
-    }
-
-    // FUNCTION         getName()
-    // DESCRIPTION      Getter for the name
-    public String getName() {
-        return name;
+        this.Name = name;
     }
 
     // FUNCTION         getEndTime()
     // RETURNS          Date
     // DESCRIPTION      Setter for the name
     public Date getEndTime() {
-        return endTime;
+        return EndTime;
+    }
+
+    public void setEndTime(Date endTime) {
+        this.EndTime = endTime;
+    }
+
+    public Date getStartTime() {
+        return StartTime;
+    }
+
+    public void setStartTime(Date startTime) {
+        this.StartTime = startTime;
     }
 
     // FUNCTION         getCategory()
     // RETURNS          String
-    // DESCRIPTION      Getter for the category
+    // DESCRIPTION      Getter for the Category
     public String getCategory(){
-        return category;
+        return Category;
     }
 
-    // FUNCTION         getAssignedPeople()
-    // RETURNS          ArrayList<Person>
-    // DESCRIPTION      Getter for assigned people
-    public ArrayList<Person> getAssignedPeople() {
-        return assignedPeople;
-    }
-
-    // FUNCTION         setAssignedPeople()
-    // DESCRIPTION      Setter for assigned people
-    public void setAssignedPeople(ArrayList<Person> people) {
-        this.assignedPeople = people;
-    }
-
-    // FUNCTION         getSubtasks()
-    // RETURNS          ArrayList<Subtask>
-    // DESCRIPTION      Getter for subtasks
-    public ArrayList<Subtask> getSubtasks() { return subtasks; }
-
-    // assignedPeople manipulation
-    public void assignPerson(Person person) {
-        if (assignedPeople.contains(person)) {
-            return;
-        }
-
-        assignedPeople.add(person);
-    }
-
-    public void unassignPerson(Person person) {
-        if (!assignedPeople.contains(person)) {
-            return;
-        }
-
-        assignedPeople.remove(person);
-    }
-
-    public void setSubtasks(ArrayList<Subtask> subtasks) {
-        this.subtasks = subtasks;
-    }
-
-    public boolean hasPersonAssigned(Person person) {
-        return assignedPeople.contains(person);
-    }
-
-    // STATIC VARIABLES & METHODS
-    private static ArrayList<Task> allTasks = new ArrayList<Task>();
-
-    public static void registerTask(Task task) {
-        if (allTasks.contains(task)) {
-            return;
-        }
-
-        allTasks.add(task);
-    }
-
-    public static void unregisterTask(Task task) {
-        if (!allTasks.contains(task)) {
-            return;
-        }
-
-        allTasks.remove(task);
-    }
-
-    public static Task getTaskByHashcode(int hashcode) {
-        for (Task task : allTasks) {
-            if (task.hashCode() == hashcode) {
-                return task;
-            }
-        }
-
-        return null;
-    }
-
-    public static ArrayList<Task> getAllTasks() {
-        return allTasks;
+    public void setCategory(String category) {
+        this.Category = category;
     }
 }
-

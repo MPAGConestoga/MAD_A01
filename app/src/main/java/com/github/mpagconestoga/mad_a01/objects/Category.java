@@ -4,15 +4,13 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 @Entity
-public class Subtask {
+public class Category {
     @PrimaryKey(autoGenerate = true)
     private int Id;
-    private int Weight;
 
     private String Name;
 
-    public Subtask(int Weight, String Name) {
-        this.Weight = Weight;
+    public Category(String Name) {
         this.Name = Name;
     }
 
@@ -22,10 +20,6 @@ public class Subtask {
 
     public int getId() {
         return Id;
-    }
-
-    public int getWeight() {
-        return Weight;
     }
 
     public String getName() {

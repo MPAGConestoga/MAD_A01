@@ -277,7 +277,10 @@ public class CreateTaskFragment extends Fragment {
             @Override
             public void onClick(View v)
             {
+                ArrayList<Person> allPeople = Person.getAllPeople();
+
                 Intent searchIntent = new Intent(getActivity(), PersonSearchActivity.class);
+                searchIntent.putExtra("people", allPeople);
                 startActivityForResult(searchIntent, 1);
             }
         });
@@ -288,32 +291,13 @@ public class CreateTaskFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        switch (resultCode) {
-            case -1:
-                String personName = data.getStringExtra("selected");
+        if (resultCode == -1) {
+            String personName = data.getStringExtra("selected");
 
-                Log.d(TAG, "onActivityResult: " + personName);
+            Log.d(TAG, "onActivityResult: Selected Name: " + personName);
 
-                Person selected = null;
-
-                // Check if we need to create this person or if they already exist
-                if (data.getBooleanExtra("create", false)) {
-                    Log.d(TAG, "onActivityResult: Created new person '" + personName + "'");
-                    selected = new Person(personName);
-                } else {
-                    Log.d(TAG, "onActivityResult: Retrieved person: " + personName);
-                    selected = Person.getPerson(personName);
-                }
-
-                if (selected == null) {
-                    return;
-                }
-
-                Log.d(TAG, "onActivityResult: Selected Name: " + selected.getName());
-                assignedPeople.add(selected);
-                insertItem(0, selected.getName());
-
-                break;
+            assignedPeople.add(Person.getPerson(personName));
+            insertItem(0, personName);
         }
     }
 }

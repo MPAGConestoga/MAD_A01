@@ -49,7 +49,9 @@ public class PersonSearchActivity extends AppCompatActivity {
         searchBox = findViewById(R.id.personSearchBox);
         searchBox.addTextChangedListener(new SearchBoxKeyListener());
 
-        allPeople = Person.getAllPeople();
+        Log.d(TAG, "onCreate: GETTING PASSED IN PEOPLE NOW");
+
+        allPeople = getIntent().getParcelableArrayListExtra("people");
         filteredPeople = new ArrayList<>(allPeople);
 
         results = findViewById(R.id.results);
@@ -98,7 +100,7 @@ public class PersonSearchActivity extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             Log.d(TAG, "onClick: Done button clicked");
-            
+
             if (results.getAdapter() == null) {
                 Log.e(TAG, "onClick: Adapter was null");
                 return;
@@ -121,21 +123,16 @@ public class PersonSearchActivity extends AppCompatActivity {
                 returnIntent.putExtra("create", true);
 
                 if (searchBox.getText().toString().trim().length() == 0) {
-                    returnIntent.putExtra("selected", selected.getName());
-                }
-                else {
-                    returnIntent.putExtra("selected", searchBox.getText().toString());
+                    new Person(selected.getName());
+                } else {
+                    new Person(searchBox.getText().toString());
                 }
             }
-            else {
-                returnIntent.putExtra("create", false);
 
-                if (searchBox.getText().toString().trim().length() == 0) {
-                    returnIntent.putExtra("selected", selected.getName());
-                }
-                else {
-                    returnIntent.putExtra("selected", searchBox.getText().toString());
-                }
+            if (searchBox.getText().toString().trim().length() == 0) {
+                returnIntent.putExtra("selected", selected.getName());
+            } else {
+                returnIntent.putExtra("selected", searchBox.getText().toString());
             }
 
             setResult(Activity.RESULT_OK, returnIntent);

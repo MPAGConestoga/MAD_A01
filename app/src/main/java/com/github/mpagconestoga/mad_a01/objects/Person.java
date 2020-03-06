@@ -9,10 +9,13 @@
 
 package com.github.mpagconestoga.mad_a01.objects;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class Person
+public class Person implements Parcelable
 {
 
     // Private Variables
@@ -46,6 +49,10 @@ public class Person
         if (register) {
             registerPerson(this);
         }
+    }
+
+    public Person(Parcel in) {
+        this.name = in.readString();
     }
 
     // Getters and Setters
@@ -103,4 +110,27 @@ public class Person
 
         return null;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(name);
+    }
+
+    public static final Parcelable.Creator<Person> CREATOR = new Parcelable.Creator<Person>() {
+        public Person createFromParcel(Parcel in) {
+            return new Person(in);
+        }
+
+        public Person[] newArray(int size) {
+            return new Person[size];
+
+        }
+    };
+
+    // all get , set method
 }

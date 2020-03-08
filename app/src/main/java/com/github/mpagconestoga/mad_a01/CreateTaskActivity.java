@@ -1,0 +1,18 @@
+package com.github.mpagconestoga.mad_a01;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.os.Bundle;
+
+public class CreateTaskActivity extends AppCompatActivity {
+    private static final String TAG = "TaskCreation";
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_create_task);
+
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.TaskCreationFragment, new TaskCreationFragment()).commit();
+    }
+}

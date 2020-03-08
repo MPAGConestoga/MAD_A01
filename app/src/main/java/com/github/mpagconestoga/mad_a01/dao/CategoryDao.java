@@ -22,7 +22,7 @@ public interface CategoryDao {
     void delete(Category category);
 
     @Query("DELETE FROM Category")
-    void deleteAllPersons();
+    void deleteAllCategories();
 
     @Query("SELECT * FROM Category ORDER BY Id DESC")
     LiveData<List<Category>> getAllCategories();

@@ -8,10 +8,11 @@
 package com.github.mpagconestoga.mad_a01.objects;
 
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
+import java.util.ArrayList;
 import java.util.Date;
-
 
 @Entity
 public class Task {
@@ -19,12 +20,15 @@ public class Task {
     private int Id;
     private int CatId;
     private String Name;
-    private String Category;
+    private Category Category;
     private Date StartTime;
     private Date EndTime;
 
+    @Ignore private ArrayList<Integer> assignedPeople;
+    @Ignore private ArrayList<Integer> subtasks;
+
     // Constructor
-    public Task(String Name, String Category, Date EndTime) {
+    public Task(String Name, Category Category, Date EndTime) {
         this.Name = Name;
         this.Category = Category;
         this.StartTime = new Date();
@@ -83,11 +87,11 @@ public class Task {
     // FUNCTION         getCategory()
     // RETURNS          String
     // DESCRIPTION      Getter for the Category
-    public String getCategory(){
+    public Category getCategory(){
         return Category;
     }
 
-    public void setCategory(String category) {
+    public void setCategory(Category category) {
         this.Category = category;
     }
 }

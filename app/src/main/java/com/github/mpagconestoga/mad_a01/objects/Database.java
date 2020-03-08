@@ -10,13 +10,14 @@ import androidx.room.TypeConverters;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.github.mpagconestoga.mad_a01.converter.Converters;
+import com.github.mpagconestoga.mad_a01.dao.CategoryDao;
 import com.github.mpagconestoga.mad_a01.dao.PersonDao;
 import com.github.mpagconestoga.mad_a01.dao.PersonSubtaskDao;
 import com.github.mpagconestoga.mad_a01.dao.PersonTaskDao;
 import com.github.mpagconestoga.mad_a01.dao.SubtaskDao;
 import com.github.mpagconestoga.mad_a01.dao.TaskDao;
 
-@androidx.room.Database(entities = {Person.class, Category.class, PersonSubtask.class, PersonTask.class, Subtask.class, Task.class}, version = 5)
+@androidx.room.Database(entities = {Person.class, Category.class, PersonSubtask.class, PersonTask.class, Subtask.class, Task.class}, version = 6, exportSchema = false)
 @TypeConverters({Converters.class})
 public abstract class Database extends RoomDatabase {
 
@@ -28,6 +29,7 @@ public abstract class Database extends RoomDatabase {
     public abstract PersonTaskDao personTaskDao();
     public abstract SubtaskDao subtaskDao();
     public abstract TaskDao taskDao();
+    public abstract CategoryDao categoryDao();
 
     public static synchronized Database getInstance(Context context){
         if(instance == null){

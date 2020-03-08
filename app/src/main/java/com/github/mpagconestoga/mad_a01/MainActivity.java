@@ -9,17 +9,18 @@
 
 package com.github.mpagconestoga.mad_a01;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
+import com.github.mpagconestoga.mad_a01.adapters.TaskListAdapter;
 import com.github.mpagconestoga.mad_a01.objects.Task;
 import com.github.mpagconestoga.mad_a01.viewmodel.TaskViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -28,20 +29,32 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
-
-    private TaskViewModel taskViewModel;
+    private TaskViewModel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        taskViewModel = ViewModelProvider.AndroidViewModelFactory.getInstance(this.getApplication()).create(TaskViewModel.class);
-        taskViewModel.getAllTasks().observe(this, new Observer<List<Task>>() {
+        // Create new task button creation
+        FloatingActionButton newTaskButton = findViewById(R.id.button_new_task);
+        newTaskButton.setOnClickListener(new NewTaskClickListener());
+
+        // RecyclerView
+        RecyclerView taskList = findViewById(R.id.task_list);
+        taskList.setLayoutManager(new LinearLayoutManager(this));
+        taskList.setHasFixedSize(true);
+
+        // Adapter
+        final TaskListAdapter adapter = new TaskListAdapter();
+        taskList.setAdapter(adapter);
+
+        // TODO: Check if the other method worksbb
+        viewModel = ViewModelProvider.AndroidViewModelFactory.getInstance(this.getApplication()).create(TaskViewModel.class);
+        viewModel.getAllTasks().observe(this, new Observer<List<Task>>() {
             @Override
             public void onChanged(List<Task> tasks) {
-                // Update Recycler View
-
+                adapter.setTasks(tasks);
             }
         });
     }
@@ -49,7 +62,9 @@ public class MainActivity extends AppCompatActivity {
     public class NewTaskClickListener implements FloatingActionButton.OnClickListener {
         @Override
         public void onClick(View v) {
-            Log.d(TAG, "onClick: New task button clicked");
+            Log.d(TAG, "onClick: New task button clicked --> Proceding to Task Creation");
+            Intent newTaskIntent = new Intent(getApplicationContext(), CreateTaskActivity.class);
+            startActivity(newTaskIntent);
         }
     }
 }

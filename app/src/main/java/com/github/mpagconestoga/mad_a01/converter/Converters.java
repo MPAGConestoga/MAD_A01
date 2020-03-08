@@ -4,6 +4,8 @@ package com.github.mpagconestoga.mad_a01.converter;
 
 import androidx.room.TypeConverter;
 
+import com.github.mpagconestoga.mad_a01.objects.Category;
+
 import java.util.Date;
 
 public class Converters {
@@ -16,5 +18,11 @@ public class Converters {
     public static Long dateToTimestamp(Date date) {
         return date == null ? null : date.getTime();
     }
+
+    @TypeConverter
+    public static Category fromCategory(String value) { return value == null ? null : new Category(value); }
+
+    @TypeConverter
+    public static String categoryToString(Category category) { return category == null ? null : category.getName(); }
 }
 

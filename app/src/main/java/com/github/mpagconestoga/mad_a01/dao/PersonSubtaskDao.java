@@ -16,6 +16,7 @@ public interface PersonSubtaskDao {
     @Insert
     void insert(PersonSubtask personSubtask);
 
-    @Query("SELECT * FROM Subtask INNER JOIN Person_Subtask ON Subtask.Id = Person_Subtask.SubtaskId WHERE Person_Subtask.PersonId = :personId")
+    @Query("SELECT Id, Weight, Name FROM Subtask INNER JOIN Person_Subtask ON Subtask.Id = Person_Subtask.SubtaskId WHERE Person_Subtask.PersonId = :personId")
     LiveData<List<Subtask>> GetSubtasksByUser(int personId);
 }
+

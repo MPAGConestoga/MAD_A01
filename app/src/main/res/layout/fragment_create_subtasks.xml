@@ -26,7 +26,7 @@
             app:layout_constraintTop_toBottomOf="@+id/subtasks"/>
 
         <Button
-            android:id="@+id/subtasks_create_task"
+            android:id="@+id/button_create_finalTask"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="16sp"

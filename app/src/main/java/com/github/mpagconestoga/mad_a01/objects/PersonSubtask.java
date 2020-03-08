@@ -2,7 +2,7 @@ package com.github.mpagconestoga.mad_a01.objects;
 
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
-import androidx.room.PrimaryKey;
+import androidx.room.Index;
 
 @Entity(tableName = "Person_Subtask",
         primaryKeys = {"SubtaskId","PersonId"},
@@ -12,8 +12,10 @@ import androidx.room.PrimaryKey;
                         childColumns = "PersonId"),
                 @ForeignKey(entity = Subtask.class,
                         parentColumns = "Id",
-                        childColumns = "SubtaskId")
-        })
+                        childColumns = "SubtaskId"),
+
+        },
+        indices = {@Index("PersonId")})
 public class PersonSubtask {
 
     public int SubtaskId;

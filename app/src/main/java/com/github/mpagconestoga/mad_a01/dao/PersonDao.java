@@ -1,6 +1,5 @@
 package com.github.mpagconestoga.mad_a01.dao;
 
-
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
@@ -27,4 +26,7 @@ public interface PersonDao {
 
     @Query("SELECT * FROM Person ORDER BY Id DESC")
     LiveData<List<Person>> getAllPersons();
+
+    @Query(("SELECT * FROM PERSON WHERE Name = :personName"))
+    LiveData<List<Person>> getPersonByName(String personName);
 }

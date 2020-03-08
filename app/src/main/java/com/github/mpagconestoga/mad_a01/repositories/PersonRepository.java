@@ -4,7 +4,6 @@ import android.app.Application;
 import android.os.AsyncTask;
 
 import androidx.lifecycle.LiveData;
-import androidx.room.Delete;
 
 import com.github.mpagconestoga.mad_a01.dao.PersonDao;
 import com.github.mpagconestoga.mad_a01.objects.Database;
@@ -42,6 +41,10 @@ public class PersonRepository {
 
     public LiveData<List<Person>> getAllPersons() {
         return allPersons;
+    }
+
+    public LiveData<List<Person>> getPersonByName(String name){
+        return personDao.getPersonByName(name);
     }
 
     private static class InsertPersonAsyncTask extends AsyncTask<Person, Void, Void> {
@@ -103,5 +106,4 @@ public class PersonRepository {
             return null;
         }
     }
-
 }

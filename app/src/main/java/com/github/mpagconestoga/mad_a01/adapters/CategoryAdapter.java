@@ -20,14 +20,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.github.mpagconestoga.mad_a01.R;
-import com.github.mpagconestoga.mad_a01.objects.CategoryItem;
+import com.github.mpagconestoga.mad_a01.objects.Category;
 
 import java.util.ArrayList;
 
-public class CategoryAdapter extends ArrayAdapter<CategoryItem> {
+public class CategoryAdapter extends ArrayAdapter<Category> {
 
     //Constructor
-    public CategoryAdapter(Context context, ArrayList<CategoryItem> categoryList)
+    public CategoryAdapter(Context context, ArrayList<Category> categoryList)
     {
         super(context, 0, categoryList);
     }
@@ -71,9 +71,9 @@ public class CategoryAdapter extends ArrayAdapter<CategoryItem> {
                     R.layout.task_categories_spinner, parent, false);
         }
         TextView categoryViewName = convert.findViewById(R.id.categoryName);
-        CategoryItem currentItem = getItem(pos);
+        Category currentItem = getItem(pos);
         if(currentItem != null) {
-            categoryViewName.setText(currentItem.getCategoryName());
+            categoryViewName.setText(currentItem.getName());
         }
         return convert;
     }

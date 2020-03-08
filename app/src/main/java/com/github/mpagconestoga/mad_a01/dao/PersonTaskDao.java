@@ -16,6 +16,6 @@ public interface PersonTaskDao {
     @Insert
     void insert(PersonTask personTask);
 
-    @Query("SELECT * FROM Task INNER JOIN Person_Task ON Task.Id = Person_Task.TaskId WHERE Person_Task.PersonId = :personId")
+    @Query("SELECT Id, CatId, Name FROM Task INNER JOIN Person_Task ON Task.Id = Person_Task.TaskId WHERE Person_Task.PersonId = :personId")
     LiveData<List<Task>> GetTasksByUser(int personId);
 }

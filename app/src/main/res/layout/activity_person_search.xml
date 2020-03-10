@@ -8,7 +8,7 @@
     tools:context=".PersonSearchActivity"
     android:padding="10dp">
 
-    <EditText
+    <SearchView
         android:id="@+id/personSearchBox"
         android:layout_width="408dp"
         android:layout_height="48dp"

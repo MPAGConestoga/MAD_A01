@@ -15,6 +15,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -23,23 +25,27 @@ import com.github.mpagconestoga.mad_a01.R;
 import com.github.mpagconestoga.mad_a01.objects.Person;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class PersonSearchAdapter extends RecyclerView.Adapter<PersonSearchAdapter.ViewHolder> {
+public class PersonSearchAdapter extends RecyclerView.Adapter<PersonSearchAdapter.ViewHolder> implements Filterable {
     private static final String TAG = "PersonSearchAdapter";
 
-    private ArrayList<Person> data;
+    private List<Person> data;
+    private List<Person> dataFull;
     private LayoutInflater inflater;
 
     public int selectedPosition = -1;
 
-    public PersonSearchAdapter(Context context, ArrayList<Person> data) {
-        this.data = data;
-        this.inflater = LayoutInflater.from(context);
+    public PersonSearchAdapter() {
+        //this.inflater = LayoutInflater.from(context); DEBUG:
+        data = new ArrayList<>();
+        dataFull = new ArrayList<>();
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = inflater.inflate(R.layout.activity_person_list_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.activity_person_list_item, parent, false);
         return new ViewHolder(view);
     }
 
@@ -77,5 +83,44 @@ public class PersonSearchAdapter extends RecyclerView.Adapter<PersonSearchAdapte
             name = itemView.findViewById(R.id.person_name);
         }
     }
+
+    public void setPersons(List<Person> persons){
+        this.data = persons;
+        this.dataFull = new ArrayList<>(persons);
+        notifyDataSetChanged();
+    }
+
+    @Override
+    public Filter getFilter() {
+        return exampleFilter;
+    }
+    private Filter exampleFilter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            List<Person> filteredList = new ArrayList<>();
+
+            if (constraint == null || constraint.length() == 0){
+                filteredList.addAll(dataFull);
+            } else{
+                String filteredPattern = constraint.toString().toLowerCase().trim();
+
+                for (Person p : dataFull){
+                    if(p.getName().toLowerCase().contains(filteredPattern)){
+                        filteredList.add(p);
+                    }
+                }
+            }
+            FilterResults results = new FilterResults();
+            results.values = filteredList;
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            data.clear();
+            data.addAll((List)results.values);
+            notifyDataSetChanged();
+        }
+    };
 }
 

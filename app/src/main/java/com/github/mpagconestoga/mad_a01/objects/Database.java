@@ -36,32 +36,8 @@ public abstract class Database extends RoomDatabase {
             instance = Room.databaseBuilder(context.getApplicationContext(),
                     Database.class, "database")
                     .fallbackToDestructiveMigration()
-                    .addCallback(roomCallback)
                     .build();
         }
         return instance;
-    }
-
-    private static RoomDatabase.Callback roomCallback = new RoomDatabase.Callback(){
-        @Override
-        public void onCreate(@NonNull SupportSQLiteDatabase db) {
-            super.onCreate(db);
-            new PopulateDBAsyncTask(instance).execute();
-        }
-    };
-
-    private static class PopulateDBAsyncTask extends AsyncTask<Void, Void, Void>{
-
-        private PersonDao personDao;
-        private PopulateDBAsyncTask(Database db){
-            personDao = db.personDao();
-        }
-        @Override
-        protected Void doInBackground(Void... voids) {
-            personDao.insert(new Person("Bob"));
-            personDao.insert(new Person("Erin"));
-            personDao.insert(new Person("Jim"));
-            return null;
-        }
     }
 }

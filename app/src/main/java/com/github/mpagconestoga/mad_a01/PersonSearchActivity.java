@@ -11,6 +11,7 @@ package com.github.mpagconestoga.mad_a01;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -24,6 +25,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.github.mpagconestoga.mad_a01.adapters.PersonSearchAdapter;
@@ -35,13 +37,15 @@ import java.util.List;
 
 public class PersonSearchActivity extends AppCompatActivity {
     private static final String TAG = "PersonSearchActivity";
-    private PersonSearchViewModel viewModel;
 
+    private final PersonSearchAdapter adapter = new PersonSearchAdapter();
+    private PersonSearchViewModel viewModel;
     private Intent returnIntent;
-    private EditText searchBox;
+    private SearchView searchBox;
     private RecyclerView results;
     private Button done;
-    private ArrayList<Person> allPeople = new ArrayList<>();
+
+    private ArrayList<Person> allPeople;
     private ArrayList<Person> filteredPeople;
 
     @Override
@@ -52,23 +56,39 @@ public class PersonSearchActivity extends AppCompatActivity {
         viewModel = ViewModelProvider.AndroidViewModelFactory.getInstance(this.getApplication()).create(PersonSearchViewModel.class);
         returnIntent = new Intent();
 
+        // People Init
+        allPeople = new ArrayList<>();
+        filteredPeople = new ArrayList<>();
+
         searchBox = findViewById(R.id.personSearchBox);
-        searchBox.addTextChangedListener(new SearchBoxKeyListener());
+        searchBox.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {return false;}
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                adapter.getFilter().filter(newText);
+                return false;
+            }
+        });
 
         Log.d(TAG, "onCreate: GETTING PASSED IN PEOPLE NOW");
-
-        LiveData<List<Person>> tempPerson = viewModel.getAllPersons();
-        Log.d(TAG, "--> People: " + tempPerson.getValue());
-        allPeople = (ArrayList<Person>) tempPerson.getValue();
-        filteredPeople = new ArrayList<>(allPeople);
 
         results = findViewById(R.id.results);
         results.setHasFixedSize(true);
         results.setLayoutManager(new LinearLayoutManager(this));
-        results.setAdapter(new PersonSearchAdapter(this, filteredPeople));
+
+        results.setAdapter(adapter);
+        viewModel.getAllPersons().observe(this, new Observer<List<Person>>() {
+            @Override
+            public void onChanged(List<Person> people) {
+                adapter.setPersons(people);
+            }
+        });
+
 
         done = findViewById(R.id.button_done);
-        done.setOnClickListener(new DoneClickListener());
+        //done.setOnClickListener(new DoneClickListener());
     }
 
     public class SearchBoxKeyListener implements TextWatcher {
@@ -76,7 +96,10 @@ public class PersonSearchActivity extends AppCompatActivity {
         public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
 
         @Override
-        public void onTextChanged(CharSequence s, int start, int before, int count) { }
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            adapter.getFilter().filter(s);
+        }
 
         @Override
         public void afterTextChanged(Editable s) {
@@ -147,5 +170,5 @@ public class PersonSearchActivity extends AppCompatActivity {
             setResult(Activity.RESULT_OK, returnIntent);
             finish();
         }
-    }
+    }*/
 }

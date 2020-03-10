@@ -135,6 +135,7 @@ public class TaskCreationFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        // Get or Create ViewModel
         viewModel = new ViewModelProvider(getActivity()).get(CreateTaskViewModel.class);
         Log.d(TAG, "&--> Task Creation Address: " + viewModel);
     }
@@ -188,8 +189,7 @@ public class TaskCreationFragment extends Fragment {
 
     private class AddMemberClickListener implements Button.OnClickListener {
         @Override
-        public void onClick(View v)
-        {
+        public void onClick(View v) {
             Intent searchIntent = new Intent(getActivity(), PersonSearchActivity.class);
             startActivityForResult(searchIntent, 1);
         }

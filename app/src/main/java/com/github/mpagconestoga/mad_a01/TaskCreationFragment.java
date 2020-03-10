@@ -145,12 +145,10 @@ public class TaskCreationFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (resultCode == -1) {
-            String personName = data.getStringExtra("selected");
+            Person selectedPerson = (Person) data.getParcelableExtra("selected");
 
-            Log.d(TAG, "onActivityResult: Selected Name: " + personName);
-
-            assignedPeople.addAll(viewModel.getPeople(personName).getValue());
-            insertItem(0, personName);
+            assignedPeople.add(selectedPerson);
+            insertItem(0, selectedPerson.getName());
         }
     }
 

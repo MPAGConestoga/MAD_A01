@@ -30,6 +30,7 @@ import android.widget.Toast;
 
 import com.github.mpagconestoga.mad_a01.adapters.PersonSearchAdapter;
 import com.github.mpagconestoga.mad_a01.objects.Person;
+import com.github.mpagconestoga.mad_a01.repositories.TaskRepository;
 import com.github.mpagconestoga.mad_a01.viewmodel.PersonSearchViewModel;
 
 import java.util.ArrayList;
@@ -44,9 +45,7 @@ public class PersonSearchActivity extends AppCompatActivity {
     private SearchView searchBox;
     private RecyclerView results;
     private Button done;
-
-    private ArrayList<Person> allPeople;
-    private ArrayList<Person> filteredPeople;
+    private Button addNewPerson;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,10 +55,10 @@ public class PersonSearchActivity extends AppCompatActivity {
         viewModel = ViewModelProvider.AndroidViewModelFactory.getInstance(this.getApplication()).create(PersonSearchViewModel.class);
         returnIntent = new Intent();
 
-        // People Init
-        allPeople = new ArrayList<>();
-        filteredPeople = new ArrayList<>();
 
+
+        addNewPerson = findViewById(R.id.addNewPersonButton);
+        addNewPerson.setVisibility(View.GONE);
         searchBox = findViewById(R.id.personSearchBox);
         searchBox.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -68,10 +67,19 @@ public class PersonSearchActivity extends AppCompatActivity {
             @Override
             public boolean onQueryTextChange(String newText) {
                 adapter.getFilter().filter(newText);
+                Log.d(TAG, "filtered empty");
+                if (!adapter.getNames().contains(newText.toLowerCase().trim()) && searchBox.getQuery().toString().trim().length() != 0){
+                    addNewPerson.setVisibility(View.VISIBLE);
+
+                }
+                else{
+                    addNewPerson.setVisibility(View.GONE);
+
+                }
                 return false;
             }
         });
-
+        addNewPerson.setOnClickListener(new NewPersonClickListener());
         Log.d(TAG, "onCreate: GETTING PASSED IN PEOPLE NOW");
 
         results = findViewById(R.id.results);
@@ -88,43 +96,21 @@ public class PersonSearchActivity extends AppCompatActivity {
 
 
         done = findViewById(R.id.button_done);
-        //done.setOnClickListener(new DoneClickListener());
+
+        done.setOnClickListener(new DoneClickListener());
     }
 
-    public class SearchBoxKeyListener implements TextWatcher {
-        @Override
-        public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+    public class NewPersonClickListener implements Button.OnClickListener{
 
         @Override
-        public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            adapter.getFilter().filter(s);
-        }
-
-        @Override
-        public void afterTextChanged(Editable s) {
-            String filter = searchBox.getText().toString();
-
-            // Clear array to clear previous results
-            filteredPeople.clear();
-
-            // Determine which people match the input provided
-            for (Person person : allPeople) {
-                if (person.getName().toLowerCase().contains(filter.toLowerCase())) {
-                    filteredPeople.add(person);
-                }
+        public void onClick(View v) {
+            String name = searchBox.getQuery().toString().trim();
+            if (name.length() > 0){
+                viewModel.addPerson(name);
+                searchBox.setQuery("", false);
+                adapter.setPosition(0);
             }
 
-            // If Person does not exists in the database
-            if ((filteredPeople.size() == 0 || !viewModel.personExists(filter)) && filter.length() > 0) {
-                filteredPeople.add(new Person(getResources().getString(R.string.person_search_create) + " '" + searchBox.getText().toString() + "'")); // DEBUG: Do not add to the database?
-            }
-
-            if (results.getAdapter() == null) {
-                return;
-            }
-
-            results.getAdapter().notifyDataSetChanged();
         }
     }
 
@@ -132,43 +118,20 @@ public class PersonSearchActivity extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             Log.d(TAG, "onClick: Done button clicked");
+            RecyclerView results;
+            results = findViewById(R.id.results);
+            int selectedItemPosition = ((PersonSearchAdapter) results.getAdapter()).selectedPosition;
 
-            if (results.getAdapter() == null) {
-                Log.e(TAG, "onClick: Adapter was null");
-                return;
-            }
-
-            Log.d(TAG, "onClick: SELECTED POSITION IS CURRENTLY " + ((PersonSearchAdapter) results.getAdapter()).selectedPosition);
-
-            if ((searchBox.getText().toString().length() == 0 && ((PersonSearchAdapter) results.getAdapter()).selectedPosition == -1) || ((PersonSearchAdapter) results.getAdapter()).selectedPosition == -1) {
+            if ( selectedItemPosition == -1) {
                 Toast.makeText(PersonSearchActivity.this, R.string.person_search_select, Toast.LENGTH_SHORT).show();
                 return;
             }
 
-            Log.d(TAG, "onClick: filteredPeople size: " + filteredPeople.size());
-
-            Person selected = filteredPeople.get(((PersonSearchAdapter) results.getAdapter()).selectedPosition);
-
-            Log.d(TAG, "onClick: Selected person: " + selected.getName());
-
-            if (!allPeople.contains(selected)) {
-                returnIntent.putExtra("create", true);
-
-                if (searchBox.getText().toString().trim().length() == 0) {
-                    new Person(selected.getName());
-                } else {
-                    new Person(searchBox.getText().toString());
-                }
-            }
-
-            if (searchBox.getText().toString().trim().length() == 0) {
-                returnIntent.putExtra("selected", selected.getName());
-            } else {
-                returnIntent.putExtra("selected", searchBox.getText().toString());
-            }
-
+            ArrayList<Person> list = new ArrayList<>(adapter.getFilteredList());
+            Person selectedPerson = list.get(selectedItemPosition);
+            returnIntent.putExtra("selected", selectedPerson);
             setResult(Activity.RESULT_OK, returnIntent);
             finish();
         }
-    }*/
+    }
 }

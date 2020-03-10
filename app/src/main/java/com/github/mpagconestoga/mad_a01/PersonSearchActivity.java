@@ -91,6 +91,7 @@ public class PersonSearchActivity extends AppCompatActivity {
         //done.setOnClickListener(new DoneClickListener());
     }
 
+    /*
     public class SearchBoxKeyListener implements TextWatcher {
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) { }

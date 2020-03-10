@@ -24,8 +24,9 @@ public class Task {
     private Date StartTime;
     private Date EndTime;
 
-    @Ignore private ArrayList<Integer> assignedPeople;
-    @Ignore private ArrayList<Integer> subtasks;
+    // DEBUG: CHANGE ASSIGNED PEOPLE TO PRIVATE
+    @Ignore public ArrayList<Person> assignedPeople;
+    @Ignore public ArrayList<Integer> subtasks;
 
     // Constructor
     public Task(String Name, Category Category, Date EndTime) {

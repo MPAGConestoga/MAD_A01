@@ -1,7 +1,10 @@
 package com.github.mpagconestoga.mad_a01.objects;
 
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
+
+import java.util.ArrayList;
 
 @Entity
 public class Subtask {
@@ -9,6 +12,9 @@ public class Subtask {
     private int Id;
     private int Weight;
     private String Name;
+
+    // DEBUG: CHANGE ASSIGNED PEOPLE TO PRIVATE
+    @Ignore public ArrayList<Person> assignedPeople;
 
     public Subtask(int Weight, String Name) {
         this.Weight = Weight;

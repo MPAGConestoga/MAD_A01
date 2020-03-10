@@ -94,9 +94,7 @@ public class PersonSearchActivity extends AppCompatActivity {
             }
         });
 
-
         done = findViewById(R.id.button_done);
-
         done.setOnClickListener(new DoneClickListener());
     }
 

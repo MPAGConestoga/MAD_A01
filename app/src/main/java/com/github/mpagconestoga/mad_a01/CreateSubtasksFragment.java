@@ -14,6 +14,7 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
@@ -23,25 +24,58 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.github.mpagconestoga.mad_a01.adapters.SubtaskAdapter;
+import com.github.mpagconestoga.mad_a01.objects.Person;
+import com.github.mpagconestoga.mad_a01.objects.Subtask;
 import com.github.mpagconestoga.mad_a01.objects.Task;
 import com.github.mpagconestoga.mad_a01.viewmodel.CreateTaskViewModel;
+import com.github.mpagconestoga.mad_a01.viewmodel.PersonSearchViewModel;
+
+import java.util.ArrayList;
 
 
 public class CreateSubtasksFragment extends Fragment {
+    // TAG
     private static final String TAG = "CreateSubtasksFragment";
 
+    //---------- Attributes ----------//
     private CreateTaskViewModel viewModel;
+    private View view;
 
-    // UI elements
+    // UI Elements
     private Button addSubtask;
+    private SubtaskAdapter adapter;
     private RecyclerView subtasks;
     private Button finishTaskCreation;
 
-
+    //---------- Lifecycle methods ----------//
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_create_subtasks, container, false);
+        view = inflater.inflate(R.layout.fragment_create_subtasks, container, false);
 
+        // DEBUG: Dummy Data
+        ArrayList<Person> taskAssignedPeople = new ArrayList<Person>()  {
+            {
+                add(new Person("Dummy"));
+                add(new Person("Jose"));
+                add(new Person("KarlMarx"));
+            }
+        };
+
+        // Set up RecyclerView and Adapter for the Subtasks list
+        subtasks = view.findViewById(R.id.subtasks);
+        subtasks.setHasFixedSize(true);
+        subtasks.setLayoutManager(new LinearLayoutManager(this.getContext()));
+
+        adapter = new SubtaskAdapter(view.getContext(), taskAssignedPeople);
+        subtasks.setAdapter(adapter);
+
+        // Add subtask button
+        addSubtask = view.findViewById(R.id.subtasks_button_add);
+        addSubtask.setOnClickListener(new AddSubtaskClickListener());
+
+        // Finilize Task (Complete Task)
+        // DEBUG: Make sure there is no other place adding task
         Button finishTaskCreation = view.findViewById(R.id.button_create_finalTask);
         finishTaskCreation.setOnClickListener(new CreateFinalTaskClickListener());
 
@@ -51,8 +85,34 @@ public class CreateSubtasksFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        // Create/Get Shared ViewModel
         viewModel = new ViewModelProvider(getActivity()).get(CreateTaskViewModel.class);
         Log.d(TAG, "&--> Subtask Creation Address: " + viewModel);
+    }
+
+    //---------- OnClick Listeners & Handlers----------//
+    public class AddSubtaskClickListener implements Button.OnClickListener {
+        @Override
+        public void onClick(View v) {
+            Log.d(TAG, "onClick: AddSubtask button clicked");
+            ArrayList<Subtask> currentSubtasks = viewModel.getAllSubtasks();
+
+            // If a subtask already exists, we want to make sure the previous subtask is valid
+            // before allowing the user to create another.
+            if (currentSubtasks.size() > 0) {
+                Subtask prev = currentSubtasks.get(currentSubtasks.size() - 1);
+
+                if (prev.getName().trim().length() == 0) {
+                    Log.d(TAG, "onClick: Tried to submit an empty subtask");
+                    Toast.makeText(view.getContext(), "Please fill out the previous subtask", Toast.LENGTH_LONG).show();
+                    return;
+                }
+            }
+
+            viewModel.insertSubtask(new Subtask(0, ""));
+            Log.d(TAG, "onClick: currentSubtasks size: " + currentSubtasks.size());
+            adapter.setData(currentSubtasks);
+        }
     }
 
     private class CreateFinalTaskClickListener implements Button.OnClickListener {

@@ -16,6 +16,7 @@ public class TaskRepository {
 
     private TaskDao taskDao;
     private LiveData<List<Task>> allTasks;
+    public Task task;
 
     public TaskRepository(Application application){
         Database database = Database.getInstance(application);
@@ -32,8 +33,14 @@ public class TaskRepository {
     public void delete(Task task){
         new TaskRepository.DeleteTaskAsyncTask(taskDao).execute(task);
     }
+    public Task getTaskById(int id){
+        return taskDao.getTaskById(id);
+    }
     public void deleteAllPersons(){
-        new TaskRepository.DeleteAllTasksAsyncTask(taskDao).execute();
+        if(new TaskRepository.DeleteAllTasksAsyncTask(taskDao).execute().getStatus() == AsyncTask.Status.FINISHED) {
+
+        }
+
     }
     public LiveData<List<Task>> getAllTasks() {
         return allTasks;

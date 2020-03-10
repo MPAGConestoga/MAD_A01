@@ -1,5 +1,8 @@
 package com.github.mpagconestoga.mad_a01.objects;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
@@ -12,6 +15,10 @@ public class Category {
 
     public Category(String Name) {
         this.Name = Name;
+    }
+
+    public Category(Parcel in) {
+        this.Name = in.readString();
     }
 
     public void setId(int id) {

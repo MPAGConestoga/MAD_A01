@@ -91,13 +91,13 @@ public class PersonSearchActivity extends AppCompatActivity {
         //done.setOnClickListener(new DoneClickListener());
     }
 
-    public class SearchBoxKeyListener implements TextWatcher {
+    /*public class SearchBoxKeyListener implements TextWatcher {
         @Override
-        public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        }
 
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
-
             adapter.getFilter().filter(s);
         }
 

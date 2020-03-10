@@ -32,15 +32,14 @@ public class PersonSearchAdapter extends RecyclerView.Adapter<PersonSearchAdapte
 
     private List<Person> data;
     private List<Person> dataFull;
-    private LayoutInflater inflater;
 
     public int selectedPosition = -1;
 
     public PersonSearchAdapter() {
-        //this.inflater = LayoutInflater.from(context); DEBUG:
         data = new ArrayList<>();
         dataFull = new ArrayList<>();
     }
+
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -48,10 +47,22 @@ public class PersonSearchAdapter extends RecyclerView.Adapter<PersonSearchAdapte
                 .inflate(R.layout.activity_person_list_item, parent, false);
         return new ViewHolder(view);
     }
-
+    
     @Override
     public int getItemCount() {
         return data.size();
+    }
+    
+    public ArrayList<String> getNames(){
+        ArrayList<String> names = new ArrayList<>();
+        for (Person p: dataFull) {
+            names.add(p.getName().toLowerCase());
+        }
+        return names;
+    }
+    public void setPosition(int position){
+        selectedPosition = position;
+        notifyDataSetChanged();
     }
 
     @Override
@@ -88,6 +99,10 @@ public class PersonSearchAdapter extends RecyclerView.Adapter<PersonSearchAdapte
         this.data = persons;
         this.dataFull = new ArrayList<>(persons);
         notifyDataSetChanged();
+    }
+
+    public List<Person> getFilteredList(){
+        return data;
     }
 
     @Override

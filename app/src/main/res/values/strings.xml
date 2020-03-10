@@ -13,6 +13,7 @@
     <string name="userpicture">userPicture</string>
     <string name="task_title">Task:</string>
     <string name="add_person">Add Person</string>
+    <string name="add_new_person">Add New Person</string>
     <string name="member_name">Enter Member Name</string>
     <string name="deleteicon">deleteIcon</string>
     <string name="create_task">Create Task</string>

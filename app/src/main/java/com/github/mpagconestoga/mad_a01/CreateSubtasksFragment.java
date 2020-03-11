@@ -27,9 +27,7 @@ import android.widget.Toast;
 import com.github.mpagconestoga.mad_a01.adapters.SubtaskAdapter;
 import com.github.mpagconestoga.mad_a01.objects.Person;
 import com.github.mpagconestoga.mad_a01.objects.Subtask;
-import com.github.mpagconestoga.mad_a01.objects.Task;
 import com.github.mpagconestoga.mad_a01.viewmodel.CreateTaskViewModel;
-import com.github.mpagconestoga.mad_a01.viewmodel.PersonSearchViewModel;
 
 import java.util.ArrayList;
 
@@ -95,40 +93,44 @@ public class CreateSubtasksFragment extends Fragment {
         @Override
         public void onClick(View v) {
             Log.d(TAG, "onClick: AddSubtask button clicked");
-            ArrayList<Subtask> currentSubtasks = viewModel.getAllSubtasks();
+            ArrayList<Subtask> currentSubtasks = viewModel.getCurrentSubtasks();
 
             // If a subtask already exists, we want to make sure the previous subtask is valid
             // before allowing the user to create another.
             if (currentSubtasks.size() > 0) {
                 Subtask prev = currentSubtasks.get(currentSubtasks.size() - 1);
 
-                if (prev.getName().trim().length() == 0) {
+                // Input Validation
+                if (prev.getName().trim().length() == 0 || prev.getWeight() == 0) {
                     Log.d(TAG, "onClick: Tried to submit an empty subtask");
-                    Toast.makeText(view.getContext(), "Please fill out the previous subtask", Toast.LENGTH_LONG).show();
+                    Toast.makeText(view.getContext(), R.string.subtask_empty, Toast.LENGTH_LONG).show();
                     return;
                 }
             }
 
-            viewModel.insertSubtask(new Subtask(0, ""));
-            Log.d(TAG, "onClick: currentSubtasks size: " + currentSubtasks.size());
+            currentSubtasks.add(new Subtask(0, ""));
+            viewModel.setSubtasks(currentSubtasks);
             adapter.setData(currentSubtasks);
+            Log.d(TAG, "onClick: currentSubtasks size: " + currentSubtasks.size());
         }
     }
 
     private class CreateFinalTaskClickListener implements Button.OnClickListener {
         @Override
         public void onClick(View v) {
-            /*
-            int numSubTasks = parent.getSubtasks().size();
-            String firstSubTaskName = parent.getSubtasks().get(0).getName().trim();
-            int firstPriority = parent.getSubtasks().get(0).getPriority();
-            int numWorkers = parent.getSubtasks().get(0).getAssignedPeople().size();
+            ArrayList<Subtask> currentSubtasks = viewModel.getCurrentSubtasks();
 
-            if (numSubTasks == 1 && (firstSubTaskName == "" || firstPriority == 0 || numWorkers == 0)) {
-                Log.d(TAG, "Number of sub-tasks:" + parent.getSubtasks().size());
+            int numSubTasks = currentSubtasks.size();
+            String firstSubTaskName = currentSubtasks.get(0).getName().trim();
+            int firstPriority = currentSubtasks.get(0).getWeight();
+
+            if (numSubTasks == 1 && (firstSubTaskName == "" || firstPriority == 0)) {
+                Log.d(TAG, "Number of sub-tasks:" + numSubTasks);
                 return;
-            }*/
+            }
 
+            // Add task to database and quit activity
+            viewModel.createTask();
             getActivity().finish();
         }
     }

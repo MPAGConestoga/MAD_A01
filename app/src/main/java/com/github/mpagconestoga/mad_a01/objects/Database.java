@@ -17,7 +17,7 @@ import com.github.mpagconestoga.mad_a01.dao.PersonTaskDao;
 import com.github.mpagconestoga.mad_a01.dao.SubtaskDao;
 import com.github.mpagconestoga.mad_a01.dao.TaskDao;
 
-@androidx.room.Database(entities = {Person.class, Category.class, PersonSubtask.class, PersonTask.class, Subtask.class, Task.class}, version = 6, exportSchema = false)
+@androidx.room.Database(entities = {Person.class, Category.class, PersonSubtask.class, PersonTask.class, Subtask.class, Task.class}, version = 7, exportSchema = false)
 @TypeConverters({Converters.class})
 public abstract class Database extends RoomDatabase {
 

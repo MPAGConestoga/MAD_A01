@@ -8,13 +8,17 @@
 package com.github.mpagconestoga.mad_a01.objects;
 
 import androidx.room.Entity;
+import androidx.room.ForeignKey;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import java.util.ArrayList;
 import java.util.Date;
 
-@Entity
+@Entity(foreignKeys = {
+        @ForeignKey(entity = Category.class,
+                parentColumns = "Id",
+                childColumns = "CatId")})
 public class Task {
     @PrimaryKey(autoGenerate = true)
     private int Id;

@@ -22,19 +22,12 @@
     <string name="person_search_select">Please select a person</string>
     <string name="person_search_create">Create</string>
     <string name="weight_view">Weight:</string>
-    <string name="team_button">Assign Workers</string>
     <string name="add_subtask">Add Sub-Task</string>
     <string name="subtask_name_hint">Name</string>
+    <string name="subtask_empty">Please fill out the previous subtask</string>
     <string name="enter_datetime">Please enter the due time</string>
     <string name="next">Next</string>
     <string name="no_tasks">Start by creating a task with the button on the bottom-right of the screen</string>
-    <string-array name="workers">
-        <item>Paul</item>
-        <item>Amy</item>
-        <item>Michael</item>
-        <item>Gabriel</item>
-        <item>Duncan</item>
-    </string-array>
     <string name="title_activity_test">ActivityTest</string>
     <string name="person_already_added">That person was already added</string>
 </resources>

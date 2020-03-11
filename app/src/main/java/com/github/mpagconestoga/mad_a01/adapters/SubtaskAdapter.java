@@ -83,17 +83,17 @@ public class SubtaskAdapter extends RecyclerView.Adapter<SubtaskAdapter.ViewHold
         EditText name;
         EditText weight;
         Button delete;
-        Button assign;
         int position;
 
         public ViewHolder(View view) {
             super(view);
+            // Set UI buttons
             name = view.findViewById(R.id.subtask_name);
             weight = view.findViewById(R.id.subtask_weight);
             delete = view.findViewById(R.id.subtask_delete_button);
-
             weight.setFilters(new InputFilter[]{ new WeightFilter(1, 5) });
 
+            // Set subtask name event handler
             name.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
@@ -107,6 +107,7 @@ public class SubtaskAdapter extends RecyclerView.Adapter<SubtaskAdapter.ViewHold
                 public void afterTextChanged(Editable s) { }
             });
 
+            // Set priority button handler
             weight.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
@@ -127,87 +128,12 @@ public class SubtaskAdapter extends RecyclerView.Adapter<SubtaskAdapter.ViewHold
                 public void afterTextChanged(Editable s) { }
             });
 
+            // Delete subtask button handler
             delete.setOnClickListener(new Button.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Subtasks.remove(position);
                     notifyDataSetChanged();
-                }
-            });
-
-            assign.setOnClickListener(new Button.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    final ArrayList<Person> assigned = taskAssignedPeople;
-                    final String[] listWorkers = new String[assigned.size()];
-                    Log.d(TAG, "onClick: LIST WORKERS: " + listWorkers);
-                    final boolean[] checkedWorkers = new boolean[assigned.size()];
-
-                    final ArrayList<Integer> selected = new ArrayList<>();
-
-                    for (int i = 0; i < assigned.size(); i++) {
-                        Person person = assigned.get(i);
-                        listWorkers[i] = person.getName();
-
-                        if (Subtasks.get(position).assignedPeople.contains(person)) {
-                            checkedWorkers[i] = true;
-                            selected.add(i);
-                        }
-                        else {
-                            checkedWorkers[i] = false;
-                        }
-                    }
-
-                    AlertDialog.Builder mBuilder = new AlertDialog.Builder(inflater.getContext());  // alert dialog for the presentation of worker selection
-                    mBuilder.setTitle("Workers available for task");    // dialog for the builder <--************ 27:38
-                    mBuilder.setMultiChoiceItems(listWorkers, checkedWorkers, new DialogInterface.OnMultiChoiceClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which, boolean isChecked) { // handles the checking of an item within the list
-                            if (isChecked) {
-                                if (!selected.contains(which)){ // if the current worker is not on the list, adds them to the list
-                                    selected.add(which);
-                                }
-                            }
-                            else if (selected.contains(which)) {  // removes worker on unchecking box
-                                // We use removeAll since if you call remove on an ArrayList<Integer> with an int,
-                                // it will assume that you want to remove an index and not a value.
-                                selected.removeAll(Arrays.asList(which));
-                            }
-                        }
-                    });
-                    mBuilder.setCancelable(false);
-                    mBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            ArrayList<Person> ass = Subtasks.get(position).assignedPeople;
-
-                            Log.d(TAG, "onClick: assigned name is: " + Subtasks.get(position).getName());
-
-                            // Add all selected workers to the subtask's list
-                            for (int i = 0; i < checkedWorkers.length; i++) {
-                                if (checkedWorkers[i] && !ass.contains(assigned.get(i))) {
-                                    Log.d(TAG, "onClick: Assigned person: " + assigned.get(i).getName());
-                                    ass.add(assigned.get(i));
-                                }
-                                else if (!checkedWorkers[i] && ass.contains(assigned.get(i))) {
-                                    Log.d(TAG, "onClick: Unassigned person: " + assigned.get(i).getName());
-                                    ass.remove(assigned.get(i));
-                                }
-                            }
-
-                            Log.d(TAG, "onClick: Ass size: " + ass.size());
-
-                            Subtasks.get(position).assignedPeople = ass;
-
-                            Log.d(TAG, "onClick: getAssignedPeople size: " + Subtasks.get(position).assignedPeople.size());
-                        }
-                    });
-
-                    mBuilder.create().show();
-
-                    for (Person p : Subtasks.get(position).assignedPeople) {
-                        Log.d(TAG, "onClick: Assigned: " + p.getName());
-                    }
                 }
             });
         }

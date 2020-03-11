@@ -69,7 +69,6 @@ public class TaskCreationFragment extends Fragment {
     private EditText taskNameEditText;
     private Category taskCategory;
     private Date taskEndTime = null;
-    private ArrayList<Person> assignedPeople;
 
     //---------- Lifecycle methods ----------//
     @Override
@@ -77,7 +76,6 @@ public class TaskCreationFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_create_task, container, false);
 
         memberList = new ArrayList<>();
-        assignedPeople = new ArrayList<>();
         // DEBUG: Setup category
         initList();
 
@@ -103,7 +101,6 @@ public class TaskCreationFragment extends Fragment {
         memberListRecyclerView.setHasFixedSize(true); //true if wont change in size
         memberListLayoutManager = new LinearLayoutManager(getActivity());
         memberListAdapter = new MemberListAdapter(memberList);
-
 
         memberListRecyclerView.setLayoutManager(memberListLayoutManager);
         memberListRecyclerView.setAdapter(memberListAdapter);
@@ -147,7 +144,8 @@ public class TaskCreationFragment extends Fragment {
         if (resultCode == -1) {
             Person selectedPerson = (Person) data.getParcelableExtra("selected");
 
-            assignedPeople.add(selectedPerson);
+            viewModel.addPerson(selectedPerson);
+            assert selectedPerson != null;
             insertItem(0, selectedPerson.getName());
         }
     }
@@ -165,18 +163,18 @@ public class TaskCreationFragment extends Fragment {
                 Toast.makeText(getActivity(), R.string.enter_task_name, Toast.LENGTH_SHORT).show();
                 return;
             }
-            /*else if (memberList.size() <= 0) {
+            else if (memberList.size() <= 0) {
                 Toast.makeText(getActivity(), R.string.enter_team_member, Toast.LENGTH_SHORT).show();
                 return;
-            }*/
+            }
             else if(taskEndTime == null) {
                 Toast.makeText(getActivity(), R.string.enter_datetime, Toast.LENGTH_SHORT).show();
                 return;
             }
 
-            // Create Task and add to the database
-            viewModel.createTask(taskName, taskCategory, taskEndTime);
-            Log.d(TAG, "--> Task Created -- Name: " + viewModel.getTask().getName());
+            // Set the current task in the viewModel to prepare for subtask creation
+            viewModel.setCurrentTask(taskName, taskCategory, taskEndTime);
+            Log.d(TAG, "--> Current Task Created -- Name: " + viewModel.getTask().getName());
 
             // Move to Sub-Task Fragment
             FragmentManager manager = getParentFragmentManager();

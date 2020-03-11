@@ -1,10 +1,9 @@
 /*
  *	FILE			: SubtaskAdapter.java
- *	PROJECT			: PROG3150 - Assignment-01
+ *	PROJECT			: PROG3150 - Assignment-02
  *	PROGRAMMER		: Michael Gordon, Paul Smith, Duncan Snider, Gabriel Gurgel, Amy Dayasundara
  *	FIRST VERSION	: 2020 - 02 - 05
- *	DESCRIPTION		: Adapter for the Recycler view of the assignment of the sub-tasks 
- *
+ *	DESCRIPTION		: Adapter for the Recycler view of the assignment of the sub-tasks
  */
 package com.github.mpagconestoga.mad_a01.adapters;
 

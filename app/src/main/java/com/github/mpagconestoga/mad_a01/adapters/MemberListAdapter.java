@@ -1,11 +1,10 @@
 /*
  *	FILE			: memberListAdapter.java
- *	PROJECT			: PROG3150 - Assignment-01
+ *	PROJECT			: PROG3150 - Assignment-02
  *	PROGRAMMER		: Michael Gordon, Paul Smith, Duncan Snider, Gabriel Gurgel, Amy Dayasundara
  *	FIRST VERSION	: 2020 - 02 - 05
- *	DESCRIPTION		:This file contains the class definition for the memberListAdapter
-                    Inspiration for this class credit: https://www.youtube.com/watch?v=17NbUcEts9c
- *
+ *	DESCRIPTION		: This file contains the class definition for the memberListAdapter
+ *                    Inspiration for this class credit: https://www.youtube.com/watch?v=17NbUcEts9c
  */
 
 package com.github.mpagconestoga.mad_a01.adapters;

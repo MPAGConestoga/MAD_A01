@@ -3,7 +3,7 @@
  *	PROJECT			: PROG3150 - Assignment-02
  *	PROGRAMMER		: Michael Gordon, Paul Smith, Duncan Snider, Gabriel Gurgel, Amy Dayasundara
  *	FIRST VERSION	: 2020 - 02 - 05
- *	DESCRIPTION		:This file contains the class definition for the MemberListItem
+ *	DESCRIPTION		: This file contains the class definition for the MemberListItem
  *
  */
 

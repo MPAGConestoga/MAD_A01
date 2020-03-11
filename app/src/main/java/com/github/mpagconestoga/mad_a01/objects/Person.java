@@ -3,8 +3,7 @@
  *	PROJECT			: PROG3150 - Assignment-02
  *	PROGRAMMER		: Michael Gordon, Paul Smith, Duncan Snider, Gabriel Gurgel, Amy Dayasundara
  *	FIRST VERSION	: 2020 - 03 - 08
- *	DESCRIPTION		: This class contains our Room Database definition, and abstract
- *                    references to our Data Access Objects
+ *	DESCRIPTION		: This class contains the class declaration and definition of Person
  */
 
 package com.github.mpagconestoga.mad_a01.objects;
@@ -29,6 +28,11 @@ public class Person implements Parcelable {
         this.Name = in.readString();
     }
 
+    /*
+     * FUNCTION     : setId
+     * PARAMETERS   : int id
+     * DESCRIPTION  : Updates the ID of the instance of a person this method belongs to
+     */
     public void setId(int id) {
         this.Id = id;
     }
@@ -37,6 +41,11 @@ public class Person implements Parcelable {
         return Id;
     }
 
+    /*
+     * FUNCTION     : getName
+     * RETURNS      : string
+     * DESCRIPTION  : Returns the name of the instance of a person this method belongs to
+     */
     public String getName() {
         return Name;
     }

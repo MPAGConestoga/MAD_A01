@@ -1,3 +1,12 @@
+/*
+ *	FILE			: PersonSearchViewModel.java
+ *	PROJECT			: PROG3150 - Assignment-02
+ *	PROGRAMMER		: Michael Gordon, Paul Smith, Duncan Snider, Gabriel Gurgel, Amy Dayasundara
+ *	FIRST VERSION	: 2020 - 03 - 08
+ *	DESCRIPTION		: This class is the ViewModel for searching for people. Specifically the
+ *                    PersonSearchActivity
+ */
+
 package com.github.mpagconestoga.mad_a01.viewmodel;
 
 import android.app.Application;

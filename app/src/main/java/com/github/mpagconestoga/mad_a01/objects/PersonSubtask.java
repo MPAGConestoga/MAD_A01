@@ -1,3 +1,12 @@
+/*
+ *	FILE			: PersonSubtask.java
+ *	PROJECT			: PROG3150 - Assignment-02
+ *	PROGRAMMER		: Michael Gordon, Paul Smith, Duncan Snider, Gabriel Gurgel, Amy Dayasundara
+ *	FIRST VERSION	: 2020 - 03 - 08
+ *	DESCRIPTION		: This class contains the class declaration and definition of PersonSubtask
+ *                    PersonSubtask links a person to a Subtask.
+ */
+
 package com.github.mpagconestoga.mad_a01.objects;
 
 import androidx.room.Entity;

@@ -1,3 +1,11 @@
+/*
+ *	FILE			: TaskCreationFragment.java
+ *	PROJECT			: PROG3150 - Assignment-02
+ *	PROGRAMMER		: Michael Gordon, Paul Smith, Duncan Snider, Gabriel Gurgel, Amy Dayasundara
+ *	FIRST VERSION	: 2020 - 03 - 06
+ *	DESCRIPTION		: This is the fragment class for creating tasks
+ */
+
 package com.github.mpagconestoga.mad_a01;
 
 import android.app.DatePickerDialog;

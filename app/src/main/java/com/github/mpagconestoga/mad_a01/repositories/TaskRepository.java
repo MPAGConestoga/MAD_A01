@@ -1,5 +1,13 @@
-package com.github.mpagconestoga.mad_a01.repositories;
+/*
+ *	FILE			: TaskRepository.java
+ *	PROJECT			: PROG3150 - Assignment-02
+ *	PROGRAMMER		: Michael Gordon, Paul Smith, Duncan Snider, Gabriel Gurgel, Amy Dayasundara
+ *	FIRST VERSION	: 2020 - 03 - 08
+ *	DESCRIPTION		: This class is the data repository for Task. It interacts with the
+ *                    Task Data Access Object and stores data retrieved from it.
+ */
 
+package com.github.mpagconestoga.mad_a01.repositories;
 
 import android.app.Application;
 import android.os.AsyncTask;
@@ -19,6 +27,7 @@ public class TaskRepository {
 
     private TaskDao taskDao;
     private LiveData<List<Task>> allTasks;
+    public Task task;
 
     public TaskRepository(Application application){
         Database database = Database.getInstance(application);
@@ -36,8 +45,14 @@ public class TaskRepository {
     public void delete(Task task){
         new TaskRepository.DeleteTaskAsyncTask(taskDao).execute(task);
     }
+    public Task getTaskById(int id){
+        return taskDao.getTaskById(id);
+    }
     public void deleteAllPersons(){
-        new TaskRepository.DeleteAllTasksAsyncTask(taskDao).execute();
+        if(new TaskRepository.DeleteAllTasksAsyncTask(taskDao).execute().getStatus() == AsyncTask.Status.FINISHED) {
+
+        }
+
     }
     public LiveData<List<Task>> getAllTasks() {
         return allTasks;

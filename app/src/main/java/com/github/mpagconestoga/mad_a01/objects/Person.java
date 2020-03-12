@@ -1,3 +1,11 @@
+/*
+ *	FILE			: Person.java
+ *	PROJECT			: PROG3150 - Assignment-02
+ *	PROGRAMMER		: Michael Gordon, Paul Smith, Duncan Snider, Gabriel Gurgel, Amy Dayasundara
+ *	FIRST VERSION	: 2020 - 03 - 08
+ *	DESCRIPTION		: This class contains the class declaration and definition of Person
+ */
+
 package com.github.mpagconestoga.mad_a01.objects;
 
 import android.os.Parcel;
@@ -21,6 +29,11 @@ public class Person implements Parcelable {
         this.Id = in.readInt();
     }
 
+    /*
+     * FUNCTION     : setId
+     * PARAMETERS   : int id
+     * DESCRIPTION  : Updates the ID of the instance of a person this method belongs to
+     */
     public void setId(int id) {
         this.Id = id;
     }
@@ -29,6 +42,11 @@ public class Person implements Parcelable {
         return Id;
     }
 
+    /*
+     * FUNCTION     : getName
+     * RETURNS      : string
+     * DESCRIPTION  : Returns the name of the instance of a person this method belongs to
+     */
     public String getName() {
         return Name;
     }

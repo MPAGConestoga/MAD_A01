@@ -1,6 +1,6 @@
 /*
  *	FILE			: PersonSearchActivity.java
- *	PROJECT			: PROG3150 - Assignment-01
+ *	PROJECT			: PROG3150 - Assignment-02
  *	PROGRAMMER		: Michael Gordon, Paul Smith, Duncan Snider, Gabriel Gurgel, Amy Dayasundara
  *	FIRST VERSION	: 2020 - 02 - 05
  *	DESCRIPTION		: Logic for adding and searching members that will be assigned to the task
@@ -99,7 +99,6 @@ public class PersonSearchActivity extends AppCompatActivity {
     }
 
     public class NewPersonClickListener implements Button.OnClickListener{
-
         @Override
         public void onClick(View v) {
             String name = searchBox.getQuery().toString().trim();

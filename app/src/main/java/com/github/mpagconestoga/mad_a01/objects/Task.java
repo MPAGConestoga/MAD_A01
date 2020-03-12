@@ -1,9 +1,11 @@
-// FILE         Task.java
-// ASSIGNMENT   MAD A01
-// DATE         Feb 6 2020
-// PROGRAMMERS  Gabriel Gurgel & Duncan Snider
-// DESCRIPTION  This class models a task with many data members we need
-//              for the program to function.
+/*
+ *	FILE			: Task.java
+ *	PROJECT			: PROG3150 - Assignment-02
+ *	PROGRAMMER		: Michael Gordon, Paul Smith, Duncan Snider, Gabriel Gurgel, Amy Dayasundara
+ *	FIRST VERSION	: 2020 - 02 - 06
+ *	DESCRIPTION		: This class contains the class declaration and definition of Task
+ */
+
 
 package com.github.mpagconestoga.mad_a01.objects;
 

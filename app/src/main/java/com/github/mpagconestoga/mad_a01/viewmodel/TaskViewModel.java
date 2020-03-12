@@ -1,3 +1,11 @@
+/*
+ *	FILE			: TaskViewModel.java
+ *	PROJECT			: PROG3150 - Assignment-02
+ *	PROGRAMMER		: Michael Gordon, Paul Smith, Duncan Snider, Gabriel Gurgel, Amy Dayasundara
+ *	FIRST VERSION	: 2020 - 03 - 08
+ *	DESCRIPTION		: This class is the ViewModel for tasks
+ */
+
 package com.github.mpagconestoga.mad_a01.viewmodel;
 
 import android.app.Application;
@@ -31,5 +39,9 @@ public class TaskViewModel extends AndroidViewModel {
 
     public LiveData<List<Task>> getAllTasks() {
         return allTasks;
+    }
+
+    public Task getTaskById(int taskId) {
+        return repository.getTaskById(taskId);
     }
 }

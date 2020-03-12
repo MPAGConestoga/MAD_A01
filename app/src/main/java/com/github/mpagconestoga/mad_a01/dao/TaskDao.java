@@ -1,3 +1,11 @@
+/*
+ *	FILE			: TaskDao.java
+ *	PROJECT			: PROG3150 - Assignment-02
+ *	PROGRAMMER		: Michael Gordon, Paul Smith, Duncan Snider, Gabriel Gurgel, Amy Dayasundara
+ *	FIRST VERSION	: 2020 - 03 - 08
+ *	DESCRIPTION		: This is the Data Access Object for the Task class
+ */
+
 package com.github.mpagconestoga.mad_a01.dao;
 
 import androidx.lifecycle.LiveData;
@@ -36,6 +44,7 @@ public abstract class TaskDao {
     public abstract void deleteAllTasks();
 
     @Query("SELECT * FROM Task ORDER BY Id DESC")
+
     public abstract LiveData<List<Task>> getAllTasks();
 
     @Transaction

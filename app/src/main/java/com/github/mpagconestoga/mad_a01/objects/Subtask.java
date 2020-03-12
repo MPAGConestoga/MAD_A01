@@ -5,7 +5,7 @@ import androidx.room.ForeignKey;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 @Entity(foreignKeys = {
-        @ForeignKey(entity = Task.class,
+        @ForeignKey(onDelete = 5/*CASCADE*/, entity = Task.class,
                 parentColumns = "Id",
                 childColumns = "TaskId")},
         indices=@Index("TaskId"))

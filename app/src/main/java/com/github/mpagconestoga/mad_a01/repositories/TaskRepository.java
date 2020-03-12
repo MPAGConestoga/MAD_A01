@@ -36,7 +36,7 @@ public class TaskRepository {
     public void delete(Task task){
         new TaskRepository.DeleteTaskAsyncTask(taskDao).execute(task);
     }
-    public void deleteAllPersons(){
+    public void deleteAllTasks(){
         new TaskRepository.DeleteAllTasksAsyncTask(taskDao).execute();
     }
     public LiveData<List<Task>> getAllTasks() {

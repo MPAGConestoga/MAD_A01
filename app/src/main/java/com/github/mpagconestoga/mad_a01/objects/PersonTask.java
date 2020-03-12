@@ -8,10 +8,10 @@ import androidx.room.PrimaryKey;
 @Entity(tableName = "Person_Task",
         primaryKeys = {"TaskId","PersonId"},
         foreignKeys = {
-                @ForeignKey(entity = Person.class,
+                @ForeignKey(onDelete = 5/*CASCADE*/, entity = Person.class,
                         parentColumns = "Id",
                         childColumns = "PersonId"),
-                @ForeignKey(entity = Task.class,
+                @ForeignKey(onDelete = 5/*CASCADE*/, entity = Task.class,
                         parentColumns = "Id",
                         childColumns = "TaskId")
         },

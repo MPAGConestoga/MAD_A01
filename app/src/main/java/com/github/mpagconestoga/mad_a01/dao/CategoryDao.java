@@ -33,5 +33,5 @@ public interface CategoryDao {
     void deleteAllCategories();
 
     @Query("SELECT * FROM Category ORDER BY Id DESC")
-    LiveData<List<Category>> getAllCategories();
+    List<Category> getAllCategories();
 }

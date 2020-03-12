@@ -9,13 +9,19 @@
 package com.github.mpagconestoga.mad_a01.objects;
 
 import androidx.room.Entity;
+import androidx.room.ForeignKey;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
-
-@Entity
+@Entity(foreignKeys = {
+        @ForeignKey(entity = Task.class,
+                parentColumns = "Id",
+                childColumns = "TaskId")},
+        indices=@Index("TaskId"))
 public class Subtask {
     @PrimaryKey(autoGenerate = true)
     private int Id;
     private int Weight;
+    private int TaskId;
     private String Name;
 
     public Subtask(int Weight, String Name) {
@@ -29,6 +35,14 @@ public class Subtask {
 
     public void setId(int id) {
         this.Id = id;
+    }
+
+    public void setTaskId(int id){
+        this.TaskId = id;
+    }
+
+    public int getTaskId(){
+        return this.TaskId;
     }
 
     public int getWeight() {

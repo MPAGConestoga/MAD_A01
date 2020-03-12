@@ -16,7 +16,10 @@ import androidx.room.PrimaryKey;
 import java.util.ArrayList;
 import java.util.Date;
 
-@Entity
+@Entity/*(foreignKeys = {
+        @ForeignKey(entity = Category.class,
+                parentColumns = "Id",
+                childColumns = "CatId")})*/
 public class Task {
     @PrimaryKey(autoGenerate = true)
     private int Id;
@@ -26,8 +29,8 @@ public class Task {
     private Date StartTime;
     private Date EndTime;
 
-    @Ignore private ArrayList<Integer> assignedPeople;
-    @Ignore private ArrayList<Integer> subtasks;
+    @Ignore private ArrayList<Person> assignedPeople;
+    @Ignore private ArrayList<Subtask> subtasks;
 
     // Constructor
     public Task(String Name, Category Category, Date EndTime) {
@@ -96,4 +99,21 @@ public class Task {
     public void setCategory(Category category) {
         this.Category = category;
     }
+
+    public ArrayList<Person> getAssignedPeople() {
+        return assignedPeople;
+    }
+
+    public ArrayList<Subtask> getSubtasks() {
+        return subtasks;
+    }
+
+    public void setAssignedPeople(ArrayList<Person> assignedPeople) {
+        this.assignedPeople = assignedPeople;
+    }
+
+    public void setSubtasks(ArrayList<Subtask> subtasks) {
+        this.subtasks = subtasks;
+    }
+
 }

@@ -33,28 +33,21 @@ import com.github.mpagconestoga.mad_a01.objects.WeightFilter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-/*
+
 public class SubtaskAdapter extends RecyclerView.Adapter<SubtaskAdapter.ViewHolder> {
     private static final String TAG = "SubtaskAdapter";
 
-    private ArrayList<Subtask> data;
+    private ArrayList<Subtask> Subtasks;
     private LayoutInflater inflater;
-    private Task parent;
-    private ArrayList<Person> assignedPeople;
+    private ArrayList<Person> taskAssignedPeople;
 
-    public SubtaskAdapter(Context context, ArrayList<Subtask> data, Task parent, ArrayList<Person> assignedPeople) {
-        this.data = data;
+    // DEBUG: Assigned People represents the people assigned to that task, I still do
+    //        not know if Task will have an List of the assigned people so for now,
+    //        I will pass the assigned People of that task in the constructor
+    public SubtaskAdapter(Context context, ArrayList<Person> taskAssignedPeople) {
+        Subtasks = new ArrayList<Subtask>();
         this.inflater = LayoutInflater.from(context);
-        this.parent = parent;
-        this.memberList = assignedPeople;
-    }
-
-    public void setData(ArrayList<Subtask> data) {
-        this.data = data;
-        notifyDataSetChanged();
-    }
-
-    public void updateParentData(int position) {
+        this.taskAssignedPeople = taskAssignedPeople;
     }
 
     @Override
@@ -64,50 +57,56 @@ public class SubtaskAdapter extends RecyclerView.Adapter<SubtaskAdapter.ViewHold
     }
 
     @Override
+    public int getItemCount() {
+        return Subtasks.size();
+    }
+
+    @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        Subtask subtask = data.get(position);
+        Subtask subtask = Subtasks.get(position);
 
         Log.d(TAG, "onBindViewHolder: Name: " + holder.name.getText().toString());
-
         holder.name.setText(subtask.getName());
         holder.weight.setText(String.valueOf(subtask.getWeight()));
         holder.position = position;
     }
 
-    @Override
-    public int getItemCount() {
-        return data.size();
+    public void updateParentData(int position) {}
+
+    public void setData(ArrayList<Subtask> subtasks) {
+        this.Subtasks = subtasks;
+        notifyDataSetChanged();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         EditText name;
         EditText weight;
         Button delete;
-        Button assign;
         int position;
 
         public ViewHolder(View view) {
             super(view);
+            // Set UI buttons
             name = view.findViewById(R.id.subtask_name);
             weight = view.findViewById(R.id.subtask_weight);
             delete = view.findViewById(R.id.subtask_delete_button);
-            assign = view.findViewById(R.id.subtask_assign_people);
-
             weight.setFilters(new InputFilter[]{ new WeightFilter(1, 5) });
 
+            // Set subtask name event handler
             name.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
 
                 @Override
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    data.get(position).setName(name.getText().toString());
+                    Subtasks.get(position).setName(name.getText().toString());
                 }
 
                 @Override
                 public void afterTextChanged(Editable s) { }
             });
 
+            // Set priority button handler
             weight.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
@@ -121,97 +120,21 @@ public class SubtaskAdapter extends RecyclerView.Adapter<SubtaskAdapter.ViewHold
                         weight = Integer.parseInt(newVal);
                     } catch (NumberFormatException ignored) { }
 
-                    data.get(position).setPriority(weight);
+                    Subtasks.get(position).setPriority(weight);
                 }
 
                 @Override
                 public void afterTextChanged(Editable s) { }
             });
 
+            // Delete subtask button handler
             delete.setOnClickListener(new Button.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    data.remove(position);
+                    Subtasks.remove(position);
                     notifyDataSetChanged();
-                }
-            });
-
-            assign.setOnClickListener(new Button.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    final String[] listWorkers = new String[assignedPeople.size()];
-                    Log.d(TAG, "onClick: LIST WORKERS: " + listWorkers);
-                    final boolean[] checkedWorkers = new boolean[assignedPeople.size()];
-
-                    final ArrayList<Integer> selected = new ArrayList<>();
-
-                    for (int i = 0; i < assignedPeople.size(); i++) {
-                        Person person = assignedPeople.get(i);
-                        listWorkers[i] = person.getName();
-
-                        //if (data.get(position).getAssignedPeople().contains(person)) {
-                        //    checkedWorkers[i] = true;
-                        //    selected.add(i);
-                        //}
-                        //else {
-                        //    checkedWorkers[i] = false;
-                        //}
-                    }
-
-                    AlertDialog.Builder mBuilder = new AlertDialog.Builder(inflater.getContext());  // alert dialog for the presentation of worker selection
-                    mBuilder.setTitle("Workers available for task");    // dialog for the builder <--************ 27:38
-                    mBuilder.setMultiChoiceItems(listWorkers, checkedWorkers, new DialogInterface.OnMultiChoiceClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which, boolean isChecked) { // handles the checking of an item within the list
-                            if (isChecked) {
-                                if (!selected.contains(which)){ // if the current worker is not on the list, adds them to the list
-                                    selected.add(which);
-                                }
-                            }
-                            else if (selected.contains(which)) {  // removes worker on unchecking box
-                                // We use removeAll since if you call remove on an ArrayList<Integer> with an int,
-                                // it will assume that you want to remove an index and not a value.
-                                selected.removeAll(Arrays.asList(which));
-                            }
-                        }
-                    });
-                    mBuilder.setCancelable(false);
-                    mBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            ArrayList<Person> ass = data.get(position).getAssignedPeople();
-
-                            Log.d(TAG, "onClick: assigned name is: " + data.get(position).getName());
-
-                            // Add all selected workers to the subtask's list
-                            for (int i = 0; i < checkedWorkers.length; i++) {
-                                if (checkedWorkers[i] && !ass.contains(assigned.get(i))) {
-                                    Log.d(TAG, "onClick: Assigned person: " + assignedPeople.get(i).getName());
-                                    ass.add(assignedPeople.get(i));
-                                }
-                                else if (!checkedWorkers[i] && ass.contains(assignedPeople.get(i))) {
-                                    Log.d(TAG, "onClick: Unassigned person: " + assignedPeople.get(i).getName());
-                                    ass.remove(assignedPeople.get(i));
-                                }
-                            }
-
-                            Log.d(TAG, "onClick: Ass size: " + ass.size());
-
-                            //DEBUG: data.get(position).setAssignedPeople(ass);
-                            //Log.d(TAG, "onClick: getAssignedPeople size: " + data.get(position).getAssignedPeople().size());
-                        }
-                    });
-
-                    mBuilder.create().show();
-
-                    for (Person p : data.get(position).getAssignedPeople()) {
-                        Log.d(TAG, "onClick: Assigned: " + p.getName());
-                    }
                 }
             });
         }
     }
 }
-*/
-
-

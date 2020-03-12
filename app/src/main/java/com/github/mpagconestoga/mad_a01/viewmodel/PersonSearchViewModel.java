@@ -44,4 +44,7 @@ public class PersonSearchViewModel extends AndroidViewModel {
     public LiveData<List<Person>> getAllPersons() {
         return allPeople;
     }
+    public void addPerson(String name){
+        peopleRepository.insert(new Person(name));
+    }
 }

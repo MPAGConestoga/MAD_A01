@@ -24,13 +24,12 @@ import java.util.List;
 public class CategoryRepository {
 
     private CategoryDao categoryDao;
-    private LiveData<List<Category>> allCategories;
+
 
 
     public CategoryRepository(Application application) {
         Database database = Database.getInstance(application);
         categoryDao = database.categoryDao();
-        allCategories = categoryDao.getAllCategories();
 
     }
 
@@ -50,8 +49,8 @@ public class CategoryRepository {
         new DeleteAllCategoriesAsyncTask(categoryDao).execute();
     }
 
-    public LiveData<List<Category>> getAllCategories() {
-        return allCategories;
+    public List<Category> getAllCategories() {
+        return categoryDao.getAllCategories();
     }
 
     private static class InsertCategoryAsyncTask extends AsyncTask<Category, Void, Void> {

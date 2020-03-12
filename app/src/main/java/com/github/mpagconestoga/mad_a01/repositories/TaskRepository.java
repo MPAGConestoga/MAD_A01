@@ -16,8 +16,11 @@ import androidx.lifecycle.LiveData;
 
 import com.github.mpagconestoga.mad_a01.dao.TaskDao;
 import com.github.mpagconestoga.mad_a01.objects.Database;
+import com.github.mpagconestoga.mad_a01.objects.Person;
+import com.github.mpagconestoga.mad_a01.objects.PersonTask;
 import com.github.mpagconestoga.mad_a01.objects.Task;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class TaskRepository {
@@ -35,6 +38,7 @@ public class TaskRepository {
     public void insert(Task task){
         new TaskRepository.InsertTaskAsyncTask(taskDao).execute(task);
     }
+    public void insertTask(Task task) {new TaskRepository.InsertFullTaskAsyncTask(taskDao).execute(task);}
     public void update(Task task){
         new TaskRepository.UpdateTaskAsyncTask(taskDao).execute(task);
     }
@@ -107,6 +111,20 @@ public class TaskRepository {
         @Override
         protected Void doInBackground(Void... voids) {
             taskDao.deleteAllTasks();
+            return null;
+        }
+    }
+    private static class InsertFullTaskAsyncTask extends AsyncTask<Task, Void, Void> {
+
+        private TaskDao taskDao;
+
+        private InsertFullTaskAsyncTask(TaskDao taskDao) {
+            this.taskDao = taskDao;
+        }
+
+        @Override
+        protected Void doInBackground(Task... tasks) {
+            taskDao.insertTask(tasks[0], tasks[0].getAssignedPeople(), tasks[0].getSubtasks());
             return null;
         }
     }

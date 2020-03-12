@@ -18,6 +18,7 @@ public class Person implements Parcelable {
 
     public Person(Parcel in) {
         this.Name = in.readString();
+        this.Id = in.readInt();
     }
 
     public void setId(int id) {
@@ -40,6 +41,7 @@ public class Person implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(Name);
+        dest.writeInt(Id);
     }
 
     public static final Parcelable.Creator<Person> CREATOR = new Parcelable.Creator<Person>() {

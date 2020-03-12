@@ -47,6 +47,8 @@ public abstract class TaskDao {
         }
 
         for(Subtask subtask : subtasks){
+            subtask.setTaskId((int) taskId);
+
             insertSubtask(subtask);
         }
     }

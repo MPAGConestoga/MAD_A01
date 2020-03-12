@@ -15,10 +15,10 @@ import androidx.room.PrimaryKey;
 import java.util.ArrayList;
 import java.util.Date;
 
-@Entity(foreignKeys = {
+@Entity/*(foreignKeys = {
         @ForeignKey(entity = Category.class,
                 parentColumns = "Id",
-                childColumns = "CatId")})
+                childColumns = "CatId")})*/
 public class Task {
     @PrimaryKey(autoGenerate = true)
     private int Id;

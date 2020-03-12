@@ -12,6 +12,7 @@ import com.github.mpagconestoga.mad_a01.objects.PersonSubtask;
 import com.github.mpagconestoga.mad_a01.objects.PersonTask;
 import com.github.mpagconestoga.mad_a01.objects.Subtask;
 import com.github.mpagconestoga.mad_a01.objects.Task;
+import com.github.mpagconestoga.mad_a01.repositories.CategoryRepository;
 import com.github.mpagconestoga.mad_a01.repositories.PersonRepository;
 import com.github.mpagconestoga.mad_a01.repositories.PersonSubtaskRepository;
 import com.github.mpagconestoga.mad_a01.repositories.PersonTaskRepository;
@@ -31,9 +32,10 @@ public class CreateTaskViewModel extends AndroidViewModel {
     // Repository and Database calls
     private PersonRepository peopleRepository;
     private TaskRepository taskRepository;
+    private CategoryRepository categoryRepository;
     private SubtaskRepository subtaskRepository;
     private PersonTaskRepository personTaskRepository;
-    private LiveData<List<Category>> allCategories;
+    private List<Category> allCategories;
     private LiveData<List<Person>> allPeople;
 
     public CreateTaskViewModel(@NonNull Application application) {
@@ -41,8 +43,11 @@ public class CreateTaskViewModel extends AndroidViewModel {
         peopleRepository = new PersonRepository(application);
         taskRepository  = new TaskRepository(application);
         subtaskRepository = new SubtaskRepository(application);
+        categoryRepository = new CategoryRepository(application);
         personTaskRepository = new PersonTaskRepository(application);
+
         allPeople = peopleRepository.getAllPersons();
+        allCategories = categoryRepository.getAllCategories();
 
         currentTask = null;
         currentSubtasks = new ArrayList<Subtask>();
@@ -60,19 +65,22 @@ public class CreateTaskViewModel extends AndroidViewModel {
     public void createTask() {
         // Add to the database
         taskRepository.insert(currentTask);
-        
-        /* Add PersonTask (Link person with that task)
+
+
+        /*
+        //Add PersonTask (Link person with that task)
         for (Person person : assignedPeople) {
             personTaskRepository.insert(
                     new PersonTask(currentTask.getId(), person.getId())
             );
-        }
+        }*/
+
 
         // Link Subtask to Task
         for (Subtask subtask: currentSubtasks) {
             subtask.setTaskId(currentTask.getId());
             subtaskRepository.insert(subtask);
-        }*/
+        }
     }
 
     public void addPerson(Person person) {
@@ -99,7 +107,7 @@ public class CreateTaskViewModel extends AndroidViewModel {
         return allPeople;
     }
 
-    public LiveData<List<Category>> getAllCategories() {
+    public List<Category> getAllCategories() {
         return allCategories;
     }
 }

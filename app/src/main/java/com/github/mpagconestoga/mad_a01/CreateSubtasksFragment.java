@@ -109,7 +109,6 @@ public class CreateSubtasksFragment extends Fragment {
             }
 
             currentSubtasks.add(new Subtask(0, ""));
-            viewModel.setSubtasks(currentSubtasks);
             adapter.setData(currentSubtasks);
             Log.d(TAG, "onClick: currentSubtasks size: " + currentSubtasks.size());
         }

@@ -51,8 +51,6 @@ public class TaskCreationFragment extends Fragment {
 
     //---------- Attributes ----------//
     private CreateTaskViewModel viewModel;
-    // DEBUG: Category List
-    private ArrayList<Category> categoryList;
 
     // UI Elements and Adapters
     private Button buttonDateTime;                  // Date and Time Picker
@@ -61,6 +59,7 @@ public class TaskCreationFragment extends Fragment {
     private Spinner categorySpinner;                // Category Drop-down
     private CategoryAdapter categoryAdapter;
     private ArrayList<MemberListItem> memberList;
+    private ArrayList<Category> categoryList;
     private RecyclerView memberListRecyclerView;    // Task Member List
     private MemberListAdapter memberListAdapter;
     private RecyclerView.LayoutManager memberListLayoutManager;
@@ -76,9 +75,7 @@ public class TaskCreationFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_create_task, container, false);
 
         memberList = new ArrayList<>();
-        // DEBUG: Setup category
-        initList();
-
+        categoryList = new ArrayList<>();
         // Setup UI elements
         taskNameEditText = view.findViewById(R.id.newTaskName);
 
@@ -96,7 +93,7 @@ public class TaskCreationFragment extends Fragment {
             public void onNothingSelected(AdapterView<?> parent) { }
         });
 
-        //---> member
+        // Assigned People to task (Member List viewer)
         memberListRecyclerView = view.findViewById(R.id.memberList);
         memberListRecyclerView.setHasFixedSize(true); //true if wont change in size
         memberListLayoutManager = new LinearLayoutManager(getActivity());
@@ -122,7 +119,7 @@ public class TaskCreationFragment extends Fragment {
         Button buttonAddPerson = view.findViewById(R.id.button_insert_person);
         buttonAddPerson.setOnClickListener(new AddMemberClickListener());
 
-        // Create Task Button
+        // Create Current Task Button
         Button buttonCreateTask = view.findViewById(R.id.button_create_task);
         buttonCreateTask.setOnClickListener(new CreateTaskClickListener());
 
@@ -134,6 +131,7 @@ public class TaskCreationFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         // Get or Create ViewModel
         viewModel = new ViewModelProvider(getActivity()).get(CreateTaskViewModel.class);
+        populateCategoryList();
         Log.d(TAG, "&--> Task Creation Address: " + viewModel);
     }
 
@@ -255,11 +253,11 @@ public class TaskCreationFragment extends Fragment {
         memberListAdapter.notifyItemRemoved(position);
     }
 
-    //DEBUG: Category List Init
-    private void initList() {
-        categoryList = new ArrayList<>();
-        categoryList.add(new Category("Test 1"));
-        categoryList.add(new Category("Test 2"));
-        categoryList.add(new Category("Test 3"));
+    private void populateCategoryList(){
+        List<Category> list = viewModel.getAllCategories();
+        for(Category c : list){
+            categoryList.add(c);
+        }
+        categoryAdapter.notifyDataSetChanged();
     }
 }

@@ -20,14 +20,7 @@ public class PersonRepository {
     public PersonRepository(Application application) {
         Database database = Database.getInstance(application);
         personDao = database.personDao();
-
-        // DEBUG: Add dummy data
-        this.insert(new Person("Jim"));
-        this.insert(new Person("Pam"));
-        this.insert(new Person("Alex"));
-
         allPersons = personDao.getAllPersons();
-
     }
 
     public void insert(Person person) {

@@ -8,7 +8,6 @@
 package com.github.mpagconestoga.mad_a01.objects;
 
 import androidx.room.Entity;
-import androidx.room.ForeignKey;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
@@ -28,9 +27,8 @@ public class Task {
     private Date StartTime;
     private Date EndTime;
 
-    // DEBUG: CHANGE ASSIGNED PEOPLE TO PRIVATE
-    @Ignore public ArrayList<Person> assignedPeople;
-    @Ignore public ArrayList<Integer> subtasks;
+    @Ignore private ArrayList<Person> assignedPeople;
+    @Ignore private ArrayList<Subtask> subtasks;
 
     // Constructor
     public Task(String Name, Category Category, Date EndTime) {
@@ -99,4 +97,21 @@ public class Task {
     public void setCategory(Category category) {
         this.Category = category;
     }
+
+    public ArrayList<Person> getAssignedPeople() {
+        return assignedPeople;
+    }
+
+    public ArrayList<Subtask> getSubtasks() {
+        return subtasks;
+    }
+
+    public void setAssignedPeople(ArrayList<Person> assignedPeople) {
+        this.assignedPeople = assignedPeople;
+    }
+
+    public void setSubtasks(ArrayList<Subtask> subtasks) {
+        this.subtasks = subtasks;
+    }
+
 }

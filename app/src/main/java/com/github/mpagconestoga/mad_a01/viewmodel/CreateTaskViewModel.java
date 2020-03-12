@@ -63,24 +63,9 @@ public class CreateTaskViewModel extends AndroidViewModel {
     }
 
     public void createTask() {
-        // Add to the database
-        taskRepository.insert(currentTask);
-
-
-        /*
-        //Add PersonTask (Link person with that task)
-        for (Person person : assignedPeople) {
-            personTaskRepository.insert(
-                    new PersonTask(currentTask.getId(), person.getId())
-            );
-        }*/
-
-
-        // Link Subtask to Task
-        for (Subtask subtask: currentSubtasks) {
-            subtask.setTaskId(currentTask.getId());
-            subtaskRepository.insert(subtask);
-        }
+        currentTask.setAssignedPeople(assignedPeople);
+        currentTask.setSubtasks(currentSubtasks);
+        taskRepository.insertTask(currentTask);
     }
 
     public void addPerson(Person person) {
@@ -110,4 +95,5 @@ public class CreateTaskViewModel extends AndroidViewModel {
     public List<Category> getAllCategories() {
         return allCategories;
     }
+
 }

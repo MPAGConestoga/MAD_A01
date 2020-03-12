@@ -5,25 +5,49 @@ import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.Transaction;
 import androidx.room.Update;
 
+import com.github.mpagconestoga.mad_a01.objects.Person;
+import com.github.mpagconestoga.mad_a01.objects.PersonTask;
+import com.github.mpagconestoga.mad_a01.objects.Subtask;
 import com.github.mpagconestoga.mad_a01.objects.Task;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Dao
-public interface TaskDao {
+public abstract class TaskDao {
 
     @Insert
-    void insert(Task task);
+    public abstract long insert(Task task);
     @Update
-    void update(Task task);
+    public abstract void update(Task task);
     @Delete
-    void delete(Task task);
+    public abstract void delete(Task task);
+
+    @Insert
+    public abstract void insertPersonTask(PersonTask personTask);
+
+    @Insert
+    public abstract void insertSubtask(Subtask subtask);
 
     @Query("DELETE FROM Task")
-    void deleteAllTasks();
+    public abstract void deleteAllTasks();
 
     @Query("SELECT * FROM Task ORDER BY Id DESC")
-    LiveData<List<Task>> getAllTasks();
+    public abstract LiveData<List<Task>> getAllTasks();
+
+    @Transaction
+    public void insertTask(Task task, List<Person> assignedPeople, ArrayList<Subtask> subtasks){
+        long taskId = insert(task);
+
+        for (Person person : assignedPeople) {
+            insertPersonTask(new PersonTask((int)taskId, person.getId()));
+        }
+
+        for(Subtask subtask : subtasks){
+            insertSubtask(subtask);
+        }
+    }
 }

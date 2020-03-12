@@ -1,6 +1,6 @@
 /*
  *	FILE			: WeightFilter.java
- *	PROJECT			: PROG3150 - Assignment-01
+ *	PROJECT			: PROG3150 - Assignment-02
  *	PROGRAMMER		: Michael Gordon, Paul Smith, Duncan Snider, Gabriel Gurgel, Amy Dayasundara
  *	FIRST VERSION	: 2020 - 02 - 05
  *	DESCRIPTION		: Limits the associated edittext to a range of values. Done so to ensure weight

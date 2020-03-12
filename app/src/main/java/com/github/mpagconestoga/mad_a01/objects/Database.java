@@ -1,3 +1,12 @@
+/*
+ *	FILE			: Database.java
+ *	PROJECT			: PROG3150 - Assignment-02
+ *	PROGRAMMER		: Michael Gordon, Paul Smith, Duncan Snider, Gabriel Gurgel, Amy Dayasundara
+ *	FIRST VERSION	: 2020 - 03 - 08
+ *	DESCRIPTION		: This class contains our Room Database definition, and abstract
+ *                    references to our Data Access Objects
+ */
+
 package com.github.mpagconestoga.mad_a01.objects;
 
 import android.content.Context;

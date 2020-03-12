@@ -34,4 +34,5 @@
     <string name="no_tasks">Start by creating a task with the button on the bottom-right of the screen</string>
     <string name="title_activity_test">ActivityTest</string>
     <string name="person_already_added">That person was already added</string>
+    <string name="priority">Priority</string>
 </resources>

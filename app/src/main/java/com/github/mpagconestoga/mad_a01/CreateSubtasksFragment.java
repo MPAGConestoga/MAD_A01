@@ -1,6 +1,6 @@
 /*
  *	FILE			: CreateSubtasksFragment.java
- *	PROJECT			: PROG3150 - Assignment-01
+ *	PROJECT			: PROG3150 - Assignment-02
  *	PROGRAMMER		: Michael Gordon, Paul Smith, Duncan Snider, Gabriel Gurgel, Amy Dayasundara
  *	FIRST VERSION	: 2020 - 02 - 05
  *	DESCRIPTION		: Fragment screen to add subtasks to the task, defining their workers, weight and name
@@ -73,7 +73,6 @@ public class CreateSubtasksFragment extends Fragment {
         addSubtask.setOnClickListener(new AddSubtaskClickListener());
 
         // Finilize Task (Complete Task)
-        // DEBUG: Make sure there is no other place adding task
         Button finishTaskCreation = view.findViewById(R.id.button_create_finalTask);
         finishTaskCreation.setOnClickListener(new CreateFinalTaskClickListener());
 
@@ -117,13 +116,13 @@ public class CreateSubtasksFragment extends Fragment {
     private class CreateFinalTaskClickListener implements Button.OnClickListener {
         @Override
         public void onClick(View v) {
+            // Get subtask
             ArrayList<Subtask> currentSubtasks = viewModel.getCurrentSubtasks();
-
             int numSubTasks = currentSubtasks.size();
             String firstSubTaskName = currentSubtasks.get(0).getName().trim();
             int firstPriority = currentSubtasks.get(0).getWeight();
 
-            if (numSubTasks == 1 && (firstSubTaskName == "" || firstPriority == 0)) {
+            if ((numSubTasks == 1) && (firstSubTaskName.equals("") || (firstPriority == 0))) {
                 Log.d(TAG, "Number of sub-tasks:" + numSubTasks);
                 return;
             }

@@ -1,3 +1,11 @@
+/*
+ *	FILE			: Converters.java
+ *	PROJECT			: PROG3150 - Assignment-02
+ *	PROGRAMMER		: Michael Gordon, Paul Smith, Duncan Snider, Gabriel Gurgel, Amy Dayasundara
+ *	FIRST VERSION	: 2020 - 03 - 08
+ *	DESCRIPTION		: This file contains declarations and definitions of the type converters needed
+ */
+
 
 // Reference: https://developer.android.com/training/data-storage/room/referencing-data
 package com.github.mpagconestoga.mad_a01.converter;

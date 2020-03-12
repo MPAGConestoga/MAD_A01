@@ -28,6 +28,6 @@ public interface PersonTaskDao {
     @Query("SELECT Id, CatId, Name, Category, StartTime, EndTime FROM Task INNER JOIN Person_Task ON Task.Id = Person_Task.TaskId WHERE Person_Task.PersonId = :personId")
     LiveData<List<Task>> GetTasksByUser(int personId);
 
-    @Query("SELECT PersonId FROM Person_Task WHERE TaskId = :taskId")
+    @Query("SELECT Id, Name FROM Person INNER JOIN Person_Task ON Person.Id = Person_Task.PersonId WHERE Person_Task.TaskId = :taskId")
     List<Person> GetPersonsByTaskId(int taskId);
 }

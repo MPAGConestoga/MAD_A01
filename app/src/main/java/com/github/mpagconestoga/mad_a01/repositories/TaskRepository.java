@@ -46,7 +46,7 @@ public class TaskRepository {
         new TaskRepository.DeleteTaskAsyncTask(taskDao).execute(task);
     }
     public Task getTaskById(int id){
-        return taskDao.getTaskById(id);
+        return taskDao.getTasksById(id);
     }
     public void deleteAllPersons(){
         if(new TaskRepository.DeleteAllTasksAsyncTask(taskDao).execute().getStatus() == AsyncTask.Status.FINISHED) {

@@ -32,7 +32,7 @@ import java.util.Date;
 import java.util.List;
 
 public class CreateTaskViewModel extends AndroidViewModel {
-    // Task being created information
+    // Task being created information (Current Task)
     private Task currentTask;
     private ArrayList<Person> assignedPeople;
     private ArrayList<Subtask> currentSubtasks;
@@ -62,12 +62,16 @@ public class CreateTaskViewModel extends AndroidViewModel {
         assignedPeople = new ArrayList<Person>();
     }
 
-    public Task getTask() {
+    public Task getCurrentTask() {
         return currentTask;
     }
 
     public void setCurrentTask(String name, Category category, Date endTime) {
         currentTask = new Task(name, category, endTime);
+    }
+
+    public ArrayList<Subtask> getCurrentSubtasks() {
+        return currentSubtasks;
     }
 
     public void createTask() {
@@ -78,26 +82,6 @@ public class CreateTaskViewModel extends AndroidViewModel {
 
     public void addPerson(Person person) {
         assignedPeople.add(person);
-    }
-
-    public void setSubtasks(ArrayList<Subtask> subtasks) {
-        currentSubtasks = subtasks;
-    }
-
-    public ArrayList<Subtask> getCurrentSubtasks() {
-        return currentSubtasks;
-    }
-
-    public void insertPerson(Person person) {
-        peopleRepository.insert(person);
-    }
-
-    public LiveData<List<Person>> getPeople(String name) {
-        return peopleRepository.getPersonByName(name);
-    }
-
-    public LiveData<List<Person>> getAllPeople() {
-        return allPeople;
     }
 
     public List<Category> getAllCategories() {

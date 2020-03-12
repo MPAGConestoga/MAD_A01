@@ -16,8 +16,6 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -47,7 +45,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 
 
@@ -84,6 +81,7 @@ public class TaskCreationFragment extends Fragment {
 
         memberList = new ArrayList<>();
         categoryList = new ArrayList<>();
+
         // Setup UI elements
         taskNameEditText = view.findViewById(R.id.newTaskName);
 
@@ -160,9 +158,9 @@ public class TaskCreationFragment extends Fragment {
     private class CreateTaskClickListener implements Button.OnClickListener {
         @Override
         public void onClick(View v) {
+            // Get task attributes
             Category taskCategory = (Category)categorySpinner.getSelectedItem();
             String taskName = taskNameEditText.getText().toString().trim();
-            // Assigned People
 
             // Input-Field Validation
             if (taskName.trim().length() == 0) {
@@ -180,7 +178,7 @@ public class TaskCreationFragment extends Fragment {
 
             // Set the current task in the viewModel to prepare for subtask creation
             viewModel.setCurrentTask(taskName, taskCategory, taskEndTime);
-            Log.d(TAG, "--> Current Task Created -- Name: " + viewModel.getTask().getName());
+            Log.d(TAG, "--> Current Task Created -- Name: " + viewModel.getCurrentTask().getName());
 
             // Move to Sub-Task Fragment
             FragmentManager manager = getParentFragmentManager();
@@ -262,10 +260,7 @@ public class TaskCreationFragment extends Fragment {
     }
 
     private void populateCategoryList(){
-        List<Category> list = viewModel.getAllCategories();
-        for(Category c : list){
-            categoryList.add(c);
-        }
+        categoryList.addAll(viewModel.getAllCategories());
         categoryAdapter.notifyDataSetChanged();
     }
 }

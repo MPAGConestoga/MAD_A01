@@ -43,8 +43,10 @@ public abstract class TaskDao {
     @Query("DELETE FROM Task")
     public abstract void deleteAllTasks();
 
-    @Query("SELECT * FROM Task ORDER BY Id DESC")
+    @Query("SELECT * FROM Task WHERE Id = :taskId")
+    public abstract Task getTasksById(int taskId);
 
+    @Query("SELECT * FROM Task ORDER BY Id DESC")
     public abstract LiveData<List<Task>> getAllTasks();
 
     @Transaction

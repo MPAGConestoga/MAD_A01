@@ -16,10 +16,11 @@ import androidx.room.Index;
 @Entity(tableName = "Person_Subtask",
         primaryKeys = {"SubtaskId","PersonId"},
         foreignKeys = {
-                @ForeignKey(entity = Person.class,
+                @ForeignKey(onDelete = 5/*CASCADE*/, entity = Person.class,
                         parentColumns = "Id",
-                        childColumns = "PersonId"),
-                @ForeignKey(entity = Subtask.class,
+                        childColumns = "PersonId"
+                        ),
+                @ForeignKey(onDelete = 5/*CASCADE*/,entity = Subtask.class,
                         parentColumns = "Id",
                         childColumns = "SubtaskId"),
 

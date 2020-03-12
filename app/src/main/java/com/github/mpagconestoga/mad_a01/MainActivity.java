@@ -9,6 +9,7 @@
 
 package com.github.mpagconestoga.mad_a01;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -18,6 +19,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.github.mpagconestoga.mad_a01.adapters.TaskListAdapter;
@@ -58,6 +62,22 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch(item.getItemId()){
+            case R.id.action_settings:
+                Intent newSettingsIntent = new Intent(getApplicationContext(), SettingsActivity.class);
+                startActivity(newSettingsIntent);
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     public class NewTaskClickListener implements FloatingActionButton.OnClickListener {
         @Override
@@ -68,4 +88,3 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 }
-

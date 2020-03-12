@@ -45,15 +45,14 @@ public class TaskRepository {
     public void delete(Task task){
         new TaskRepository.DeleteTaskAsyncTask(taskDao).execute(task);
     }
+  
+    public void deleteAllTasks(){
+        new TaskRepository.DeleteAllTasksAsyncTask(taskDao).execute();
+
     public Task getTaskById(int id){
         return taskDao.getTasksById(id);
     }
-    public void deleteAllPersons(){
-        if(new TaskRepository.DeleteAllTasksAsyncTask(taskDao).execute().getStatus() == AsyncTask.Status.FINISHED) {
-
-        }
-
-    }
+  
     public LiveData<List<Task>> getAllTasks() {
         return allTasks;
     }

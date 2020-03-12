@@ -16,6 +16,7 @@ import androidx.lifecycle.LiveData;
 
 import com.github.mpagconestoga.mad_a01.dao.PersonTaskDao;
 import com.github.mpagconestoga.mad_a01.objects.Database;
+import com.github.mpagconestoga.mad_a01.objects.Person;
 import com.github.mpagconestoga.mad_a01.objects.PersonTask;
 
 import java.util.List;
@@ -36,6 +37,10 @@ public class PersonTaskRepository {
 
     public LiveData<List<PersonTask>> getAllTasks() {
         return allPersonTasks;
+    }
+
+    public List<Person> getPersonsByTaskId(int taskId){
+        return personTaskDao.GetPersonsByTaskId(taskId);
     }
 
     private static class InsertPersonTaskAsyncTask extends AsyncTask<PersonTask, Void, Void>{

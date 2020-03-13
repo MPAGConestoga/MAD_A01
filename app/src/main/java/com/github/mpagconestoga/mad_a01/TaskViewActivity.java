@@ -9,8 +9,8 @@
 
 package com.github.mpagconestoga.mad_a01;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,18 +20,17 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.github.mpagconestoga.mad_a01.adapters.SubtaskAdapter;
-import com.github.mpagconestoga.mad_a01.adapters.TaskListAdapter;
 import com.github.mpagconestoga.mad_a01.adapters.ViewSubtaskAdapter;
+import com.github.mpagconestoga.mad_a01.objects.Person;
 import com.github.mpagconestoga.mad_a01.objects.Task;
 import com.github.mpagconestoga.mad_a01.viewmodel.TaskViewModel;
 
@@ -44,6 +43,7 @@ import java.io.OutputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.List;
 
 public class TaskViewActivity extends AppCompatActivity {
     private static final String TAG = "TaskViewActivity";
@@ -51,12 +51,15 @@ public class TaskViewActivity extends AppCompatActivity {
     private RecyclerView subtaskRecyclerView;
     private ViewSubtaskAdapter subtaskAdapter;
     private RecyclerView.LayoutManager subtaskLayoutManager;
-    private TextView header;
+    private TextView taskHeader;
     private ProgressBar progressBar;
-
+    private TextView categoryHeader;
+    private TextView categoryLink;
+    private TextView assignedPeopleList;
     private TaskViewModel viewModel;
 
     private View backgroundView;
+    // TODO: Change this
     String imageURL = "https://neighborscape.ca/wp-content/uploads/2018/06/Thumbnail-02-256x256.jpg";
 
     @Override
@@ -65,19 +68,27 @@ public class TaskViewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_view);
 
-        // Grab viewModel
+        // Grab viewModel and set background image place
         viewModel = ViewModelProvider.AndroidViewModelFactory.getInstance(this.getApplication()).create(TaskViewModel.class);
         int taskId = getIntent().getIntExtra("taskid", -1);
-
         backgroundView = findViewById(R.id.layout);
 
         // Get task
         viewModel.setTaskById(taskId);
+        Task task = viewModel.getTask();
 
         // Set Task Header info
         progressBar = findViewById(R.id.task_progress);
-        header = findViewById(R.id.task_title);
-        header.setText(String.format("%s: %s", "Task", viewModel.getTask().getName()));
+        taskHeader = findViewById(R.id.task_title);
+        taskHeader.setText(String.format("%s: %s", getString(R.string.task_header), task.getName()));
+
+        // Set Assigned People display
+        assignedPeopleList.setText(generatePeopleList(task.getAssignedPeople()));
+
+        // Set Category Header and Link
+        String categoryHelpHeader = task.getCategory().getName() + getString(R.string.help_collon);
+        categoryHeader.setText(categoryHelpHeader);
+        // DO with a button instead
 
         // Set subtask recycler list
         subtaskRecyclerView = findViewById(R.id.viewsubtask_list);
@@ -89,7 +100,8 @@ public class TaskViewActivity extends AppCompatActivity {
         subtaskRecyclerView.setAdapter(subtaskAdapter);
         subtaskAdapter.setData(viewModel.getSubtasks());
 
-        DownloadTask downloadTask = new DownloadTask(); // logic for saving and loading background image
+        // Logic for saving and loading background image
+        DownloadTask downloadTask = new DownloadTask();
         downloadTask.execute(imageURL);
     }
 
@@ -178,10 +190,24 @@ public class TaskViewActivity extends AppCompatActivity {
             return bitmapDrawable;
         }
 
+        @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
         @Override
         protected void onPostExecute(BitmapDrawable bitmapDrawable) {
             backgroundView.setBackground(bitmapDrawable);
             bitmapDrawable.setAlpha(50);
         }
+    }
+
+    public static String generatePeopleList(List<Person> personList) {
+        int size = personList.size();
+        StringBuilder returnString = new StringBuilder();
+
+        for (int i = 0; i < size ; i++) {
+            returnString.append(personList.get(i));
+            if(i == size - 1) {
+                returnString.append(" ,");
+            }
+        }
+        return returnString.toString();
     }
 }

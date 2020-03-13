@@ -35,4 +35,7 @@
     <string name="title_activity_test">ActivityTest</string>
     <string name="person_already_added">That person was already added</string>
     <string name="priority">Priority</string>
+    <string name="assigned_people">Assigned People:</string>
+    <string name="task_header">Task</string>
+    <string name="help_collon">Help:</string>
 </resources>

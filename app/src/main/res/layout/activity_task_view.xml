@@ -7,24 +7,24 @@
     tools:context=".TaskViewActivity"
     android:id="@+id/layout">
 
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/linearLayout"
-        android:layout_width="409dp"
-        android:layout_height="75dp"
-        android:layout_marginStart="1dp"
-        android:layout_marginTop="1dp"
+        android:layout_width="410dp"
+        android:layout_height="155dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/task_title"
             android:layout_width="match_parent"
-            android:padding="20dp"
             android:layout_height="wrap_content"
-            android:textSize="30sp"
+            android:padding="20dp"
             android:text="@string/task_title"
+            android:textSize="30sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
 
         <TextView
             android:id="@+id/taskName"
@@ -33,18 +33,56 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/category_help_header"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="8dp"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/assigned_people_header" />
 
+        <TextView
+            android:id="@+id/assigned_people_header"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/assigned_people"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/task_title" />
+
+        <TextView
+            android:id="@+id/assigned_people"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            tools:layout_editor_absoluteX="160dp"
+            tools:layout_editor_absoluteY="90dp" />
+
+        <TextView
+            android:id="@+id/category_link"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            app:layout_constraintStart_toEndOf="@+id/category_help_header"
+            app:layout_constraintTop_toTopOf="@+id/category_help_header" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/viewsubtask_list"
         android:layout_width="match_parent"
         android:layout_height="300dp"
-        android:layout_marginTop="164dp"
+        android:layout_marginTop="4dp"
         android:padding="4dp"
         android:scrollbars="vertical"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 

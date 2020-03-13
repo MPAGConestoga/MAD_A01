@@ -38,4 +38,5 @@
     <string name="assigned_people">Assigned People:</string>
     <string name="task_header">Task</string>
     <string name="help_collon">Help:</string>
+    <string name="subtask_name_view">Subtask:</string>
 </resources>

@@ -68,9 +68,9 @@ public class PersonSearchAdapter extends RecyclerView.Adapter<PersonSearchAdapte
     public void onBindViewHolder(ViewHolder holder, final int position) {
         String name = data.get(position).getName();
         holder.name.setText(name);
-
+        
         if (selectedPosition == position) {
-            holder.itemView.setBackgroundColor(Color.parseColor("#f0f0f0"));
+            holder.itemView.setBackgroundColor(Color.parseColor("#B8B8B8"));
         } else {
             holder.itemView.setBackgroundColor(Color.parseColor("#ffffff"));
         }

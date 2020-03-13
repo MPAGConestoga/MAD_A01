@@ -28,7 +28,7 @@ public class Converters {
     }
 
     @TypeConverter
-    public static Category fromCategory(String value) { return value == null ? null : new Category(value); }
+    public static Category fromCategory(String value) { return value == null ? null : new Category(value, "",""); }
 
     @TypeConverter
     public static String categoryToString(Category category) { return category == null ? null : category.getName(); }

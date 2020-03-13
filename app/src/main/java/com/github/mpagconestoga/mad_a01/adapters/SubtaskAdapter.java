@@ -25,10 +25,16 @@ import com.github.mpagconestoga.mad_a01.R;
 import com.github.mpagconestoga.mad_a01.objects.Subtask;
 import com.github.mpagconestoga.mad_a01.objects.WeightFilter;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 
 public class SubtaskAdapter extends RecyclerView.Adapter<SubtaskAdapter.ViewHolder> {
     private static final String TAG = "SubtaskAdapter";
+
+    public ArrayList<Subtask> getSubtasks() {
+        return Subtasks;
+    }
 
     private ArrayList<Subtask> Subtasks;
     private LayoutInflater inflater;
@@ -67,57 +73,28 @@ public class SubtaskAdapter extends RecyclerView.Adapter<SubtaskAdapter.ViewHold
         holder.name.setText(subtask.getName());
         holder.weight.setText(String.valueOf(subtask.getWeight()));
         holder.position = position;
-        Log.d(TAG, "&--> onBindViewHolder: Position: " + position + "Name: " + subtask.getName());
+    }
+
+    public void updateParentData(int position) {}
+    public void setData(Subtask subtask) {
+        this.Subtasks.add(0, subtask);
+        notifyDataSetChanged();
+
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        EditText name;
-        EditText weight;
+        TextView name;
+        TextView weight;
         Button delete;
         int position;
 
         public ViewHolder(View view) {
             super(view);
+
             // Set UI buttons
+            delete = view.findViewById(R.id.subtask_delete_button);
             name = view.findViewById(R.id.subtask_name);
             weight = view.findViewById(R.id.subtask_weight);
-            delete = view.findViewById(R.id.subtask_delete_button);
-            weight.setFilters(new InputFilter[]{ new WeightFilter(1, 5) });
-
-            // Set subtask name event handler
-            name.addTextChangedListener(new TextWatcher() {
-                @Override
-                public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
-
-                @Override
-                public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    Subtasks.get(position).setName(name.getText().toString());
-                }
-
-                @Override
-                public void afterTextChanged(Editable s) { }
-            });
-
-            // Set priority button handler
-            weight.addTextChangedListener(new TextWatcher() {
-                @Override
-                public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
-
-                @Override
-                public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    String newVal = weight.getText().toString();
-                    int weight = 1;
-
-                    try {
-                        weight = Integer.parseInt(newVal);
-                    } catch (NumberFormatException ignored) { }
-
-                    Subtasks.get(position).setPriority(weight);
-                }
-
-                @Override
-                public void afterTextChanged(Editable s) { }
-            });
 
             // Delete subtask button handler
             delete.setOnClickListener(new Button.OnClickListener() {

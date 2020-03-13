@@ -10,12 +10,18 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/subtasks"
+        <EditText
+            android:id="@+id/subtask_name_edittext"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent"
+            android:hint="Task Name"/>
+        <EditText
+            android:id="@+id/subtask_weight_edittext"
+            android:hint="Weight value between 1-5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/subtask_name_edittext"/>
 
         <Button
             android:id="@+id/subtasks_button_add"
@@ -23,7 +29,17 @@
             android:layout_height="wrap_content"
             android:textSize="16sp"
             android:text="@string/add_subtask"
-            app:layout_constraintTop_toBottomOf="@+id/subtasks"/>
+            app:layout_constraintTop_toBottomOf="@id/subtask_weight_edittext"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/subtasks"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            app:layout_constraintTop_toBottomOf="@+id/subtasks_button_add"
+            tools:layout_editor_absoluteX="16dp" />
+
+
 
         <Button
             android:id="@+id/button_create_finalTask"

@@ -31,11 +31,17 @@ import com.github.mpagconestoga.mad_a01.objects.Subtask;
 import com.github.mpagconestoga.mad_a01.objects.Task;
 import com.github.mpagconestoga.mad_a01.objects.WeightFilter;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
 public class SubtaskAdapter extends RecyclerView.Adapter<SubtaskAdapter.ViewHolder> {
     private static final String TAG = "SubtaskAdapter";
+
+    public ArrayList<Subtask> getSubtasks() {
+        return Subtasks;
+    }
 
     private ArrayList<Subtask> Subtasks;
     private LayoutInflater inflater;
@@ -72,25 +78,30 @@ public class SubtaskAdapter extends RecyclerView.Adapter<SubtaskAdapter.ViewHold
     }
 
     public void updateParentData(int position) {}
+    public void setData(Subtask subtask) {
+        this.Subtasks.add(0, subtask);
+        notifyDataSetChanged();
 
-    public void setData(ArrayList<Subtask> subtasks) {
+    }
+    /*public void setData(ArrayList<Subtask> subtasks) {
         this.Subtasks = subtasks;
         notifyDataSetChanged();
-    }
+    }*/
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        EditText name;
-        EditText weight;
+        TextView name;
+        TextView weight;
         Button delete;
         int position;
 
         public ViewHolder(View view) {
             super(view);
             // Set UI buttons
+
+            delete = view.findViewById(R.id.subtask_delete_button);
             name = view.findViewById(R.id.subtask_name);
             weight = view.findViewById(R.id.subtask_weight);
-            delete = view.findViewById(R.id.subtask_delete_button);
-            weight.setFilters(new InputFilter[]{ new WeightFilter(1, 5) });
+            /*weight.setFilters(new InputFilter[]{ new WeightFilter(1, 5) });
 
             // Set subtask name event handler
             name.addTextChangedListener(new TextWatcher() {
@@ -125,7 +136,7 @@ public class SubtaskAdapter extends RecyclerView.Adapter<SubtaskAdapter.ViewHold
 
                 @Override
                 public void afterTextChanged(Editable s) { }
-            });
+            });*/
 
             // Delete subtask button handler
             delete.setOnClickListener(new Button.OnClickListener() {

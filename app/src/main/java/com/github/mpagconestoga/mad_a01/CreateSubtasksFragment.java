@@ -17,16 +17,21 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.Editable;
+import android.text.InputFilter;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.github.mpagconestoga.mad_a01.adapters.SubtaskAdapter;
 import com.github.mpagconestoga.mad_a01.objects.Person;
 import com.github.mpagconestoga.mad_a01.objects.Subtask;
+import com.github.mpagconestoga.mad_a01.objects.WeightFilter;
 import com.github.mpagconestoga.mad_a01.viewmodel.CreateTaskViewModel;
 
 import java.util.ArrayList;
@@ -45,6 +50,8 @@ public class CreateSubtasksFragment extends Fragment {
     private SubtaskAdapter adapter;
     private RecyclerView subtasks;
     private Button finishTaskCreation;
+    private EditText subtaskNameEditText;
+    private EditText subtaskWeightEditText;
 
     //---------- Lifecycle methods ----------//
     @Override
@@ -76,6 +83,27 @@ public class CreateSubtasksFragment extends Fragment {
         Button finishTaskCreation = view.findViewById(R.id.button_create_finalTask);
         finishTaskCreation.setOnClickListener(new CreateFinalTaskClickListener());
 
+        subtaskNameEditText = view.findViewById(R.id.subtask_name_edittext);
+        subtaskWeightEditText = view.findViewById(R.id.subtask_weight_edittext);
+        subtaskWeightEditText.setFilters(new InputFilter[]{ new WeightFilter(1, 5) });
+        subtaskWeightEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String newVal = subtaskWeightEditText.getText().toString();
+                int weight = 1;
+
+                try {
+                    weight = Integer.parseInt(newVal);
+                } catch (NumberFormatException ignored) { }
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) { }
+        });
         return view;
     }
 
@@ -92,12 +120,24 @@ public class CreateSubtasksFragment extends Fragment {
         @Override
         public void onClick(View v) {
             Log.d(TAG, "onClick: AddSubtask button clicked");
-            ArrayList<Subtask> currentSubtasks = viewModel.getCurrentSubtasks();
+            String subtaskName = subtaskNameEditText.getText().toString().trim();
+            if(subtaskName.isEmpty()){
+                Toast.makeText(view.getContext(), "Please fill out the name of the subtask", Toast.LENGTH_LONG).show();
+                return;
+            }
+            String subtaskWeight = subtaskWeightEditText.getText().toString().trim();
+            if (subtaskWeight.isEmpty()){
+                Toast.makeText(view.getContext(), "Please fill out the weight of the subtask", Toast.LENGTH_LONG).show();
+                return;
+            }
+
+
+            ArrayList<Subtask> currentSubtasks = adapter.getSubtasks();
 
             // If a subtask already exists, we want to make sure the previous subtask is valid
             // before allowing the user to create another.
-            if (currentSubtasks.size() > 0) {
-                Subtask prev = currentSubtasks.get(currentSubtasks.size() - 1);
+            /*if (currentSubtasks.size() > 0) {
+                Subtask prev = currentSubtasks.get(0);
 
                 // Input Validation
                 if (prev.getName().trim().length() == 0 || prev.getWeight() == 0) {
@@ -105,11 +145,15 @@ public class CreateSubtasksFragment extends Fragment {
                     Toast.makeText(view.getContext(), R.string.subtask_empty, Toast.LENGTH_LONG).show();
                     return;
                 }
-            }
-
-            currentSubtasks.add(new Subtask(0, ""));
-            adapter.setData(currentSubtasks);
+            }*/
+            adapter.setData(new Subtask(Integer.parseInt(subtaskWeight), subtaskName));
+            //currentSubtasks.add(new Subtask(0, ""));
+            //adapter.setData(currentSubtasks);
             Log.d(TAG, "onClick: currentSubtasks size: " + currentSubtasks.size());
+            subtaskNameEditText.setText("");
+            subtaskWeightEditText.setText("");
+            subtaskNameEditText.requestFocus();
+
         }
     }
 
@@ -117,15 +161,21 @@ public class CreateSubtasksFragment extends Fragment {
         @Override
         public void onClick(View v) {
             // Get subtask
-            ArrayList<Subtask> currentSubtasks = viewModel.getCurrentSubtasks();
-            int numSubTasks = currentSubtasks.size();
+
+
+            ArrayList<Subtask> currentSubtasks = adapter.getSubtasks();
+
             String firstSubTaskName = currentSubtasks.get(0).getName().trim();
             int firstPriority = currentSubtasks.get(0).getWeight();
-
-            if ((numSubTasks == 1) && (firstSubTaskName.equals("") || (firstPriority == 0))) {
-                Log.d(TAG, "Number of sub-tasks:" + numSubTasks);
-                return;
+            //error with empty first task name being equal to second task name
+            if(firstSubTaskName == "" ){
+                Toast.makeText(viewModel.getApplication(), "Please ensure all fields for each subtask are filled out", Toast.LENGTH_SHORT).show();
             }
+            ArrayList<Subtask> currentSubtasksToReturn =viewModel.getCurrentSubtasks();
+            for(Subtask s : currentSubtasks){
+                currentSubtasksToReturn.add(s);
+            }
+
 
             // Add task to database and quit activity
             viewModel.createTask();

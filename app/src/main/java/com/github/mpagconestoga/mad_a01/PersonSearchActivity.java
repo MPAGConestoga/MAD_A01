@@ -106,6 +106,7 @@ public class PersonSearchActivity extends AppCompatActivity {
                 viewModel.addPerson(name);
                 searchBox.setQuery("", false);
                 adapter.setPosition(0);
+                HideKeyBoardUtility.hideKeyboard(v);
             }
 
         }
@@ -128,6 +129,7 @@ public class PersonSearchActivity extends AppCompatActivity {
             Person selectedPerson = list.get(selectedItemPosition);
             returnIntent.putExtra("selected", selectedPerson);
             setResult(Activity.RESULT_OK, returnIntent);
+            HideKeyBoardUtility.hideKeyboard(v);
             finish();
         }
     }

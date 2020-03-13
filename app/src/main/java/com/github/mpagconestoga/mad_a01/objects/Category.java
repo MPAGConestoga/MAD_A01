@@ -21,8 +21,14 @@ public class Category {
 
     private String Name;
 
-    public Category(String Name) {
+    private String BackgroundURL;
+
+    private String WebURL;
+
+    public Category(String Name, String BackgroundURL, String WebURL) {
         this.Name = Name;
+        this.BackgroundURL = BackgroundURL;
+        this.WebURL = WebURL;
     }
 
     public Category(Parcel in) {
@@ -39,5 +45,13 @@ public class Category {
 
     public String getName() {
         return Name;
+    }
+
+    public String getBackgroundURL() {
+        return BackgroundURL;
+    }
+
+    public String getWebURL() {
+        return WebURL;
     }
 }

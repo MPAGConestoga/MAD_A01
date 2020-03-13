@@ -43,7 +43,7 @@ public abstract class Database extends RoomDatabase {
     public static synchronized Database getInstance(Context context){
         if(instance == null){
             instance = Room.databaseBuilder(context.getApplicationContext(),
-                    Database.class, "database1.5")
+                    Database.class, "database1.6")
                     .fallbackToDestructiveMigration()
                     .allowMainThreadQueries()
                     .addCallback(roomCallback)
@@ -76,12 +76,15 @@ public abstract class Database extends RoomDatabase {
 
         @Override
         protected Void doInBackground(Void... voids) {
-            personDao.insert(new Person("Person 1"));
-            personDao.insert(new Person("Person 2"));
-            personDao.insert(new Person("Person 3"));
-            categoryDao.insert(new Category("Category 1"));
-            categoryDao.insert(new Category("Category 2"));
-            categoryDao.insert(new Category("Category 3"));
+            personDao.insert(new Person("Igor"));
+            personDao.insert(new Person("Amy"));
+            personDao.insert(new Person("Gabriel"));
+            personDao.insert(new Person("Michael"));
+            personDao.insert(new Person("Duncan"));
+            personDao.insert(new Person("Paul"));
+            categoryDao.insert(new Category("Landscaping","https://www.houselogic.com/wp-content/uploads/2019/05/spring-landscaping-ideas-yard.jpg?crop&resize=1280%2C853", "https://www.diynetwork.com/how-to/outdoors/landscaping/the-essential-steps-to-landscape-design-pictures"));
+            categoryDao.insert(new Category("House Renovations", "https://assets.entrepreneur.com/images/misc/1500455382_5.jpg","https://www.homestoriesatoz.com/decorating/home-exterior-makeover-before-and-after.html"));
+            categoryDao.insert(new Category("Winter Cleaning","https://static.houselogic.com/content/images/winter-cleaning-outside-windows-retina_retina_164f4b36e83ca415c86d623f564773d1.jpg","https://www.houselogic.com/organize-maintain/cleaning-decluttering/winter-cleaning/"));
 
             return null;
         }

@@ -21,7 +21,7 @@ import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
-
+//credit:https://android.jlelse.eu/make-a-great-android-ux-how-to-make-a-swipe-button-eefbf060326d
 public class SwipeButton extends RelativeLayout {
     private ImageView slidingButton;
     private float initialX;

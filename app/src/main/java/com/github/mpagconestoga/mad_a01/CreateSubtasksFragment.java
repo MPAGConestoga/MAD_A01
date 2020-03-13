@@ -28,6 +28,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.NumberPicker;
 import android.widget.Toast;
 
 import com.github.mpagconestoga.mad_a01.adapters.SubtaskAdapter;
@@ -49,11 +50,11 @@ public class CreateSubtasksFragment extends Fragment {
 
     // UI Elements
     private Button addSubtask;
+    private NumberPicker weight;
     private SubtaskAdapter adapter;
     private RecyclerView subtasks;
     private Button finishTaskCreation;
     private EditText subtaskNameEditText;
-    private EditText subtaskWeightEditText;
 
     //---------- Lifecycle methods ----------//
     @Override
@@ -86,26 +87,12 @@ public class CreateSubtasksFragment extends Fragment {
         finishTaskCreation.setOnClickListener(new CreateFinalTaskClickListener());
 
         subtaskNameEditText = view.findViewById(R.id.subtask_name_edittext);
-        subtaskWeightEditText = view.findViewById(R.id.subtask_weight_edittext);
-        subtaskWeightEditText.setFilters(new InputFilter[]{ new WeightFilter(1, 5) });
-        subtaskWeightEditText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+        weight = view.findViewById(R.id.subtask_number_picker);
+        weight.setMinValue(1);
+        weight.setMaxValue(5);
+        weight.setWrapSelectorWheel(true);
+        weight.setValue(2);
 
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                String newVal = subtaskWeightEditText.getText().toString();
-                int weight = 1;
-
-                try {
-                    weight = Integer.parseInt(newVal);
-                } catch (NumberFormatException ignored) { }
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) { }
-        });
         return view;
     }
 
@@ -140,13 +127,13 @@ public class CreateSubtasksFragment extends Fragment {
                 Toast.makeText(view.getContext(), "Please fill out the name of the subtask", Toast.LENGTH_LONG).show();
                 return;
             }
-            String subtaskWeight = subtaskWeightEditText.getText().toString().trim();
-            if (subtaskWeight.isEmpty()){
+            int subtaskWeight = weight.getValue();
+            if (subtaskWeight < 1){
                 Toast.makeText(view.getContext(), "Please fill out the weight of the subtask", Toast.LENGTH_LONG).show();
                 return;
             }
 
-            hideKeyboard(v);
+            HideKeyBoardUtility.hideKeyboard(v);
             ArrayList<Subtask> currentSubtasks = adapter.getSubtasks();
 
             // If a subtask already exists, we want to make sure the previous subtask is valid
@@ -161,12 +148,12 @@ public class CreateSubtasksFragment extends Fragment {
                     return;
                 }
             }*/
-            adapter.setData(new Subtask(Integer.parseInt(subtaskWeight), subtaskName));
+            adapter.setData(new Subtask(subtaskWeight, subtaskName));
             //currentSubtasks.add(new Subtask(0, ""));
             //adapter.setData(currentSubtasks);
             Log.d(TAG, "onClick: currentSubtasks size: " + currentSubtasks.size());
             subtaskNameEditText.setText("");
-            subtaskWeightEditText.setText("");
+            weight.setValue(1);
             subtaskNameEditText.requestFocus();
 
         }

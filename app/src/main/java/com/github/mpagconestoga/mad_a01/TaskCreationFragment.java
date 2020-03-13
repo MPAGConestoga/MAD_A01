@@ -97,7 +97,7 @@ public class TaskCreationFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 taskCategory = (Category) parent.getItemAtPosition(position);
-                hideKeyboard(view);
+                HideKeyBoardUtility.hideKeyboard(view);
             }
 
             @Override
@@ -200,25 +200,12 @@ public class TaskCreationFragment extends Fragment {
         }
     }
 
-    //credit:https://stackoverflow.com/questions/1109022/close-hide-android-soft-keyboard
-    public static void hideKeyboard(View view) {
-        InputMethodManager imm = (InputMethodManager) view.getContext().getSystemService(Activity.INPUT_METHOD_SERVICE);
-                //getSystemService(Activity.INPUT_METHOD_SERVICE);
-        //Find the currently focused view, so we can grab the correct window token from it.
-        //View view = activity.getCurrentFocus();
-        //If no view currently has focus, create a new one, just so we can grab a window token from it
-        /*if (view == null) {
-            view = new View(activity);
-        }*/
-        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-    }
-
     // TODO: Fix the calendar -> Put in its own class and make sure the date matches
     private void dateTimeDialogBuilder(View view) {
         buttonDateTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                hideKeyboard(view);
+                HideKeyBoardUtility.hideKeyboard(view);
                 // Set up calendar -> used to initialized values for the time & date picker
                 final Calendar calendar = Calendar.getInstance();
                 final int day = calendar.get(Calendar.DAY_OF_MONTH);

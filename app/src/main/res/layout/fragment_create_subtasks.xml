@@ -16,20 +16,31 @@
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
             android:hint="Task Name"/>
-        <EditText
-            android:id="@+id/subtask_weight_edittext"
-            android:hint="Weight value between 1-5"
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/weight_view"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="@string/priority"
+            android:textSize="10pt"
+            app:layout_constraintTop_toBottomOf="@+id/subtask_name_edittext"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:layout_editor_absoluteX="8dp" />
+        <NumberPicker
+            android:id="@+id/subtask_number_picker"
+            android:layout_marginStart="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@+id/weight_view"
             app:layout_constraintTop_toBottomOf="@+id/subtask_name_edittext"/>
-
         <Button
             android:id="@+id/subtasks_button_add"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="16sp"
             android:text="@string/add_subtask"
-            app:layout_constraintTop_toBottomOf="@id/subtask_weight_edittext"/>
+            app:layout_constraintTop_toBottomOf="@id/subtask_number_picker"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/subtasks"
@@ -47,7 +58,8 @@
             android:layout_height="wrap_content"
             android:textSize="16sp"
             android:text="@string/create_task"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintTop_toBottomOf="@id/subtasks"
+            android:layout_marginTop="150dp"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -87,7 +87,6 @@ public class TaskCreationFragment extends Fragment {
         // Setup UI elements
         taskNameEditText = view.findViewById(R.id.newTaskName);
 
-
         // Category Drop-down builder
         categorySpinner = view.findViewById(R.id.spinner_select_category);
         categoryAdapter = new CategoryAdapter(getActivity(), categoryList);

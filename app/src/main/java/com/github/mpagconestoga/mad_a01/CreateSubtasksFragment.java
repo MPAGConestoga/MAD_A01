@@ -67,16 +67,16 @@ public class CreateSubtasksFragment extends Fragment {
         addSubtask = view.findViewById(R.id.subtasks_button_add);
         addSubtask.setOnClickListener(new AddSubtaskClickListener());
 
-        // Finilize Task (Complete Task)
-        Button finishTaskCreation = view.findViewById(R.id.button_create_finalTask);
-        finishTaskCreation.setOnClickListener(new CreateFinalTaskClickListener());
-
         subtaskNameEditText = view.findViewById(R.id.subtask_name_edittext);
         weight = view.findViewById(R.id.subtask_number_picker);
         weight.setMinValue(1);
         weight.setMaxValue(5);
         weight.setWrapSelectorWheel(true);
         weight.setValue(2);
+
+        // Finilize Task Button Listener(Complete Task)
+        Button finishTaskCreation = view.findViewById(R.id.button_create_finalTask);
+        finishTaskCreation.setOnClickListener(new CreateFinalTaskClickListener());
 
         return view;
     }
@@ -128,7 +128,7 @@ public class CreateSubtasksFragment extends Fragment {
             if(firstSubTaskName == "" ){
                 Toast.makeText(viewModel.getApplication(), "Please ensure all fields for each subtask are filled out", Toast.LENGTH_SHORT).show();
             }
-            ArrayList<Subtask> currentSubtasksToReturn =viewModel.getCurrentSubtasks();
+            ArrayList<Subtask> currentSubtasksToReturn = viewModel.getCurrentSubtasks();
             for(Subtask s : currentSubtasks){
                 currentSubtasksToReturn.add(s);
             }

@@ -31,7 +31,6 @@ public class TaskViewModel extends AndroidViewModel {
 
     private Task task;
     private LiveData<List<Task>> allTasks;
-    private List<Person> assignedPeople;
     private List<Subtask> subtasks;
 
     public TaskViewModel(@NonNull Application application) {
@@ -60,16 +59,7 @@ public class TaskViewModel extends AndroidViewModel {
 
     public void setTaskById(int taskId) {
         task = taskRepository.getTaskById(taskId);
-        assignedPeople = personTaskRepository.getPersonsByTaskId(taskId);
-        subtasks = subtaskRepository.getSubtasksByTaskId(taskId);
+        task.setAssignedPeople((ArrayList<Person>) personTaskRepository.getPersonsByTaskId(taskId));
+        task.setSubtasks((ArrayList<Subtask>) subtaskRepository.getSubtasksByTaskId(taskId));
     }
-
-    public List<Person> getAssignedPeople() {
-        return assignedPeople;
-    }
-
-    public List<Subtask> getSubtasks() {
-        return subtasks;
-    }
-
 }

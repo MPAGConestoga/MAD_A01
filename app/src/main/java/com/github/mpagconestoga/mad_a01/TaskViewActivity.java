@@ -47,18 +47,17 @@ import java.util.List;
 
 public class TaskViewActivity extends AppCompatActivity {
     private static final String TAG = "TaskViewActivity";
+    private TaskViewModel viewModel;
+    private View backgroundView;
 
-    private RecyclerView subtaskRecyclerView;
-    private ViewSubtaskAdapter subtaskAdapter;
-    private RecyclerView.LayoutManager subtaskLayoutManager;
     private TextView taskHeader;
     private ProgressBar progressBar;
     private TextView categoryHeader;
     private TextView categoryLink;
     private TextView assignedPeopleList;
-    private TaskViewModel viewModel;
+    private RecyclerView subtaskRecyclerView;
+    private ViewSubtaskAdapter subtaskAdapter;
 
-    private View backgroundView;
     // TODO: Change this
     String imageURL = "https://neighborscape.ca/wp-content/uploads/2018/06/Thumbnail-02-256x256.jpg";
 
@@ -67,6 +66,16 @@ public class TaskViewActivity extends AppCompatActivity {
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_view);
+
+        // Set up UI elements
+        progressBar = findViewById(R.id.task_progress);
+        taskHeader = findViewById(R.id.task_title);
+        categoryHeader = findViewById(R.id.category_help_header);
+        categoryLink = findViewById(R.id.category_link);
+        assignedPeopleList = findViewById(R.id.assigned_people_list);
+
+        subtaskRecyclerView = findViewById(R.id.viewsubtask_list);
+        subtaskAdapter = new ViewSubtaskAdapter(this);
 
         // Grab viewModel and set background image place
         viewModel = ViewModelProvider.AndroidViewModelFactory.getInstance(this.getApplication()).create(TaskViewModel.class);
@@ -78,8 +87,6 @@ public class TaskViewActivity extends AppCompatActivity {
         Task task = viewModel.getTask();
 
         // Set Task Header info
-        progressBar = findViewById(R.id.task_progress);
-        taskHeader = findViewById(R.id.task_title);
         taskHeader.setText(String.format("%s: %s", getString(R.string.task_header), task.getName()));
 
         // Set Assigned People display
@@ -91,14 +98,12 @@ public class TaskViewActivity extends AppCompatActivity {
         // DO with a button instead
 
         // Set subtask recycler list
-        subtaskRecyclerView = findViewById(R.id.viewsubtask_list);
         subtaskRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         subtaskRecyclerView.setHasFixedSize(true);
 
         // Subtask Adapter
-        subtaskAdapter = new ViewSubtaskAdapter(this);
         subtaskRecyclerView.setAdapter(subtaskAdapter);
-        subtaskAdapter.setData(viewModel.getSubtasks());
+        subtaskAdapter.setData(task.getSubtasks());
 
         // Logic for saving and loading background image
         DownloadTask downloadTask = new DownloadTask();
@@ -203,8 +208,8 @@ public class TaskViewActivity extends AppCompatActivity {
         StringBuilder returnString = new StringBuilder();
 
         for (int i = 0; i < size ; i++) {
-            returnString.append(personList.get(i));
-            if(i == size - 1) {
+            returnString.append(personList.get(i).getName());
+            if(i != size - 1) {
                 returnString.append(" ,");
             }
         }

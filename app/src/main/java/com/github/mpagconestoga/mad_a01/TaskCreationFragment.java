@@ -8,6 +8,7 @@
 
 package com.github.mpagconestoga.mad_a01;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
@@ -16,11 +17,13 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
+import android.view.inputmethod.InputMethodManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -85,6 +88,7 @@ public class TaskCreationFragment extends Fragment {
         // Setup UI elements
         taskNameEditText = view.findViewById(R.id.newTaskName);
 
+
         // Category Drop-down builder
         categorySpinner = view.findViewById(R.id.spinner_select_category);
         categoryAdapter = new CategoryAdapter(getActivity(), categoryList);
@@ -93,6 +97,7 @@ public class TaskCreationFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 taskCategory = (Category) parent.getItemAtPosition(position);
+                hideKeyboard(view);
             }
 
             @Override
@@ -195,11 +200,25 @@ public class TaskCreationFragment extends Fragment {
         }
     }
 
+    //credit:https://stackoverflow.com/questions/1109022/close-hide-android-soft-keyboard
+    public static void hideKeyboard(View view) {
+        InputMethodManager imm = (InputMethodManager) view.getContext().getSystemService(Activity.INPUT_METHOD_SERVICE);
+                //getSystemService(Activity.INPUT_METHOD_SERVICE);
+        //Find the currently focused view, so we can grab the correct window token from it.
+        //View view = activity.getCurrentFocus();
+        //If no view currently has focus, create a new one, just so we can grab a window token from it
+        /*if (view == null) {
+            view = new View(activity);
+        }*/
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
     // TODO: Fix the calendar -> Put in its own class and make sure the date matches
     private void dateTimeDialogBuilder(View view) {
         buttonDateTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                hideKeyboard(view);
                 // Set up calendar -> used to initialized values for the time & date picker
                 final Calendar calendar = Calendar.getInstance();
                 final int day = calendar.get(Calendar.DAY_OF_MONTH);
@@ -263,4 +282,5 @@ public class TaskCreationFragment extends Fragment {
         categoryList.addAll(viewModel.getAllCategories());
         categoryAdapter.notifyDataSetChanged();
     }
+
 }

@@ -9,6 +9,7 @@
 
 package com.github.mpagconestoga.mad_a01;
 
+import android.app.Activity;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -24,6 +25,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -115,6 +117,19 @@ public class CreateSubtasksFragment extends Fragment {
         Log.d(TAG, "&--> Subtask Creation Address: " + viewModel);
     }
 
+    //credit: https://stackoverflow.com/questions/1109022/close-hide-android-soft-keyboard
+    public static void hideKeyboard(View view) {
+        InputMethodManager imm = (InputMethodManager) view.getContext().getSystemService(Activity.INPUT_METHOD_SERVICE);
+        //getSystemService(Activity.INPUT_METHOD_SERVICE);
+        //Find the currently focused view, so we can grab the correct window token from it.
+        //View view = activity.getCurrentFocus();
+        //If no view currently has focus, create a new one, just so we can grab a window token from it
+        /*if (view == null) {
+            view = new View(activity);
+        }*/
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
     //---------- OnClick Listeners & Handlers----------//
     public class AddSubtaskClickListener implements Button.OnClickListener {
         @Override
@@ -131,7 +146,7 @@ public class CreateSubtasksFragment extends Fragment {
                 return;
             }
 
-
+            hideKeyboard(v);
             ArrayList<Subtask> currentSubtasks = adapter.getSubtasks();
 
             // If a subtask already exists, we want to make sure the previous subtask is valid

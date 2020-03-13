@@ -1,4 +1,4 @@
-package com.github.mpagconestoga.mad_a01;
+package com.github.mpagconestoga.mad_a01.objects;
 
 import android.app.Activity;
 import android.view.View;

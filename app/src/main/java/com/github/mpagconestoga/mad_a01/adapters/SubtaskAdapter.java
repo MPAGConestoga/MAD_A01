@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -32,16 +33,16 @@ import java.util.ArrayList;
 public class SubtaskAdapter extends RecyclerView.Adapter<SubtaskAdapter.ViewHolder> {
     private static final String TAG = "SubtaskAdapter";
 
-    public ArrayList<Subtask> getSubtasks() {
-        return Subtasks;
-    }
-
     private ArrayList<Subtask> Subtasks;
     private LayoutInflater inflater;
 
     public SubtaskAdapter(Context context) {
         Subtasks = new ArrayList<Subtask>();
         this.inflater = LayoutInflater.from(context);
+    }
+
+    public ArrayList<Subtask> getSubtasks() {
+        return Subtasks;
     }
 
     @NonNull
@@ -59,10 +60,6 @@ public class SubtaskAdapter extends RecyclerView.Adapter<SubtaskAdapter.ViewHold
     @Override
     public int getItemCount() {
         return Subtasks.size();
-    }
-
-    public ArrayList<Subtask> getSubtasks() {
-        return Subtasks;
     }
 
     @Override

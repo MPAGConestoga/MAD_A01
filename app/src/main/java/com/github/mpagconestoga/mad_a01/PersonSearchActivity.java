@@ -10,7 +10,6 @@
 package com.github.mpagconestoga.mad_a01;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -19,18 +18,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.github.mpagconestoga.mad_a01.adapters.PersonSearchAdapter;
+import com.github.mpagconestoga.mad_a01.objects.HideKeyBoardUtility;
 import com.github.mpagconestoga.mad_a01.objects.Person;
-import com.github.mpagconestoga.mad_a01.repositories.TaskRepository;
 import com.github.mpagconestoga.mad_a01.viewmodel.PersonSearchViewModel;
 
 import java.util.ArrayList;

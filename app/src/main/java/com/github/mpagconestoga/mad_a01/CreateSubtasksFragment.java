@@ -9,7 +9,6 @@
 
 package com.github.mpagconestoga.mad_a01;
 
-import android.app.Activity;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -18,23 +17,18 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.text.Editable;
-import android.text.InputFilter;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.NumberPicker;
 import android.widget.Toast;
 
 import com.github.mpagconestoga.mad_a01.adapters.SubtaskAdapter;
-import com.github.mpagconestoga.mad_a01.objects.Person;
+import com.github.mpagconestoga.mad_a01.objects.HideKeyBoardUtility;
 import com.github.mpagconestoga.mad_a01.objects.Subtask;
-import com.github.mpagconestoga.mad_a01.objects.WeightFilter;
 import com.github.mpagconestoga.mad_a01.viewmodel.CreateTaskViewModel;
 
 import java.util.ArrayList;

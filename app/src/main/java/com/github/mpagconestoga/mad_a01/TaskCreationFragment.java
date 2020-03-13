@@ -8,7 +8,6 @@
 
 package com.github.mpagconestoga.mad_a01;
 
-import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
@@ -23,7 +22,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
-import android.view.inputmethod.InputMethodManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,6 +37,7 @@ import android.widget.Toast;
 import com.github.mpagconestoga.mad_a01.adapters.CategoryAdapter;
 import com.github.mpagconestoga.mad_a01.adapters.MemberListAdapter;
 import com.github.mpagconestoga.mad_a01.objects.Category;
+import com.github.mpagconestoga.mad_a01.objects.HideKeyBoardUtility;
 import com.github.mpagconestoga.mad_a01.objects.MemberListItem;
 import com.github.mpagconestoga.mad_a01.objects.Person;
 import com.github.mpagconestoga.mad_a01.viewmodel.CreateTaskViewModel;

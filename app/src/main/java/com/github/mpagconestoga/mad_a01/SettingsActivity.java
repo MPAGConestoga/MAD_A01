@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.github.mpagconestoga.mad_a01.objects.SwipeButton;
 import com.github.mpagconestoga.mad_a01.viewmodel.SettingsViewModel;
 
 public class SettingsActivity extends AppCompatActivity {

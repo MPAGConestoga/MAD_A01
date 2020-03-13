@@ -1,4 +1,4 @@
-package com.github.mpagconestoga.mad_a01;
+package com.github.mpagconestoga.mad_a01.objects;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -21,6 +21,9 @@ import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
+
+import com.github.mpagconestoga.mad_a01.R;
+import com.github.mpagconestoga.mad_a01.SettingsActivity;
 
 public class SwipeButton extends RelativeLayout {
     private ImageView slidingButton;
@@ -89,7 +92,7 @@ public class SwipeButton extends RelativeLayout {
                 ViewGroup.LayoutParams.WRAP_CONTENT);
 
         layoutParams.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE);
-        centerText.setText(getResources().getString(R.string.delete_all_data)); //add any text you need
+        centerText.setText(getResources().getString(R.string.delete_all_data));
         centerText.setTextColor(Color.WHITE);
         centerText.setPadding(35, 35, 35, 35);
         background.addView(centerText, layoutParams);

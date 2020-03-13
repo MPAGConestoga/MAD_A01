@@ -20,13 +20,19 @@ import android.util.Log;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.github.mpagconestoga.mad_a01.adapters.ViewSubtaskAdapter;
+import com.github.mpagconestoga.mad_a01.objects.Subtask;
 import com.github.mpagconestoga.mad_a01.objects.Task;
 import com.github.mpagconestoga.mad_a01.viewmodel.TaskViewModel;
+
+import java.util.ArrayList;
 
 public class TaskViewActivity extends AppCompatActivity {
     private static final String TAG = "TaskViewActivity";
 
-    private RecyclerView subTaskList;
+    private RecyclerView subtaskRecyclerView;
+    private ViewSubtaskAdapter subtaskAdapter;
+    private RecyclerView.LayoutManager subtaskLayoutManager;
     private TextView header;
     private ProgressBar progressBar;
 
@@ -38,26 +44,26 @@ public class TaskViewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_view);
 
+        // Grab viewModel
         viewModel = ViewModelProvider.AndroidViewModelFactory.getInstance(this.getApplication()).create(TaskViewModel.class);
-
         int taskId = getIntent().getIntExtra("taskid", -1);
 
-        Task task = viewModel.getTaskById(taskId);
+        // Get task
+        viewModel.setTaskById(taskId);
 
-        if (task == null) {
-            Log.e(TAG, "onCreate: Hash code received was invalid!");
-            finish();
-        }
-
+        // Set Task Header info
         progressBar = findViewById(R.id.task_progress);
-
-        subTaskList = findViewById(R.id.subtask_list);
-        subTaskList.setLayoutManager(new LinearLayoutManager(this));
-        subTaskList.setHasFixedSize(true);
-
-        //subTaskList.setAdapter(new OnGoingSubtaskAdapter(this, task.getSubtasks(), task, progressBar));
-
         header = findViewById(R.id.task_title);
-        header.setText(String.format("%s: %s", "Task", task.getName()));
+        header.setText(String.format("%s: %s", "Task", viewModel.getTask().getName()));
+
+        // Set subtask recycler list
+        subtaskRecyclerView = findViewById(R.id.viewsubtask_list);
+        subtaskRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        subtaskRecyclerView.setHasFixedSize(true);
+
+        // Subtask Adapter
+        subtaskAdapter = new ViewSubtaskAdapter(this);
+        subtaskRecyclerView.setAdapter(subtaskAdapter);
+        subtaskAdapter.setData(viewModel.getSubtasks());
     }
 }

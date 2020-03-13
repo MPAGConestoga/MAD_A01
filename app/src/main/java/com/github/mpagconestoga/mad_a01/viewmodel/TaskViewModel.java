@@ -14,34 +14,62 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
+import com.github.mpagconestoga.mad_a01.objects.Person;
+import com.github.mpagconestoga.mad_a01.objects.Subtask;
 import com.github.mpagconestoga.mad_a01.objects.Task;
+import com.github.mpagconestoga.mad_a01.repositories.PersonTaskRepository;
+import com.github.mpagconestoga.mad_a01.repositories.SubtaskRepository;
 import com.github.mpagconestoga.mad_a01.repositories.TaskRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class TaskViewModel extends AndroidViewModel {
-    private TaskRepository repository;
+    private TaskRepository taskRepository;
+    private PersonTaskRepository personTaskRepository;
+    private SubtaskRepository subtaskRepository;
+
+    private Task task;
     private LiveData<List<Task>> allTasks;
+    private List<Person> assignedPeople;
+    private List<Subtask> subtasks;
 
     public TaskViewModel(@NonNull Application application) {
         super(application);
-        repository = new TaskRepository(application);
-        allTasks = repository.getAllTasks();
+        taskRepository = new TaskRepository(application);
+        personTaskRepository = new PersonTaskRepository(application);
+        subtaskRepository = new SubtaskRepository(application);
+        allTasks = taskRepository.getAllTasks();
     }
 
     public void insert(Task task) {
-        repository.insert(task);
+        taskRepository.insert(task);
     }
 
     public void delete(Task task) {
-        repository.delete(task);
+        taskRepository.delete(task);
+    }
+
+    public Task getTask() {
+        return task;
     }
 
     public LiveData<List<Task>> getAllTasks() {
         return allTasks;
     }
 
-    public Task getTaskById(int taskId) {
-        return repository.getTaskById(taskId);
+    public void setTaskById(int taskId) {
+        task = taskRepository.getTaskById(taskId);
+        assignedPeople = personTaskRepository.getPersonsByTaskId(taskId);
+        subtasks = subtaskRepository.getSubtasksByTaskId(taskId);
     }
+
+    public List<Person> getAssignedPeople() {
+        return assignedPeople;
+    }
+
+    public List<Subtask> getSubtasks() {
+        return subtasks;
+    }
+
 }

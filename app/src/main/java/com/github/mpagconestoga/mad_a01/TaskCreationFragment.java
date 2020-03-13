@@ -240,8 +240,7 @@ public class TaskCreationFragment extends Fragment {
      *                    String name -> name of the person to be added to the list
      *    RETURNS     :   void
      * */
-    private void insertItem(int position, String name)
-    {
+    private void insertItem(int position, String name) {
         for (MemberListItem mli : memberList) {
             if (mli.getmName().equals(name)) {
                 Toast.makeText(this.getContext(), getResources().getString(R.string.person_already_added), Toast.LENGTH_LONG).show();
@@ -253,8 +252,7 @@ public class TaskCreationFragment extends Fragment {
         memberListAdapter.notifyItemInserted(position);
     }
 
-    private void removeItem(int position)
-    {
+    private void removeItem(int position) {
         memberList.remove(position);
         memberListAdapter.notifyItemRemoved(position);
     }

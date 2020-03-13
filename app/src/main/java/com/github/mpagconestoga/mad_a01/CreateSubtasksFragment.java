@@ -51,21 +51,12 @@ public class CreateSubtasksFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_create_subtasks, container, false);
 
-        // DEBUG: Dummy Data
-        ArrayList<Person> taskAssignedPeople = new ArrayList<Person>()  {
-            {
-                add(new Person("Dummy"));
-                add(new Person("Jose"));
-                add(new Person("KarlMarx"));
-            }
-        };
-
         // Set up RecyclerView and Adapter for the Subtasks list
         subtasks = view.findViewById(R.id.subtasks);
         subtasks.setHasFixedSize(true);
         subtasks.setLayoutManager(new LinearLayoutManager(this.getContext()));
 
-        adapter = new SubtaskAdapter(view.getContext(), taskAssignedPeople);
+        adapter = new SubtaskAdapter(view.getContext());
         subtasks.setAdapter(adapter);
 
         // Add subtask button
@@ -84,6 +75,7 @@ public class CreateSubtasksFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         // Create/Get Shared ViewModel
         viewModel = new ViewModelProvider(getActivity()).get(CreateTaskViewModel.class);
+        adapter.setData(viewModel.getCurrentSubtasks());
         Log.d(TAG, "&--> Subtask Creation Address: " + viewModel);
     }
 
@@ -106,9 +98,8 @@ public class CreateSubtasksFragment extends Fragment {
                     return;
                 }
             }
-
             currentSubtasks.add(new Subtask(0, ""));
-            adapter.setData(currentSubtasks);
+            adapter.setData(viewModel.getCurrentSubtasks());
             Log.d(TAG, "onClick: currentSubtasks size: " + currentSubtasks.size());
         }
     }

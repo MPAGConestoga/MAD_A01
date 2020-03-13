@@ -43,7 +43,7 @@
             android:gravity="center"
             android:text="@string/delete_data_conf" />
 
-        <com.github.mpagconestoga.mad_a01.SwipeButton
+        <com.github.mpagconestoga.mad_a01.objects.SwipeButton
             android:id="@+id/swipeButton"
             android:layout_width="match_parent"
             android:layout_height="100dp"

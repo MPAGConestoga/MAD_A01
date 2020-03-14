@@ -10,16 +10,19 @@
 package com.github.mpagconestoga.mad_a01.objects;
 
 import androidx.room.Entity;
+import androidx.room.ForeignKey;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import java.util.ArrayList;
 import java.util.Date;
-
-@Entity/*(foreignKeys = {
-        @ForeignKey(entity = Category.class,
-                parentColumns = "Id",
-                childColumns = "CatId")})*/
+/*
+ *  CLASS: Task
+ *  DESCRIPTION: This class represents a Task. Room uses this class
+ *               definition to create a table with the members of this class being the
+ *              columns of the Task Table
+ */
+@Entity
 public class Task {
     @PrimaryKey(autoGenerate = true)
     private int Id;
@@ -29,8 +32,9 @@ public class Task {
     private Date StartTime;
     private Date EndTime;
 
-    @Ignore private ArrayList<Person> assignedPeople;
-    @Ignore private ArrayList<Subtask> subtasks;
+    //ignore tells room to not include these values in the database
+    @Ignore private ArrayList<Person> assignedPeople;   //holds the list of people assigned to the task
+    @Ignore private ArrayList<Subtask> subtasks;        //holds the list of subtasks of the task
 
     // Constructor
     public Task(String Name, Category Category, Date EndTime) {
@@ -63,16 +67,10 @@ public class Task {
         return Name;
     }
 
-    // FUNCTION         setName()
-    // PARAMETERS       String name
-    // DESCRIPTION      Setter for the name
     public void setName(String name) {
         this.Name = name;
     }
 
-    // FUNCTION         getEndTime()
-    // RETURNS          Date
-    // DESCRIPTION      Setter for the name
     public Date getEndTime() {
         return EndTime;
     }
@@ -89,9 +87,6 @@ public class Task {
         this.StartTime = startTime;
     }
 
-    // FUNCTION         getCategory()
-    // RETURNS          String
-    // DESCRIPTION      Getter for the Category
     public Category getCategory(){
         return Category;
     }

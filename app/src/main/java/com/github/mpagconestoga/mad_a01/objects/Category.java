@@ -14,25 +14,30 @@ import android.os.Parcelable;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+
+/*
+ *  CLASS: Category
+ *  DESCRIPTION: This class represents a task category type. Room uses this class
+ *               definition to create a table with the members of this class being the
+ *              columns of the Category Table
+ */
 @Entity
 public class Category {
     @PrimaryKey(autoGenerate = true)
     private int Id;
-
     private String Name;
-
-
-
     private String BackgroundURL;
-
     private String WebURL;
 
+    //Constructor: Sets the name, background link, and web helper link
     public Category(String Name, String BackgroundURL, String WebURL) {
         this.Name = Name;
         this.BackgroundURL = BackgroundURL;
         this.WebURL = WebURL;
     }
 
+
+    //Getters and Setters for class members:
     public void setBackgroundURL(String backgroundURL) {
         BackgroundURL = backgroundURL;
     }

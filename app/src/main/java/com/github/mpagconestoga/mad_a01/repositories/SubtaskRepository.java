@@ -19,42 +19,67 @@ import com.github.mpagconestoga.mad_a01.objects.Database;
 import com.github.mpagconestoga.mad_a01.objects.Subtask;
 
 import java.util.List;
-
+/*
+ *  CLASS: SubtaskRepository
+ *  DESCRIPTION: This class is a model in the MVVM framework. It used to hold data about the subtasks.
+ *              Using the subtask DAO, it retrieves data from the database, sending it to the view model.
+ */
 public class SubtaskRepository {
 
     private SubtaskDao subTaskDao;
-    private LiveData<List<Subtask>> allSubtasks;
 
+    //Constructor used to get database instance, and initialize the DAO
     public SubtaskRepository(Application application) {
         Database database = Database.getInstance(application);
         subTaskDao = database.subtaskDao();
-        allSubtasks = subTaskDao.getAllSubtasks();
     }
-
+    /*
+     *    METHOD      :     insert
+     *    DESCRIPTION :     Inserts a new subtask into the database
+     *    PARAMETERS  :     Subtask subtask
+     *    RETURNS     :     VOID
+     * */
     public void insert(Subtask subtask) {
         new SubtaskRepository.InsertSubtaskAsyncTask(subTaskDao).execute(subtask);
     }
-
+    /*
+     *    METHOD      :     update
+     *    DESCRIPTION :     Update a subtask in the database
+     *    PARAMETERS  :     Subtask subtask
+     *    RETURNS     :     VOID
+     * */
     public void update(Subtask subtask) {
         new SubtaskRepository.UpdateSubtaskAsyncTask(subTaskDao).execute(subtask);
     }
-
+    /*
+     *    METHOD      :     delete
+     *    DESCRIPTION :     Delete a subtask from the database
+     *    PARAMETERS  :     Subtask subtask
+     *    RETURNS     :     VOID
+     * */
     public void delete(Subtask subtask) {
         new SubtaskRepository.DeleteSubtaskAsyncTask(subTaskDao).execute(subtask);
     }
-
+    /*
+     *    METHOD      :     deleteAllSubtasks
+     *    DESCRIPTION :     Delete all subtasks from the database
+     *    PARAMETERS  :     NONE
+     *    RETURNS     :     VOID
+     * */
     public void deleteAllSubtasks() {
         new SubtaskRepository.DeleteAllSubtasksAsyncTask(subTaskDao).execute();
     }
-
-    public LiveData<List<Subtask>> getAllSubtasks() {
-        return allSubtasks;
-    }
-
+    /*
+     *    METHOD      :     getSubtasksByTaskId
+     *    DESCRIPTION :     Retrieve subtasks of a task, based on task Id
+     *    PARAMETERS  :     int taskId
+     *    RETURNS     :     List<Subtask>
+     * */
     public List<Subtask> getSubtasksByTaskId(int taskId) {
         return subTaskDao.getSubtasksbyTaskId(taskId);
     }
 
+    //This class is an async task used to access the database in order to insert a new subtask
     private static class InsertSubtaskAsyncTask extends AsyncTask<Subtask, Void, Void> {
 
         private SubtaskDao subtaskDao;
@@ -70,6 +95,7 @@ public class SubtaskRepository {
         }
     }
 
+    //This class is an async task used to access the database in order to update a subtask
     private static class UpdateSubtaskAsyncTask extends AsyncTask<Subtask, Void, Void> {
 
         private SubtaskDao subtaskDao;
@@ -85,6 +111,7 @@ public class SubtaskRepository {
         }
     }
 
+    //This class is an async task used to access the database in order to delete a subtask
     private static class DeleteSubtaskAsyncTask extends AsyncTask<Subtask, Void, Void> {
 
         private SubtaskDao subtaskDao;
@@ -100,6 +127,7 @@ public class SubtaskRepository {
         }
     }
 
+    //This class is an async task used to access the database in order to delete all subtasks from the database
     private static class DeleteAllSubtasksAsyncTask extends AsyncTask<Void, Void, Void> {
 
         private SubtaskDao subtaskDao;

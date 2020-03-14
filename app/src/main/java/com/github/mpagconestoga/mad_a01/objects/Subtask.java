@@ -12,6 +12,13 @@ import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
+
+/*
+ *  CLASS: Subtask
+ *  DESCRIPTION: This class represents a subtask that is linked to a task. Room uses this class
+ *               definition to create a table with the members of this class being the
+ *              columns of the subtask Table
+ */
 @Entity(foreignKeys = {
         @ForeignKey(onDelete = 5/*CASCADE*/, entity = Task.class,
                 parentColumns = "Id",
@@ -29,6 +36,8 @@ public class Subtask {
         this.Name = Name;
     }
 
+
+    //Getters and Setters
     public int getId() {
         return Id;
     }
@@ -49,9 +58,6 @@ public class Subtask {
         return Weight;
     }
 
-    // FUNCTION         setPriority()
-    // PARAMETERS       int priority
-    // DESCRIPTION      Setter for the priority
     public void setPriority(int priority) { this.Weight = priority; }
 
     public String getName() {

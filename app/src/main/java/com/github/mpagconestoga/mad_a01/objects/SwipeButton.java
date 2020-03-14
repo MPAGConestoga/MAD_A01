@@ -1,3 +1,10 @@
+/*
+ *	FILE			: SwipeButton.java
+ *	PROJECT			: PROG3150 - Assignment-02
+ *	PROGRAMMER		: Michael Gordon, Paul Smith, Duncan Snider, Gabriel Gurgel, Amy Dayasundara
+ *	FIRST VERSION	: 2020 - 03 - 08
+ *	DESCRIPTION		: This class contains the functionality of the SwipeButton found in the Settings page
+ */
 package com.github.mpagconestoga.mad_a01.objects;
 
 import android.animation.Animator;
@@ -26,7 +33,11 @@ import com.github.mpagconestoga.mad_a01.R;
 import com.github.mpagconestoga.mad_a01.SettingsActivity;
 
 //credit:https://android.jlelse.eu/make-a-great-android-ux-how-to-make-a-swipe-button-eefbf060326d
-
+/*
+ *  CLASS: SwipeButton
+ *  DESCRIPTION: This class contains the functionality used by the custom button slider image.
+ *               This work is not our own, and as such has been credited. See link above
+ */
 public class SwipeButton extends RelativeLayout {
     private ImageView slidingButton;
     private float initialX;

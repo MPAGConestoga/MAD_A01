@@ -13,7 +13,11 @@ import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
-
+/*
+ *  CLASS: PersonTask
+ *  DESCRIPTION: This class is used by room to create the Person_Task table in the database.
+ *               The table is used to link the Persons associated with a task
+ */
 @Entity(tableName = "Person_Task",
         primaryKeys = {"TaskId","PersonId"},
         foreignKeys = {
@@ -28,7 +32,6 @@ import androidx.room.PrimaryKey;
 public class PersonTask {
 
     public int TaskId;
-
     public int PersonId;
 
     public PersonTask(int TaskId, int PersonId) {

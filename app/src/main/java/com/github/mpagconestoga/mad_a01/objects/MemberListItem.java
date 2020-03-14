@@ -27,6 +27,7 @@ public class MemberListItem {
         mDeleteImage = delete;
     }
 
+    //setters and getters
     public int getmImage()
     {
         return mImage;
@@ -35,7 +36,6 @@ public class MemberListItem {
     {
         return mName;
     }
-
     public int getmDeleteImage()
     {
         return mDeleteImage;

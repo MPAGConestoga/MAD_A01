@@ -34,4 +34,10 @@ public interface CategoryDao {
 
     @Query("SELECT * FROM Category ORDER BY Id DESC")
     List<Category> getAllCategories();
+
+    @Query("SELECT BackgroundURL FROM Category Where Id = :catId")
+    String getBackground(int catId);
+
+    @Query("SELECT WebURL FROM Category Where Id = :catId")
+    String getWebUrl(int catId);
 }

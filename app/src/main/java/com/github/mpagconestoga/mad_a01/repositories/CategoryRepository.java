@@ -45,6 +45,14 @@ public class CategoryRepository {
         new DeleteCategoryAsyncTask(categoryDao).execute(category);
     }
 
+    public String getBackgroundURL(int catID){
+        return categoryDao.getBackground(catID);
+    }
+
+    public String getWebURL(int catID){
+        return categoryDao.getWebUrl(catID);
+    }
+
     public void deleteAllCategories() {
         new DeleteAllCategoriesAsyncTask(categoryDao).execute();
     }

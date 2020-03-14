@@ -21,6 +21,8 @@ public class Category {
 
     private String Name;
 
+
+
     private String BackgroundURL;
 
     private String WebURL;
@@ -29,6 +31,14 @@ public class Category {
         this.Name = Name;
         this.BackgroundURL = BackgroundURL;
         this.WebURL = WebURL;
+    }
+
+    public void setBackgroundURL(String backgroundURL) {
+        BackgroundURL = backgroundURL;
+    }
+
+    public void setWebURL(String webURL) {
+        WebURL = webURL;
     }
 
     public Category(Parcel in) {

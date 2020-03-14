@@ -168,9 +168,11 @@ public class TaskCreationFragment extends Fragment {
         if (resultCode == -1) {
             Person selectedPerson = data.getParcelableExtra("selected");
 
-            viewModel.addPerson(selectedPerson);
             assert selectedPerson != null;
-            insertItem(0, selectedPerson.getName());
+            if(insertItem(0, selectedPerson.getName())){
+                viewModel.addPerson(selectedPerson);
+                //only add person if they are not in the list.
+            }
         }
     }
 
@@ -262,16 +264,17 @@ public class TaskCreationFragment extends Fragment {
 
     // FUNCTION    : insertItem
     // DESCRIPTION :  Add a new memberListItem object to the recyclerView
-    private void insertItem(int position, String name) {
+    private boolean insertItem(int position, String name) {
         for (MemberListItem mli : memberList) {
             if (mli.getmName().equals(name)) {
                 Toast.makeText(this.getContext(), getResources().getString(R.string.person_already_added), Toast.LENGTH_LONG).show();
-                return;
+                return false;
             }
         }
 
         memberList.add(position, new MemberListItem(R.drawable.user, name, R.drawable.ic_delete));
         memberListAdapter.notifyItemInserted(position);
+        return true;
     }
 
     // FUNCTION    : removeItem

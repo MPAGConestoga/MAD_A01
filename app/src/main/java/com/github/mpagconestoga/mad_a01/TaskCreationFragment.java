@@ -8,6 +8,7 @@
 
 package com.github.mpagconestoga.mad_a01;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
@@ -18,6 +19,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelStoreOwner;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -58,6 +60,7 @@ public class TaskCreationFragment extends Fragment {
 
     //---------- Attributes ----------//
     private CreateTaskViewModel viewModel;
+    private Activity parentActivity;
 
     // UI Elements and Adapters
     private Button buttonDateTime;                  // Date and Time Picker
@@ -81,6 +84,13 @@ public class TaskCreationFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_create_task, container, false);
 
+        // Get parent activity
+        parentActivity = getActivity();
+        if(parentActivity == null) {
+            Log.d(TAG, "Unexpected error: Fragment Parent activity does not exists");
+            return null;
+        }
+
         memberList = new ArrayList<>();
         categoryList = new ArrayList<>();
 
@@ -89,7 +99,7 @@ public class TaskCreationFragment extends Fragment {
 
         // Category Drop-down builder
         categorySpinner = view.findViewById(R.id.spinner_select_category);
-        categoryAdapter = new CategoryAdapter(getActivity(), categoryList);
+        categoryAdapter = new CategoryAdapter(parentActivity, categoryList);
         categorySpinner.setAdapter(categoryAdapter);
         categorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -105,7 +115,7 @@ public class TaskCreationFragment extends Fragment {
         // Assigned People to task (Member List viewer)
         memberListRecyclerView = view.findViewById(R.id.memberList);
         memberListRecyclerView.setHasFixedSize(true); //true if wont change in size
-        memberListLayoutManager = new LinearLayoutManager(getActivity());
+        memberListLayoutManager = new LinearLayoutManager(parentActivity);
         memberListAdapter = new MemberListAdapter(memberList);
 
         memberListRecyclerView.setLayoutManager(memberListLayoutManager);
@@ -138,8 +148,9 @@ public class TaskCreationFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
         // Get or Create ViewModel
-        viewModel = new ViewModelProvider(getActivity()).get(CreateTaskViewModel.class);
+        viewModel = new ViewModelProvider((ViewModelStoreOwner) parentActivity).get(CreateTaskViewModel.class);
         populateCategoryList();
         Log.d(TAG, "&--> Task Creation Address: " + viewModel);
     }
@@ -149,7 +160,7 @@ public class TaskCreationFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (resultCode == -1) {
-            Person selectedPerson = (Person) data.getParcelableExtra("selected");
+            Person selectedPerson = data.getParcelableExtra("selected");
 
             viewModel.addPerson(selectedPerson);
             assert selectedPerson != null;
@@ -167,15 +178,15 @@ public class TaskCreationFragment extends Fragment {
 
             // Input-Field Validation
             if (taskName.trim().length() == 0) {
-                Toast.makeText(getActivity(), R.string.enter_task_name, Toast.LENGTH_SHORT).show();
+                Toast.makeText(parentActivity, R.string.enter_task_name, Toast.LENGTH_SHORT).show();
                 return;
             }
             else if (memberList.size() <= 0) {
-                Toast.makeText(getActivity(), R.string.enter_team_member, Toast.LENGTH_SHORT).show();
+                Toast.makeText(parentActivity, R.string.enter_team_member, Toast.LENGTH_SHORT).show();
                 return;
             }
             else if(taskEndTime == null) {
-                Toast.makeText(getActivity(), R.string.enter_datetime, Toast.LENGTH_SHORT).show();
+                Toast.makeText(parentActivity, R.string.enter_datetime, Toast.LENGTH_SHORT).show();
                 return;
             }
 
@@ -193,7 +204,7 @@ public class TaskCreationFragment extends Fragment {
     private class AddMemberClickListener implements Button.OnClickListener {
         @Override
         public void onClick(View v) {
-            Intent searchIntent = new Intent(getActivity(), PersonSearchActivity.class);
+            Intent searchIntent = new Intent(parentActivity, PersonSearchActivity.class);
             startActivityForResult(searchIntent, 1);
         }
     }
@@ -213,11 +224,11 @@ public class TaskCreationFragment extends Fragment {
                 final int minute = calendar.get(Calendar.MINUTE);
 
                 // Create date dialog
-                dateDialog = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
+                dateDialog = new DatePickerDialog(parentActivity, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     // When date is set -> save the values and popup the time dialog
                     public void onDateSet(DatePicker datePicker, final int endYear, final int endMonth, final int endDay) {
-                        timePicker = new TimePickerDialog(getActivity(), new TimePickerDialog.OnTimeSetListener() {
+                        timePicker = new TimePickerDialog(parentActivity, new TimePickerDialog.OnTimeSetListener() {
                             @Override
                             public void onTimeSet(TimePicker view, int endHour, int endMinute) {
                                 // Construct Date value for EndDate Task attribute

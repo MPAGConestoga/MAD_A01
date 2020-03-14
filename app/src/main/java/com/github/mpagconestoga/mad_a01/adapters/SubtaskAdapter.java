@@ -43,6 +43,11 @@ public class SubtaskAdapter extends RecyclerView.Adapter<SubtaskAdapter.ViewHold
 
     public void updateParentData(int position) {}
 
+    /*
+     * FUNCTION     getSubtasks
+     * DESCRIPTION  This function returns the list of subtasks
+     * RETURNS      ArrayList<Subtask>
+     */
     public ArrayList<Subtask> getSubtasks() {
         return Subtasks;
     }
@@ -52,6 +57,13 @@ public class SubtaskAdapter extends RecyclerView.Adapter<SubtaskAdapter.ViewHold
         notifyDataSetChanged();
     }
 
+    /*
+     * FUNCTION     onCreateViewHolder
+     * PARAMS       ViewGroup parent
+     *              int viewType
+     * DESCRIPTION  This function inflates the new UI element
+     * RETURNS      ViewHolder
+     */
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -59,11 +71,24 @@ public class SubtaskAdapter extends RecyclerView.Adapter<SubtaskAdapter.ViewHold
         return new ViewHolder(view);
     }
 
+    /*
+     * FUNCTION     getItemCount
+     * PARAMS       ViewGroup parent
+     *              int viewType
+     * DESCRIPTION  This function returns the size of the dataset
+     * RETURNS      int
+     */
     @Override
     public int getItemCount() {
         return Subtasks.size();
     }
 
+    /*
+     * FUNCTION     onBindViewHolder
+     * PARAMS       ViewGroup holder
+     *              int position
+     * DESCRIPTION  This function binds the data to the new UI element
+     */
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         Subtask subtask = Subtasks.get(position);
@@ -73,7 +98,6 @@ public class SubtaskAdapter extends RecyclerView.Adapter<SubtaskAdapter.ViewHold
         holder.weight.setText(String.valueOf(subtask.getWeight()));
         holder.position = position;
     }
-
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView name;

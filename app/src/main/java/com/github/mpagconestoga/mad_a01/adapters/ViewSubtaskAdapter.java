@@ -40,6 +40,13 @@ public class ViewSubtaskAdapter extends RecyclerView.Adapter<ViewSubtaskAdapter.
         this.progressBar = progressBar;
     }
 
+    /*
+     * FUNCTION     onCreateViewHolder
+     * PARAMS       ViewGroup parent
+     *              int viewType
+     * DESCRIPTION  This function inflates the new UI element
+     * RETURNS      ViewHolder
+     */
     @NonNull
     @Override
     public ViewSubtaskAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -48,6 +55,11 @@ public class ViewSubtaskAdapter extends RecyclerView.Adapter<ViewSubtaskAdapter.
         return new ViewHolder(view);
     }
 
+    /*
+     * FUNCTION     setData
+     * PARAMS       List<Subtask> subtasks
+     * DESCRIPTION  This function sets the dataset to a newly provided set
+     */
     public void setData(List<Subtask> subtasks) {
         this.Subtasks = subtasks;
         notifyDataSetChanged();
@@ -62,6 +74,12 @@ public class ViewSubtaskAdapter extends RecyclerView.Adapter<ViewSubtaskAdapter.
         progressBar.setMax(completionWeight);
     }
 
+    /*
+     * FUNCTION     onBindViewHolder
+     * PARAMS       ViewGroup holder
+     *              int position
+     * DESCRIPTION  This function binds the data to the UI elements
+     */
     @Override
     public void onBindViewHolder(@NonNull ViewSubtaskAdapter.ViewHolder holder, int position) {
         Subtask subtask = Subtasks.get(position);
@@ -73,6 +91,11 @@ public class ViewSubtaskAdapter extends RecyclerView.Adapter<ViewSubtaskAdapter.
         Log.d(TAG, "&--> onBindViewHolder: Position: " + position + "Name: " + subtask.getName());
     }
 
+    /*
+     * FUNCTION     getItemCount
+     * DESCRIPTION  This function returns the size of the dataset
+     * RETURNS      int
+     */
     @Override
     public int getItemCount() {
         return Subtasks.size();

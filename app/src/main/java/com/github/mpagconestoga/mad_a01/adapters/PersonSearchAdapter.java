@@ -40,18 +40,35 @@ public class PersonSearchAdapter extends RecyclerView.Adapter<PersonSearchAdapte
     }
 
 
+    /*
+     * FUNCTION     onCreateViewHolder
+     * PARAMS       ViewGroup parent
+     *              int viewType
+     * DESCRIPTION  This function inflates the new UI element
+     * RETURNS      ViewHolder
+     */
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.activity_person_list_item, parent, false);
         return new ViewHolder(view);
     }
-    
+
+    /*
+     * FUNCTION     getItemCount()
+     * DESCRIPTION  This function returns the size of the data set
+     * RETURNS      int
+     */
     @Override
     public int getItemCount() {
         return data.size();
     }
-    
+
+    /*
+     * FUNCTION     getNames
+     * DESCRIPTION  This function returns the list of names
+     * RETURNS      ArrayList<String>
+     */
     public ArrayList<String> getNames(){
         ArrayList<String> names = new ArrayList<>();
         for (Person p: dataFull) {
@@ -59,11 +76,23 @@ public class PersonSearchAdapter extends RecyclerView.Adapter<PersonSearchAdapte
         }
         return names;
     }
+
+    /*
+     * FUNCTION     setPosition
+     * PARAMS       int position
+     * DESCRIPTION  This function sets the position
+     */
     public void setPosition(int position){
         selectedPosition = position;
         notifyDataSetChanged();
     }
 
+    /*
+     * FUNCTION     onBindViewHolder
+     * PARAMS       ViewGroup holder
+     *              final int position
+     * DESCRIPTION  This function binds the data to the UI elements
+     */
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
         String name = data.get(position).getName();
@@ -85,6 +114,7 @@ public class PersonSearchAdapter extends RecyclerView.Adapter<PersonSearchAdapte
         });
     }
 
+
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView name;
 
@@ -94,16 +124,31 @@ public class PersonSearchAdapter extends RecyclerView.Adapter<PersonSearchAdapte
         }
     }
 
+    /*
+     * FUNCTION     setPersons
+     * PARAMS       List<Person>
+     * DESCRIPTION  This function replaces the current person list with a new list
+     */
     public void setPersons(List<Person> persons){
         this.data = persons;
         this.dataFull = new ArrayList<>(persons);
         notifyDataSetChanged();
     }
 
+    /*
+     * FUNCTION     getFilteredList
+     * DESCRIPTION  This function gets a filtered list
+     * RETURNS      List<Person>
+     */
     public List<Person> getFilteredList(){
         return data;
     }
 
+    /*
+     * FUNCTION     getFiler
+     * DESCRIPTION  This function returns the current filter
+     * RETURNS      Filter
+     */
     @Override
     public Filter getFilter() {
         return exampleFilter;

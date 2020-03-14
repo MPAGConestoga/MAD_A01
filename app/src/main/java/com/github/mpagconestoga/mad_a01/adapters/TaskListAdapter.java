@@ -46,6 +46,13 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.TaskHo
         return new TaskHolder(itemView);
     }
 
+    /*
+     * FUNCTION     onBindViewHolder
+     * PARAMS       ViewGroup parent
+     *              int viewType
+     * DESCRIPTION  This function inflates the new UI element
+     * RETURNS      ViewHolder
+     */
     @Override
     public void onBindViewHolder(@NonNull TaskHolder holder, int position) {
         Task currentTask = tasks.get(position);
@@ -54,6 +61,11 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.TaskHo
         holder.position = position;
     }
 
+    /*
+     * FUNCTION     getItemCount
+     * DESCRIPTION  This function returns the size of the dataset
+     * RETURNS      int
+     */
     @Override
     public int getItemCount() {
         return tasks.size();

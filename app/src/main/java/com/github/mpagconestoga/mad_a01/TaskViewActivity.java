@@ -100,8 +100,8 @@ public class TaskViewActivity extends AppCompatActivity {
         // Set Category Header and Link
         String categoryHelpHeader = task.getCategory().getName() + " " + getString(R.string.help_collon);
         final Category currentCategory = task.getCategory();
-        currentCategory.setBackgroundURL(categoryRepository.getBackgroundURL(task.getId()));
-        currentCategory.setWebURL(categoryRepository.getWebURL(task.getId()));
+        currentCategory.setBackgroundURL(categoryRepository.getBackgroundURL(currentCategory.getName()));
+        currentCategory.setWebURL(categoryRepository.getWebURL(currentCategory.getName()));
 
         categoryHeader.setText(categoryHelpHeader);
         categoryLink.setOnClickListener(new View.OnClickListener() {
@@ -121,7 +121,7 @@ public class TaskViewActivity extends AppCompatActivity {
         subtaskAdapter.setData(task.getSubtasks());
 
         // Logic for saving and loading background image
-        String imageURL = task.getCategory().getBackgroundURL();
+        String imageURL = currentCategory.getBackgroundURL();
         DownloadTask downloadTask = new DownloadTask();
         downloadTask.execute(imageURL);
     }

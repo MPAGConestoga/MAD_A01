@@ -3,7 +3,9 @@
  *	PROJECT			: PROG3150 - Assignment-02
  *	PROGRAMMER		: Michael Gordon, Paul Smith, Duncan Snider, Gabriel Gurgel, Amy Dayasundara
  *	FIRST VERSION	: 2020 - 03 - 08
- *	DESCRIPTION		: This is the Data Access Object for the Category class
+ *	DESCRIPTION		: This is the Data Access Object for the Category class. It will insert, update
+ *                      and delete any values found within the entity. The queries are linked to functions
+ *                      which are used throughout the program when requested.
  */
 
 package com.github.mpagconestoga.mad_a01.dao;
@@ -33,11 +35,11 @@ public interface CategoryDao {
     void deleteAllCategories();
 
     @Query("SELECT * FROM Category ORDER BY Id DESC")
-    List<Category> getAllCategories();
+    List<Category> getAllCategories(); //Retrieve all categories to show in dropdown
 
     @Query("SELECT BackgroundURL FROM Category Where Name = :catName")
-    String getBackground(String catName);
+    String getBackground(String catName); //Set the background image of the task
 
     @Query("SELECT WebURL FROM Category Where Name = :catName")
-    String getWebUrl(String catName);
+    String getWebUrl(String catName); //Get the help info from the internet
 }

@@ -49,6 +49,13 @@ public abstract class TaskDao {
     @Query("SELECT * FROM Task ORDER BY Id DESC")
     public abstract LiveData<List<Task>> getAllTasks();
 
+     /* FUNCTION     insertTask
+     * PARAMS        Task task
+     *               List<Person> assignedPeople
+     *               ArrayList<Subtask> subtasks
+     * DESCRIPTION   This function inserts the tasks into the database
+     * RETURNS       void
+     */
     @Transaction
     public void insertTask(Task task, List<Person> assignedPeople, ArrayList<Subtask> subtasks){
         long taskId = insert(task);

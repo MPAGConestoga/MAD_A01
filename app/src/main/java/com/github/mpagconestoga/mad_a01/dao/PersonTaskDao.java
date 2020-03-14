@@ -3,7 +3,9 @@
  *	PROJECT			: PROG3150 - Assignment-02
  *	PROGRAMMER		: Michael Gordon, Paul Smith, Duncan Snider, Gabriel Gurgel, Amy Dayasundara
  *	FIRST VERSION	: 2020 - 03 - 08
- *	DESCRIPTION		: This is the Data Access Object for the PersonTask class
+ *	DESCRIPTION		: This is the Data Access Object for the PersonTask class.It will insert,
+ *                      any values found within the entity. The queries are linked to functions
+ *                      which are used throughout the program when requested.
  */
 
 package com.github.mpagconestoga.mad_a01.dao;
@@ -26,8 +28,8 @@ public interface PersonTaskDao {
     void insert(PersonTask personTask);
 
     @Query("SELECT Id, CatId, Name, Category, StartTime, EndTime FROM Task INNER JOIN Person_Task ON Task.Id = Person_Task.TaskId WHERE Person_Task.PersonId = :personId")
-    LiveData<List<Task>> GetTasksByUser(int personId);
+    LiveData<List<Task>> GetTasksByUser(int personId); //Retrieves the tasks by users
 
     @Query("SELECT Id, Name FROM Person INNER JOIN Person_Task ON Person.Id = Person_Task.PersonId WHERE Person_Task.TaskId = :taskId")
-    List<Person> GetPersonsByTaskId(int taskId);
+    List<Person> GetPersonsByTaskId(int taskId); //Retrieves the ID and the Name for the person
 }

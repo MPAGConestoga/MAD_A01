@@ -33,8 +33,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.mpagconestoga.mad_a01.adapters.ViewSubtaskAdapter;
+import com.github.mpagconestoga.mad_a01.objects.Category;
 import com.github.mpagconestoga.mad_a01.objects.Person;
 import com.github.mpagconestoga.mad_a01.objects.Task;
+import com.github.mpagconestoga.mad_a01.repositories.CategoryRepository;
 import com.github.mpagconestoga.mad_a01.viewmodel.TaskViewModel;
 
 import java.io.BufferedInputStream;
@@ -76,6 +78,7 @@ public class TaskViewActivity extends AppCompatActivity {
         assignedPeopleList = findViewById(R.id.assigned_people_list);
         subtaskRecyclerView = findViewById(R.id.viewsubtask_list);
         subtaskAdapter = new ViewSubtaskAdapter(this);
+        CategoryRepository categoryRepository = new CategoryRepository(this.getApplication());
 
         // Grab viewModel and set background image place
         viewModel = ViewModelProvider.AndroidViewModelFactory.getInstance(this.getApplication()).create(TaskViewModel.class);
@@ -86,6 +89,7 @@ public class TaskViewActivity extends AppCompatActivity {
         viewModel.setTaskById(taskId);
         Task task = viewModel.getTask();
 
+
         // Set Task Header info
         taskHeader.setText(String.format("%s: %s", getString(R.string.task_header), task.getName()));
 
@@ -94,12 +98,15 @@ public class TaskViewActivity extends AppCompatActivity {
 
         // Set Category Header and Link
         String categoryHelpHeader = task.getCategory().getName() + " " + getString(R.string.help_collon);
-        final String helpLink = task.getCategory().getWebURL();
+        final Category currentCategory = task.getCategory();
+        currentCategory.setBackgroundURL(categoryRepository.getBackgroundURL(task.getId()));
+        currentCategory.setWebURL(categoryRepository.getWebURL(task.getId()));
+
         categoryHeader.setText(categoryHelpHeader);
         categoryLink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(helpLink));
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(currentCategory.getWebURL()));
                 startActivity(browserIntent);
             }
         });
@@ -187,7 +194,6 @@ public class TaskViewActivity extends AppCompatActivity {
 
             SetBackground setBackground = new SetBackground();
             setBackground.execute();
-
         }
     }
 

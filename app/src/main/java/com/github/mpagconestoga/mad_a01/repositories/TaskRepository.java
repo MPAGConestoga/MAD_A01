@@ -11,6 +11,7 @@ package com.github.mpagconestoga.mad_a01.repositories;
 
 import android.app.Application;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 
@@ -68,6 +69,28 @@ public class TaskRepository {
         @Override
         protected Void doInBackground(Task... tasks) {
             taskDao.insert(tasks[0]);
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            // Contrived and nonsensical use of chained async tasks.
+            // We know how to do it, but we don't have a second use case since
+            // we're using Room for our database manipulation.
+            new InsertTaskVerifyIntegrityTask().execute();
+        }
+    }
+
+    private static class InsertTaskVerifyIntegrityTask extends AsyncTask<Task, Void, Void> {
+
+        @Override
+        protected Void doInBackground(Task... tasks) {
+            Log.d("Task logging", "doInBackground: A new task was inserted successfully");
+
+            for (Task task : tasks) {
+                Log.d("Task logging", "doInBackground: Task found: " + task.getName() + " (" + task.getId() + ")");
+            }
+
             return null;
         }
     }

@@ -122,11 +122,9 @@ public class CreateSubtasksFragment extends Fragment {
             // Get subtask
             ArrayList<Subtask> currentSubtasks = adapter.getSubtasks();
 
-            String firstSubTaskName = currentSubtasks.get(0).getName().trim();
-            int firstPriority = currentSubtasks.get(0).getWeight();
-            //error with empty first task name being equal to second task name
-            if(firstSubTaskName == "" ){
-                Toast.makeText(viewModel.getApplication(), "Please ensure all fields for each subtask are filled out", Toast.LENGTH_SHORT).show();
+            if(currentSubtasks.size() == 0){
+                Toast.makeText(viewModel.getApplication(), "Please enter at least one subtask", Toast.LENGTH_SHORT).show();
+                return;
             }
             ArrayList<Subtask> currentSubtasksToReturn = viewModel.getCurrentSubtasks();
             for(Subtask s : currentSubtasks){

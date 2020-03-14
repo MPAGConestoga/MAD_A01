@@ -16,15 +16,18 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Html;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -50,16 +53,14 @@ public class TaskViewActivity extends AppCompatActivity {
     private TaskViewModel viewModel;
     private View backgroundView;
 
+    // UI elements
     private TextView taskHeader;
     private ProgressBar progressBar;
     private TextView categoryHeader;
-    private TextView categoryLink;
+    private Button categoryLink;
     private TextView assignedPeopleList;
     private RecyclerView subtaskRecyclerView;
     private ViewSubtaskAdapter subtaskAdapter;
-
-    // TODO: Change this
-    String imageURL = "https://neighborscape.ca/wp-content/uploads/2018/06/Thumbnail-02-256x256.jpg";
 
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -71,9 +72,8 @@ public class TaskViewActivity extends AppCompatActivity {
         progressBar = findViewById(R.id.task_progress);
         taskHeader = findViewById(R.id.task_title);
         categoryHeader = findViewById(R.id.category_help_header);
-        categoryLink = findViewById(R.id.category_link);
+        categoryLink = findViewById(R.id.website_button);
         assignedPeopleList = findViewById(R.id.assigned_people_list);
-
         subtaskRecyclerView = findViewById(R.id.viewsubtask_list);
         subtaskAdapter = new ViewSubtaskAdapter(this);
 
@@ -93,9 +93,16 @@ public class TaskViewActivity extends AppCompatActivity {
         assignedPeopleList.setText(generatePeopleList(task.getAssignedPeople()));
 
         // Set Category Header and Link
-        String categoryHelpHeader = task.getCategory().getName() + getString(R.string.help_collon);
+        String categoryHelpHeader = task.getCategory().getName() + " " + getString(R.string.help_collon);
+        final String helpLink = task.getCategory().getWebURL();
         categoryHeader.setText(categoryHelpHeader);
-        // DO with a button instead
+        categoryLink.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(helpLink));
+                startActivity(browserIntent);
+            }
+        });
 
         // Set subtask recycler list
         subtaskRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -106,6 +113,7 @@ public class TaskViewActivity extends AppCompatActivity {
         subtaskAdapter.setData(task.getSubtasks());
 
         // Logic for saving and loading background image
+        String imageURL = task.getCategory().getWebURL();
         DownloadTask downloadTask = new DownloadTask();
         downloadTask.execute(imageURL);
     }

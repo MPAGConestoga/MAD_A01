@@ -39,4 +39,5 @@
     <string name="task_header">Task</string>
     <string name="help_collon">Help:</string>
     <string name="subtask_name_view">Subtask:</string>
+    <string name="website_help">Website help</string>
 </resources>

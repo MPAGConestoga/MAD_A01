@@ -7,14 +7,12 @@
     tools:context=".TaskViewActivity"
     android:id="@+id/layout">
 
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/linearLayout"
-        android:layout_width="410dp"
-        android:layout_height="155dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
-
 
         <TextView
             android:id="@+id/task_title"
@@ -27,48 +25,45 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/taskName"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/category_help_header"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="8dp"
-            android:textSize="18sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/assigned_people_header" />
-
-        <TextView
             android:id="@+id/assigned_people_header"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginLeft="4dp"
             android:text="@string/assigned_people"
             android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/task_title" />
 
         <TextView
+            android:id="@+id/category_help_header"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginTop="8dp"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="@+id/assigned_people_header"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/assigned_people_header" />
+
+        <TextView
             android:id="@+id/assigned_people_list"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
             android:textSize="18sp"
-            tools:layout_editor_absoluteX="160dp"
-            tools:layout_editor_absoluteY="90dp" />
+            app:layout_constraintStart_toEndOf="@+id/assigned_people_header"
+            app:layout_constraintTop_toTopOf="@+id/assigned_people_header" />
 
-        <TextView
-            android:id="@+id/category_link"
+        <Button
+            android:id="@+id/website_button"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="18sp"
+            android:layout_height="36dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:text="@string/website_help"
             app:layout_constraintStart_toEndOf="@+id/category_help_header"
             app:layout_constraintTop_toTopOf="@+id/category_help_header" />
 
@@ -77,14 +72,16 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/viewsubtask_list"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:layout_marginTop="4dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
         android:padding="4dp"
         android:scrollbars="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/task_progress"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        app:layout_constraintVertical_bias="0.0" />
 
     <ProgressBar
         android:id="@+id/task_progress"
@@ -94,5 +91,4 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

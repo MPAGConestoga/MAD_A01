@@ -23,42 +23,94 @@ import com.github.mpagconestoga.mad_a01.objects.Task;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/*
+ *  CLASS: TaskRepository
+ *  DESCRIPTION: This class is a model in the MVVM framework. It used to hold data about the Task.
+ *              Using the subtask DAO, it retrieves data from the database, sending it to the view model.
+ */
 public class TaskRepository {
 
     private TaskDao taskDao;
     private LiveData<List<Task>> allTasks;
     public Task task;
 
+    //Constructor used to get database instance, and initialize the DAO, get all Tasks
     public TaskRepository(Application application){
         Database database = Database.getInstance(application);
         taskDao = database.taskDao();
         allTasks = taskDao.getAllTasks();
     }
 
+    /*
+     *    METHOD      :     insert
+     *    DESCRIPTION :     Inserts a new task into the database
+     *    PARAMETERS  :     Task task
+     *    RETURNS     :     VOID
+     * */
     public void insert(Task task){
         new TaskRepository.InsertTaskAsyncTask(taskDao).execute(task);
     }
+
+    /*
+     *    METHOD      :     insertTask
+     *    DESCRIPTION :     Inserts a new task into the database, including
+     *                      subtask and persons attached to task
+     *    PARAMETERS  :     Task task
+     *    RETURNS     :     VOID
+     * */
     public void insertTask(Task task) {new TaskRepository.InsertFullTaskAsyncTask(taskDao).execute(task);}
+
+    /*
+     *    METHOD      :     update
+     *    DESCRIPTION :     Update a task in the database
+     *    PARAMETERS  :     Task task
+     *    RETURNS     :     VOID
+     * */
     public void update(Task task){
         new TaskRepository.UpdateTaskAsyncTask(taskDao).execute(task);
     }
+
+    /*
+     *    METHOD      :     delete
+     *    DESCRIPTION :     Task a task from the database
+     *    PARAMETERS  :     Subtask task
+     *    RETURNS     :     VOID
+     * */
     public void delete(Task task){
         new TaskRepository.DeleteTaskAsyncTask(taskDao).execute(task);
     }
-  
+
+    /*
+     *    METHOD      :     deleteAllTasks
+     *    DESCRIPTION :     Delete all tasks from the database
+     *    PARAMETERS  :     NONE
+     *    RETURNS     :     VOID
+     * */
     public void deleteAllTasks() {
         new TaskRepository.DeleteAllTasksAsyncTask(taskDao).execute();
     }
 
+    /*
+     *    METHOD      :     getTaskById
+     *    DESCRIPTION :     Get a Task object, based on the id passed into method
+     *    PARAMETERS  :     int id
+     *    RETURNS     :     Task
+     * */
     public Task getTaskById(int id){
         return taskDao.getTasksById(id);
     }
-  
+
+    /*
+     *    METHOD      :     getAllTasks
+     *    DESCRIPTION :     Get all tasks from the database, in a livedata list
+     *    PARAMETERS  :     None
+     *    RETURNS     :     LiveData<List<Task>>
+     * */
     public LiveData<List<Task>> getAllTasks() {
         return allTasks;
     }
 
+    //This class is an async task used to access the database in order to insert a new task
     private static class InsertTaskAsyncTask extends AsyncTask<Task, Void, Void>{
 
         private TaskDao taskDao;
@@ -81,6 +133,7 @@ public class TaskRepository {
         }
     }
 
+    //Async task used to log the integrity of the newly inserted task information
     private static class InsertTaskVerifyIntegrityTask extends AsyncTask<Task, Void, Void> {
 
         @Override
@@ -95,6 +148,7 @@ public class TaskRepository {
         }
     }
 
+    //This class is an async task used to access the database in order to update a task
     private static class UpdateTaskAsyncTask extends AsyncTask<Task, Void, Void>{
 
         private TaskDao taskDao;
@@ -109,6 +163,7 @@ public class TaskRepository {
         }
     }
 
+    //This class is an async task used to access the database in order to delete a btask
     private static class DeleteTaskAsyncTask extends AsyncTask<Task, Void, Void>{
 
         private TaskDao taskDao;
@@ -123,6 +178,7 @@ public class TaskRepository {
         }
     }
 
+    //This class is an async task used to access the database in order to delete all tasks from the database
     private static class DeleteAllTasksAsyncTask extends AsyncTask<Void, Void, Void> {
 
         private TaskDao taskDao;
@@ -137,6 +193,7 @@ public class TaskRepository {
             return null;
         }
     }
+    //This class is an async task used to access the database in order to insert into the task, subtask, and person_task tables
     private static class InsertFullTaskAsyncTask extends AsyncTask<Task, Void, Void> {
 
         private TaskDao taskDao;

@@ -14,39 +14,37 @@ import android.os.Parcelable;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.lang.reflect.Constructor;
+
+/*
+ *  CLASS: Person
+ *  DESCRIPTION: This class represents a person that is assigned to a task. Room uses this class
+ *               definition to create a table with the members of this class being the
+ *              columns of the Person Table
+ */
 @Entity
 public class Person implements Parcelable {
     @PrimaryKey(autoGenerate = true)
     private int Id;
     private String Name;
 
+    //Constructor
     public Person(String Name) {
         this.Name = Name;
     }
-
+    //Constructor - Parcel is used to pass objects between Activities
     public Person(Parcel in) {
         this.Name = in.readString();
         this.Id = in.readInt();
     }
 
-    /*
-     * FUNCTION     : setId
-     * PARAMETERS   : int id
-     * DESCRIPTION  : Updates the ID of the instance of a person this method belongs to
-     */
+    //Setters and getters
     public void setId(int id) {
         this.Id = id;
     }
-
     public int getId() {
         return Id;
     }
-
-    /*
-     * FUNCTION     : getName
-     * RETURNS      : string
-     * DESCRIPTION  : Returns the name of the instance of a person this method belongs to
-     */
     public String getName() {
         return Name;
     }
@@ -56,12 +54,15 @@ public class Person implements Parcelable {
         return 0;
     }
 
+    //Write the Person's name and Id into a parcel, to be passed to another activity
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(Name);
         dest.writeInt(Id);
     }
 
+
+    //Create person from parceable
     public static final Parcelable.Creator<Person> CREATOR = new Parcelable.Creator<Person>() {
         public Person createFromParcel(Parcel in) {
             return new Person(in);

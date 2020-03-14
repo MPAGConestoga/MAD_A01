@@ -16,13 +16,10 @@ import androidx.lifecycle.LiveData;
 
 import com.github.mpagconestoga.mad_a01.objects.Category;
 import com.github.mpagconestoga.mad_a01.objects.Person;
-import com.github.mpagconestoga.mad_a01.objects.PersonSubtask;
-import com.github.mpagconestoga.mad_a01.objects.PersonTask;
 import com.github.mpagconestoga.mad_a01.objects.Subtask;
 import com.github.mpagconestoga.mad_a01.objects.Task;
 import com.github.mpagconestoga.mad_a01.repositories.CategoryRepository;
 import com.github.mpagconestoga.mad_a01.repositories.PersonRepository;
-import com.github.mpagconestoga.mad_a01.repositories.PersonSubtaskRepository;
 import com.github.mpagconestoga.mad_a01.repositories.PersonTaskRepository;
 import com.github.mpagconestoga.mad_a01.repositories.SubtaskRepository;
 import com.github.mpagconestoga.mad_a01.repositories.TaskRepository;

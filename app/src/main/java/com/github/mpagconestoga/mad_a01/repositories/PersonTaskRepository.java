@@ -21,28 +21,41 @@ import com.github.mpagconestoga.mad_a01.objects.PersonTask;
 
 import java.util.List;
 
+/*
+ *  CLASS: PersonTaskRepository
+ *  DESCRIPTION: This class is a model in the MVVM framework. It used to hold data about the person_task table.
+ *              Using the persontask DAO, it retrieves data from the database, sending it to the view model.
+ */
 public class PersonTaskRepository {
 
     private PersonTaskDao personTaskDao;
-    private LiveData<List<PersonTask>> allPersonTasks;
 
+    //Constructor used to get database instance, and initialize the DAO
     public PersonTaskRepository(Application application){
         Database database = Database.getInstance(application);
         personTaskDao = database.personTaskDao();
     }
-
+    /*
+     *    METHOD      :     insert
+     *    DESCRIPTION :     Inserts a new PersonTask into the database
+     *    PARAMETERS  :     PersonTask personTask
+     *    RETURNS     :     VOID
+     * */
     public void insert(PersonTask personTask){
         new PersonTaskRepository.InsertPersonTaskAsyncTask(personTaskDao).execute(personTask);
     }
 
-    public LiveData<List<PersonTask>> getAllTasks() {
-        return allPersonTasks;
-    }
-
+    /*
+     *    METHOD      :     getPersonsByTaskId
+     *    DESCRIPTION :     Returns a list of persons, based on the Id of a task
+     *    PARAMETERS  :     int taskId -> Id of task
+     *    RETURNS     :     List<Person>
+     * */
     public List<Person> getPersonsByTaskId(int taskId){
         return personTaskDao.GetPersonsByTaskId(taskId);
     }
 
+    //This class is an async task used to access the database in order to insert a new personTask row
     private static class InsertPersonTaskAsyncTask extends AsyncTask<PersonTask, Void, Void>{
 
         private PersonTaskDao personTaskDao;

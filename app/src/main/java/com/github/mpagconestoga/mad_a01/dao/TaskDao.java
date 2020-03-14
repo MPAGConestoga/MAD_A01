@@ -40,27 +40,35 @@ public abstract class TaskDao {
     @Insert
     public abstract void insertSubtask(Subtask subtask);
 
-    @Query("DELETE FROM Task")
+    @Query("DELETE FROM Task")                                      // Clears all Tasks from database
     public abstract void deleteAllTasks();
 
-    @Query("SELECT * FROM Task WHERE Id = :taskId")
+    @Query("SELECT * FROM Task WHERE Id = :taskId")                 // retrieves tasks based on ID
     public abstract Task getTasksById(int taskId);
 
-    @Query("SELECT * FROM Task ORDER BY Id DESC")
+    @Query("SELECT * FROM Task ORDER BY Id DESC")                   // assigns tasks to livedata to update UI
     public abstract LiveData<List<Task>> getAllTasks();
 
+    /*
+    Method:      inseertTask
+    Description: takes available task data inserts it into database
+    Parameters:  Tast task - Task data to be retrieved
+                 List<Person> assignedPeople - workers assigned to task
+                 ArrayList<Subtask> subtasks - assigned subtasks for task
+    Returns		 None
+    */
     @Transaction
     public void insertTask(Task task, List<Person> assignedPeople, ArrayList<Subtask> subtasks){
         long taskId = insert(task);
 
-        for (Person person : assignedPeople) {
-            insertPersonTask(new PersonTask((int)taskId, person.getId()));
+        for (Person person : assignedPeople) {                              // loops through all assigned people to task
+            insertPersonTask(new PersonTask((int)taskId, person.getId()));  // adds person to database entry for task
         }
 
-        for(Subtask subtask : subtasks){
-            subtask.setTaskId((int) taskId);
+        for(Subtask subtask : subtasks){                                    // loops through all entered subtasks for task
+            subtask.setTaskId((int) taskId);                                // assigns task ID to subtask
 
-            insertSubtask(subtask);
+            insertSubtask(subtask);                                         // adds subtask to database entry for task
         }
     }
 }

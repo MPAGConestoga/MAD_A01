@@ -29,12 +29,12 @@ public interface SubtaskDao {
     @Delete
     void delete(Subtask subtask);
 
-    @Query("DELETE FROM Subtask")
+    @Query("DELETE FROM Subtask")                           // deletes all subtasks from task
     void deleteAllSubtasks();
 
-    @Query("SELECT * FROM Subtask ORDER BY Id DESC")
+    @Query("SELECT * FROM Subtask ORDER BY Id DESC")        // puts all subtasks into livedata, to ensure view is updated
     LiveData<List<Subtask>> getAllSubtasks();
 
-    @Query("SELECT * FROM Subtask WHERE TaskId = :taskId")
+    @Query("SELECT * FROM Subtask WHERE TaskId = :taskId")  // pulls all subtasks from database based on assigned task ID
     List<Subtask> getSubtasksbyTaskId(int taskId);
 }

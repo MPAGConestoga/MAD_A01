@@ -12,7 +12,6 @@
         android:layout_height="43dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-
         android:gravity="center_vertical"
         android:hint="@string/subtask_name_hint"
         app:layout_constraintEnd_toStartOf="@+id/subtask_delete_button"
@@ -66,7 +65,6 @@
         android:layout_weight="1"
         android:background="@android:drawable/ic_delete"
         android:onClick="onDelete"
-        android:text=""
         android:layout_marginTop="6dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"

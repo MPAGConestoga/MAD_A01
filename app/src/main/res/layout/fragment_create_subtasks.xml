@@ -15,7 +15,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
-            android:hint="Task Name"/>
+            android:hint="@string/task_name_hint"/>
         <TextView
             android:id="@+id/weight_view"
             android:layout_width="0dp"

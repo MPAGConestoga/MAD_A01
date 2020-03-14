@@ -120,7 +120,7 @@ public class TaskViewActivity extends AppCompatActivity {
         subtaskAdapter.setData(task.getSubtasks());
 
         // Logic for saving and loading background image
-        String imageURL = task.getCategory().getWebURL();
+        String imageURL = task.getCategory().getBackgroundURL();
         DownloadTask downloadTask = new DownloadTask();
         downloadTask.execute(imageURL);
     }

@@ -41,8 +41,15 @@ public class SubtaskAdapter extends RecyclerView.Adapter<SubtaskAdapter.ViewHold
         this.inflater = LayoutInflater.from(context);
     }
 
+    public void updateParentData(int position) {}
+
     public ArrayList<Subtask> getSubtasks() {
         return Subtasks;
+    }
+
+    public void addSubtask(Subtask subtask) {
+        Subtasks.add(subtask);
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -50,11 +57,6 @@ public class SubtaskAdapter extends RecyclerView.Adapter<SubtaskAdapter.ViewHold
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = inflater.inflate(R.layout.subtask_field, parent, false);
         return new ViewHolder(view);
-    }
-
-    public void setData(ArrayList<Subtask> subtasks) {
-        this.Subtasks = subtasks;
-        notifyDataSetChanged();
     }
 
     @Override
@@ -72,12 +74,6 @@ public class SubtaskAdapter extends RecyclerView.Adapter<SubtaskAdapter.ViewHold
         holder.position = position;
     }
 
-    public void updateParentData(int position) {}
-    public void setData(Subtask subtask) {
-        this.Subtasks.add(0, subtask);
-        notifyDataSetChanged();
-
-    }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView name;

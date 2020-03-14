@@ -35,7 +35,6 @@ public class CreateTaskViewModel extends AndroidViewModel {
     // Task being created information (Current Task)
     private Task currentTask;
     private ArrayList<Person> assignedPeople;
-    private ArrayList<Subtask> currentSubtasks;
 
     // Repository and Database calls
     private PersonRepository peopleRepository;
@@ -58,7 +57,6 @@ public class CreateTaskViewModel extends AndroidViewModel {
         allCategories = categoryRepository.getAllCategories();
 
         currentTask = null;
-        currentSubtasks = new ArrayList<Subtask>();
         assignedPeople = new ArrayList<Person>();
     }
 
@@ -70,13 +68,16 @@ public class CreateTaskViewModel extends AndroidViewModel {
         currentTask = new Task(name, category, endTime);
     }
 
-    public ArrayList<Subtask> getCurrentSubtasks() {
-        return currentSubtasks;
+    public void setAssignedPeople(ArrayList<Person> people) {
+        currentTask.setAssignedPeople(people);
+    }
+
+    public void setCurrentSubtasks(ArrayList<Subtask> subtasks) {
+        currentTask.setSubtasks(subtasks);
     }
 
     public void createTask() {
         currentTask.setAssignedPeople(assignedPeople);
-        currentTask.setSubtasks(currentSubtasks);
         taskRepository.insertTask(currentTask);
     }
 

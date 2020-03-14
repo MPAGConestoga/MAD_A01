@@ -9,11 +9,13 @@
 
 package com.github.mpagconestoga.mad_a01;
 
+import android.app.Activity;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelStoreOwner;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -40,6 +42,7 @@ public class CreateSubtasksFragment extends Fragment {
 
     //---------- Attributes ----------//
     private CreateTaskViewModel viewModel;
+    private Activity parentActivity;
     private View view;
 
     // UI Elements
@@ -75,7 +78,7 @@ public class CreateSubtasksFragment extends Fragment {
         weight.setValue(2);
 
         // Finilize Task Button Listener(Complete Task)
-        Button finishTaskCreation = view.findViewById(R.id.button_create_finalTask);
+        finishTaskCreation = view.findViewById(R.id.button_create_finalTask);
         finishTaskCreation.setOnClickListener(new CreateFinalTaskClickListener());
 
         return view;
@@ -84,9 +87,16 @@ public class CreateSubtasksFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        // Get Parent activity
+        parentActivity = getActivity();
+        if(parentActivity == null) {
+            Log.d(TAG, "Unexpected error: Fragment Parent activity does not exists");
+            return;
+        }
+
         // Create/Get Shared ViewModel
-        viewModel = new ViewModelProvider(getActivity()).get(CreateTaskViewModel.class);
-        adapter.setData(viewModel.getCurrentSubtasks());
+        viewModel = new ViewModelProvider((ViewModelStoreOwner) parentActivity).get(CreateTaskViewModel.class);
         Log.d(TAG, "&--> Subtask Creation Address: " + viewModel);
     }
 
@@ -95,6 +105,8 @@ public class CreateSubtasksFragment extends Fragment {
         @Override
         public void onClick(View v) {
             Log.d(TAG, "onClick: AddSubtask button clicked");
+
+            // Input Validation
             String subtaskName = subtaskNameEditText.getText().toString().trim();
             if(subtaskName.isEmpty()){
                 Toast.makeText(view.getContext(), "Please fill out the name of the subtask", Toast.LENGTH_LONG).show();
@@ -107,9 +119,12 @@ public class CreateSubtasksFragment extends Fragment {
             }
 
             HideKeyBoardUtility.hideKeyboard(v);
-            ArrayList<Subtask> currentSubtasks = adapter.getSubtasks();
-            adapter.setData(new Subtask(subtaskWeight, subtaskName));
-            Log.d(TAG, "onClick: currentSubtasks size: " + currentSubtasks.size());
+
+            // Add subtask to adapter
+            adapter.addSubtask(new Subtask(subtaskWeight, subtaskName));
+            Log.d(TAG, "onClick: currentSubtasks size: " + adapter.getItemCount());
+
+            // Reset input fields
             subtaskNameEditText.setText("");
             weight.setValue(1);
             subtaskNameEditText.requestFocus();
@@ -119,21 +134,17 @@ public class CreateSubtasksFragment extends Fragment {
     private class CreateFinalTaskClickListener implements Button.OnClickListener {
         @Override
         public void onClick(View v) {
-            // Get subtask
-            ArrayList<Subtask> currentSubtasks = adapter.getSubtasks();
-
-            if(currentSubtasks.size() == 0){
+            if(adapter.getItemCount() == 0){
                 Toast.makeText(viewModel.getApplication(), "Please enter at least one subtask", Toast.LENGTH_SHORT).show();
                 return;
             }
-            ArrayList<Subtask> currentSubtasksToReturn = viewModel.getCurrentSubtasks();
-            for(Subtask s : currentSubtasks){
-                currentSubtasksToReturn.add(s);
-            }
+
+            // Assign subtask to current task
+            viewModel.setCurrentSubtasks(adapter.getSubtasks());
 
             // Add task to database and quit activity
             viewModel.createTask();
-            getActivity().finish();
+            parentActivity.finish();
         }
     }
 }

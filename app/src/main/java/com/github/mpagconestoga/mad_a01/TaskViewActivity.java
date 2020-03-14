@@ -77,8 +77,9 @@ public class TaskViewActivity extends AppCompatActivity {
         categoryLink = findViewById(R.id.website_button);
         assignedPeopleList = findViewById(R.id.assigned_people_list);
         subtaskRecyclerView = findViewById(R.id.viewsubtask_list);
-        subtaskAdapter = new ViewSubtaskAdapter(this);
+
         CategoryRepository categoryRepository = new CategoryRepository(this.getApplication());
+        subtaskAdapter = new ViewSubtaskAdapter(this, progressBar);
 
         // Grab viewModel and set background image place
         viewModel = ViewModelProvider.AndroidViewModelFactory.getInstance(this.getApplication()).create(TaskViewModel.class);

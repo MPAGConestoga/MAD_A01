@@ -81,7 +81,11 @@ public class CreateTaskViewModel extends AndroidViewModel {
     }
 
     public void addPerson(Person person) {
-        assignedPeople.add(person);
+        assignedPeople.add(0, person);
+    }
+
+    public void removePerson(int index){
+        assignedPeople.remove(index);
     }
 
     public List<Category> getAllCategories() {

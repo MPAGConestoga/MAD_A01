@@ -259,6 +259,8 @@ public class TaskCreationFragment extends Fragment {
     private void removeItem(int position) {
         memberList.remove(position);
         memberListAdapter.notifyItemRemoved(position);
+        viewModel.removePerson(position);
+
     }
 
     private void populateCategoryList(){

@@ -80,6 +80,8 @@ public class TaskCreationFragment extends Fragment {
     private Date taskEndTime = null;
 
     //---------- Lifecycle methods ----------//
+    // FUNCTION   : onCreateView
+    // DESCRIPTION: Initiate the UI elements
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_create_task, container, false);
@@ -145,6 +147,8 @@ public class TaskCreationFragment extends Fragment {
         return view;
     }
 
+    // FUNCTION   : onActivityCreated
+    // DESCRIPTION: Initializes or grabs a existing the viewModel
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -155,6 +159,8 @@ public class TaskCreationFragment extends Fragment {
         Log.d(TAG, "&--> Task Creation Address: " + viewModel);
     }
 
+    // FUNCTION   : onActivityCreated
+    // DESCRIPTION: Initializes or grabs a existing the viewModel
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -169,6 +175,9 @@ public class TaskCreationFragment extends Fragment {
     }
 
     //---------- Other Methods----------//
+    // FUNCTION   : CreateTaskClickListener
+    // DESCRIPTION: Validates the task fields, creates a task in the viewModel, moves to the next
+    //              screen if successful
     private class CreateTaskClickListener implements Button.OnClickListener {
         @Override
         public void onClick(View v) {
@@ -201,6 +210,8 @@ public class TaskCreationFragment extends Fragment {
         }
     }
 
+    // FUNCTION   : AddMemberClickListener
+    // DESCRIPTION: Add a person to the member list adapter and therefore in the task's assigned people
     private class AddMemberClickListener implements Button.OnClickListener {
         @Override
         public void onClick(View v) {
@@ -209,7 +220,8 @@ public class TaskCreationFragment extends Fragment {
         }
     }
 
-    // TODO: Fix the calendar -> Put in its own class and make sure the date matches
+    // FUNCTION   : dateTimeDialogBuilder
+    // DESCRIPTION: Sets up a date and time picker for the task endtime
     private void dateTimeDialogBuilder(View view) {
         buttonDateTime.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -248,13 +260,8 @@ public class TaskCreationFragment extends Fragment {
     }
 
 
-    /*
-     *    METHOD      :   insertItem
-     *    DESCRIPTION :   Add a new memberListItem object to the recyclerView
-     *    PARAMETERS  :   int position - position where it should be added
-     *                    String name -> name of the person to be added to the list
-     *    RETURNS     :   void
-     * */
+    // FUNCTION    : insertItem
+    // DESCRIPTION :  Add a new memberListItem object to the recyclerView
     private void insertItem(int position, String name) {
         for (MemberListItem mli : memberList) {
             if (mli.getmName().equals(name)) {
@@ -267,6 +274,8 @@ public class TaskCreationFragment extends Fragment {
         memberListAdapter.notifyItemInserted(position);
     }
 
+    // FUNCTION    : removeItem
+    // DESCRIPTION : Removes the object from the recyclerView
     private void removeItem(int position) {
         memberList.remove(position);
         memberListAdapter.notifyItemRemoved(position);
@@ -274,6 +283,8 @@ public class TaskCreationFragment extends Fragment {
 
     }
 
+    // FUNCTION    : removeItem
+    // DESCRIPTION : Removes the object from the recyclerView
     private void populateCategoryList(){
         categoryList.addAll(viewModel.getAllCategories());
         categoryAdapter.notifyDataSetChanged();

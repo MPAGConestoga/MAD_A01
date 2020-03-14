@@ -31,8 +31,14 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+/*
+ *   CLASS       : CreateTaskViewModel.java
+ *   DESCRIPTION : ViewModel for the fragments responsible in creating a task flow: assigning people
+ *                 responsible for that task and creating subtasks. It contains Repositories for Person,
+ *                 Category, Task, subtask, PersonTask.
+ */
 public class CreateTaskViewModel extends AndroidViewModel {
-    // Task being created information (Current Task)
+    // Attributes
     private Task currentTask;
     private ArrayList<Person> assignedPeople;
 
@@ -45,6 +51,8 @@ public class CreateTaskViewModel extends AndroidViewModel {
     private List<Category> allCategories;
     private LiveData<List<Person>> allPeople;
 
+
+    // Constructor
     public CreateTaskViewModel(@NonNull Application application) {
         super(application);
         peopleRepository = new PersonRepository(application);
@@ -60,25 +68,28 @@ public class CreateTaskViewModel extends AndroidViewModel {
         assignedPeople = new ArrayList<Person>();
     }
 
-    public Task getCurrentTask() {
-        return currentTask;
+    // FUNCTION   : createTask
+    // DESCRIPTION: Adds the currentTask, with assigned people and subtask, into the Database
+    public void createTask() {
+        currentTask.setAssignedPeople(assignedPeople);
+        taskRepository.insertTask(currentTask);
     }
 
+    // FUNCTION   : setCurrentTask
+    // DESCRIPTION: Construct the current task being created in the Activity
     public void setCurrentTask(String name, Category category, Date endTime) {
         currentTask = new Task(name, category, endTime);
     }
 
-    public void setAssignedPeople(ArrayList<Person> people) {
-        currentTask.setAssignedPeople(people);
-    }
-
+    // FUNCTION   : setCurrentSubtasks
+    // DESCRIPTION: Construct the current subtasks being created in the Fragment
     public void setCurrentSubtasks(ArrayList<Subtask> subtasks) {
         currentTask.setSubtasks(subtasks);
     }
 
-    public void createTask() {
-        currentTask.setAssignedPeople(assignedPeople);
-        taskRepository.insertTask(currentTask);
+    // Getters and Setters
+    public Task getCurrentTask() {
+        return currentTask;
     }
 
     public void addPerson(Person person) {
@@ -92,5 +103,4 @@ public class CreateTaskViewModel extends AndroidViewModel {
     public List<Category> getAllCategories() {
         return allCategories;
     }
-
 }

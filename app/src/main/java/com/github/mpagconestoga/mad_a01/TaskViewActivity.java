@@ -64,6 +64,9 @@ public class TaskViewActivity extends AppCompatActivity {
     private RecyclerView subtaskRecyclerView;
     private ViewSubtaskAdapter subtaskAdapter;
 
+
+    // FUNCTION   : onCreate
+    // DESCRIPTION: Initate UI Elements
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
@@ -126,6 +129,10 @@ public class TaskViewActivity extends AppCompatActivity {
         downloadTask.execute(imageURL);
     }
 
+    /*
+     *   CLASS       : DownloadTask
+     *   DESCRIPTION : Class responsible for downloading the background for the task view
+     */
     class DownloadTask extends AsyncTask<String, Integer, String> {   //Integer and second String can be changed back to Void later
 
         ProgressDialog progressDialog;
@@ -198,6 +205,11 @@ public class TaskViewActivity extends AppCompatActivity {
         }
     }
 
+
+    /*
+     *   CLASS       : SetBackground
+     *   DESCRIPTION : Class responsible for setting the background image for the the task view
+     */
     class SetBackground extends AsyncTask<Void, Void, BitmapDrawable> {
 
         @Override
@@ -218,6 +230,8 @@ public class TaskViewActivity extends AppCompatActivity {
         }
     }
 
+    // FUNCTION   : generatePeopleList
+    // DESCRIPTION: Generates a string for displaying the task's assigned people in the view
     public static String generatePeopleList(List<Person> personList) {
         int size = personList.size();
         StringBuilder returnString = new StringBuilder();

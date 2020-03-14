@@ -24,6 +24,11 @@ import com.github.mpagconestoga.mad_a01.repositories.TaskRepository;
 import java.util.ArrayList;
 import java.util.List;
 
+/*
+ *   CLASS       : TaskViewModel.java
+ *   DESCRIPTION : ViewModel for the task viewing screen, displaying all the information regarding a task.
+ *                 Contains repository for Task, PersonTask, and Subtask.
+ */
 public class TaskViewModel extends AndroidViewModel {
     private TaskRepository taskRepository;
     private PersonTaskRepository personTaskRepository;
@@ -33,6 +38,7 @@ public class TaskViewModel extends AndroidViewModel {
     private LiveData<List<Task>> allTasks;
     private List<Subtask> subtasks;
 
+    // Constructor
     public TaskViewModel(@NonNull Application application) {
         super(application);
         taskRepository = new TaskRepository(application);
@@ -41,25 +47,34 @@ public class TaskViewModel extends AndroidViewModel {
         allTasks = taskRepository.getAllTasks();
     }
 
+    // FUNCTION   : insert
+    // DESCRIPTION: Inserts task into the database
     public void insert(Task task) {
         taskRepository.insert(task);
     }
 
+    // FUNCTION   : delete
+    // DESCRIPTION: Deletes the task in the database
     public void delete(Task task) {
         taskRepository.delete(task);
+    }
+
+    // FUNCTION   : getAllTasks
+    // DESCRIPTION: Returns all tasks from the database
+    public LiveData<List<Task>> getAllTasks() {
+        return allTasks;
+    }
+
+    // FUNCTION   : setTaskById
+    // DESCRIPTION: Returns the task by its TaskId
+    public void setTaskById(int taskId) {
+        task = taskRepository.getTaskById(taskId);
+        task.setAssignedPeople((ArrayList<Person>) personTaskRepository.getPersonsByTaskId(taskId));
+        task.setSubtasks((ArrayList<Subtask>) subtaskRepository.getSubtasksByTaskId(taskId));
     }
 
     public Task getTask() {
         return task;
     }
 
-    public LiveData<List<Task>> getAllTasks() {
-        return allTasks;
-    }
-
-    public void setTaskById(int taskId) {
-        task = taskRepository.getTaskById(taskId);
-        task.setAssignedPeople((ArrayList<Person>) personTaskRepository.getPersonsByTaskId(taskId));
-        task.setSubtasks((ArrayList<Subtask>) subtaskRepository.getSubtasksByTaskId(taskId));
-    }
 }

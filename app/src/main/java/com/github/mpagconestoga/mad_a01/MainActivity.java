@@ -36,6 +36,8 @@ public class MainActivity extends AppCompatActivity {
     private TaskViewModel viewModel;
 
     @Override
+    // FUNCTION   : onCreateView
+    // DESCRIPTION: Initiate the UI elements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -53,7 +55,6 @@ public class MainActivity extends AppCompatActivity {
         final TaskListAdapter adapter = new TaskListAdapter();
         taskList.setAdapter(adapter);
 
-        // TODO: Check if the other method worksbb
         viewModel = ViewModelProvider.AndroidViewModelFactory.getInstance(this.getApplication()).create(TaskViewModel.class);
         viewModel.getAllTasks().observe(this, new Observer<List<Task>>() {
             @Override
@@ -62,6 +63,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+    // FUNCTION   : onCreateOptionsMenu
+    // DESCRIPTION: Inflates the main menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -69,6 +73,8 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+    // FUNCTION   : onOptionsItemSelected
+    // DESCRIPTION: Opens the settings page if clicked
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch(item.getItemId()){
@@ -79,6 +85,8 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    // FUNCTION   : NewTaskClickListener
+    // DESCRIPTION: Opens the CreateTaskActivity
     public class NewTaskClickListener implements FloatingActionButton.OnClickListener {
         @Override
         public void onClick(View v) {

@@ -20,27 +20,23 @@ import com.github.mpagconestoga.mad_a01.repositories.PersonRepository;
 
 import java.util.List;
 
+/*
+ *   CLASS       : PersonSearchViewModel.java
+ *   DESCRIPTION : ViewModel for the activity responsible for searching the database for adding to a task.
+ *                 Contains Repositories for Person.
+ */
 public class PersonSearchViewModel extends AndroidViewModel {
     private PersonRepository peopleRepository;
     private LiveData<List<Person>> allPeople;
 
+    // Constructor
     public PersonSearchViewModel(@NonNull Application application) {
         super(application);
         peopleRepository = new PersonRepository(application);
         allPeople = peopleRepository.getAllPersons();
     }
 
-    public boolean personExists(String name) {
-        boolean retCode = false;
-        LiveData<List<Person>> people = peopleRepository.getPersonByName(name);
-
-        if(people.getValue().size() > 0) {
-            retCode = true;
-        }
-
-        return retCode;
-    }
-
+    // Getter and Setter
     public LiveData<List<Person>> getAllPersons() {
         return allPeople;
     }

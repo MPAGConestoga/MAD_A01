@@ -54,6 +54,8 @@ public class CreateSubtasksFragment extends Fragment {
     private EditText subtaskNameEditText;
 
     //---------- Lifecycle methods ----------//
+    // FUNCTION   : onCreateView
+    // DESCRIPTION: Initiate the UI elements
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_create_subtasks, container, false);
@@ -84,6 +86,8 @@ public class CreateSubtasksFragment extends Fragment {
         return view;
     }
 
+    // FUNCTION   : onActivityCreated
+    // DESCRIPTION: Gets the Activity and initiates or grab the viewModel
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -101,6 +105,8 @@ public class CreateSubtasksFragment extends Fragment {
     }
 
     //---------- OnClick Listeners & Handlers----------//
+    // FUNCTION   : AddSubtaskClickListener
+    // DESCRIPTION: Creates a subtask object and adds to the list
     public class AddSubtaskClickListener implements Button.OnClickListener {
         @Override
         public void onClick(View v) {
@@ -131,6 +137,8 @@ public class CreateSubtasksFragment extends Fragment {
         }
     }
 
+    // FUNCTION   : CreateFinalTaskClickListener
+    // DESCRIPTION: Validates that there at least one subtask and creates a task if so
     private class CreateFinalTaskClickListener implements Button.OnClickListener {
         @Override
         public void onClick(View v) {

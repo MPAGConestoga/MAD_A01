@@ -43,6 +43,8 @@ public class PersonSearchActivity extends AppCompatActivity {
     private Button done;
     private Button addNewPerson;
 
+    // FUNCTION   : onCreate
+    // DESCRIPTION: Initiates UI components and grabs the viewModel
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,8 +52,6 @@ public class PersonSearchActivity extends AppCompatActivity {
 
         viewModel = ViewModelProvider.AndroidViewModelFactory.getInstance(this.getApplication()).create(PersonSearchViewModel.class);
         returnIntent = new Intent();
-
-
 
         addNewPerson = findViewById(R.id.addNewPersonButton);
         addNewPerson.setVisibility(View.GONE);
@@ -94,6 +94,8 @@ public class PersonSearchActivity extends AppCompatActivity {
         done.setOnClickListener(new DoneClickListener());
     }
 
+    // FUNCTION   : NewPersonClickListener
+    // DESCRIPTION: Adds new person to the Person database
     public class NewPersonClickListener implements Button.OnClickListener{
         @Override
         public void onClick(View v) {
@@ -108,6 +110,8 @@ public class PersonSearchActivity extends AppCompatActivity {
         }
     }
 
+    // FUNCTION   : DoneClickListener
+    // DESCRIPTION: Returns to the calling activity, proving the selected person
     public class DoneClickListener implements Button.OnClickListener {
         @Override
         public void onClick(View v) {

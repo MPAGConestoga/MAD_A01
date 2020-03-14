@@ -1,6 +1,5 @@
 package com.github.mpagconestoga.mad_a01;
 
-
 import android.os.Bundle;
 import android.view.View;
 import android.webkit.WebView;

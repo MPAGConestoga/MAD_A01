@@ -9,7 +9,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -27,8 +30,14 @@ public class ViewSubtaskAdapter extends RecyclerView.Adapter<ViewSubtaskAdapter.
 
     private List<Subtask> Subtasks;
 
-    public ViewSubtaskAdapter(Context context) {
+    private ProgressBar progressBar;
+
+    private int completionWeight = 0;
+    private int currentWeight = 0;
+
+    public ViewSubtaskAdapter(Context context, ProgressBar progressBar) {
         Subtasks = new ArrayList<Subtask>();
+        this.progressBar = progressBar;
     }
 
     @NonNull
@@ -42,6 +51,15 @@ public class ViewSubtaskAdapter extends RecyclerView.Adapter<ViewSubtaskAdapter.
     public void setData(List<Subtask> subtasks) {
         this.Subtasks = subtasks;
         notifyDataSetChanged();
+
+        int maxWeight = 0;
+
+        for (Subtask subtask : subtasks) {
+            maxWeight += subtask.getWeight();
+        }
+
+        completionWeight = maxWeight;
+        progressBar.setMax(completionWeight);
     }
 
     @Override
@@ -63,6 +81,7 @@ public class ViewSubtaskAdapter extends RecyclerView.Adapter<ViewSubtaskAdapter.
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView name;
         TextView weight;
+        CheckBox checkBox;
         int position;
 
         public ViewHolder(View view) {
@@ -70,6 +89,21 @@ public class ViewSubtaskAdapter extends RecyclerView.Adapter<ViewSubtaskAdapter.
             // Set UI buttons
             name = view.findViewById(R.id.viewSubtask_name);
             weight = view.findViewById(R.id.viewSubtask_weight);
+            checkBox = view.findViewById(R.id.checkBox);
+
+            checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton checkBox, boolean isChecked) {
+                    if (isChecked) {
+                        currentWeight += Subtasks.get(position).getWeight();
+                    }
+                    else {
+                        currentWeight -= Subtasks.get(position).getWeight();
+                    }
+
+                    progressBar.setProgress(currentWeight);
+                }
+            });
         }
     }
 }
